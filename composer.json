@@ -1,0 +1,25 @@
+{
+    "name": "elephant418/packy",
+    "type": "lib",
+    "description": "A library for a simple & explicit model couch",
+    "keywords": ["model"],
+    "license": "MIT",
+    "homepage": "https://github.com/Elephant418/Packy",
+    "authors": [
+        {
+            "name": "Thomas Zilliox",
+            "email": "hello@tzi.fr",
+            "homepage": "http://tzi.fr"
+
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Elephant418\\Packy\\": "src",
+            "Test\\Elephant418\\Packy\\": "test"
+        }
+    }
+}
