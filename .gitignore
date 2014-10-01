@@ -1,6 +1,9 @@
 # Dev folders
 .idea
 
+# Dependencies folders
+vendor
+
 
 
 
