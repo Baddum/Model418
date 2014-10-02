@@ -1,7 +1,7 @@
 Packy
 =====
 
-A PHP library for a simple & explicit model couch.
+A PHP library for a simple & explicit model layer.
 
 
 
