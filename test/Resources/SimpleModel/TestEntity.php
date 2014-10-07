@@ -22,4 +22,9 @@ class TestEntity extends Entity
         $dataConnector->setDataFolder(__DIR__.'/data');
         $this->setDataConnector($dataConnector);
     }
+
+    public function fetchTest()
+    {
+        return $this->fetchById('test');
+    }
 }
