@@ -30,6 +30,12 @@ class Model extends ArrayObject
 
     /* INITIALIZATION
      *************************************************************************/
+    public function __construct()
+    {
+        parent::__construct();
+        $this->initDataConnector();
+    }
+    
     public function initByData($data)
     {
         $this->id = $data['id'];

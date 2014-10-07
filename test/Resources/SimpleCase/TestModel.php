@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Elephant418\Packy\Resources\SimpleModel;
+namespace Test\Elephant418\Packy\Resources\SimpleCase;
 
 use Elephant418\Packy\DataConnector;
 use Elephant418\Packy\Model;
@@ -17,9 +17,8 @@ class TestModel extends Model
 
     /* CONSTRUCTOR
      *************************************************************************/
-    public function __construct()
+    protected function initDataConnector()
     {
-        parent::__construct();
         $dataConnector = new DataConnector();
         $dataConnector->setDataFolder(__DIR__.'/data');
         $this->setDataConnector($dataConnector);

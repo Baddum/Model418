@@ -37,6 +37,11 @@ trait Entity
 
     /* PRIVATE DATA CONNECTOR ACCESSOR
      *************************************************************************/
+    protected function initDataConnector()
+    {
+        throw new \LogicException('This method must be overridden');
+    }
+    
     protected function getDataConnector()
     {
         return self::$_dataConnector;
