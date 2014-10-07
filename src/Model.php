@@ -4,13 +4,13 @@ namespace Elephant418\Packy;
 
 class Model extends ArrayObject
 {
-    use Entity;
 
 
     /* ATTRIBUTES
      *************************************************************************/
     public $id;
     protected $_schema = array();
+    protected $_entity = 'Elephant418\\Packy\\Entity';
 
     
 

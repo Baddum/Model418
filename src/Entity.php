@@ -2,28 +2,26 @@
 
 namespace Elephant418\Packy;
 
-trait Entity
+class Entity
 {
 
 
     /* ATTRIBUTES
      *************************************************************************/
     protected static $_dataConnector;
+    protected $_model = 'Elephant418\\Packy\\Model';
     
 
 
     /* CONSTRUCTOR
      *************************************************************************/
-    public function initialize()
+    public function __construct()
     {
         $this->setDataConnector(new DataConnector());
     }
 
     public function getDataConnector()
     {
-        if (! self::$_dataConnector) {
-            $this->setDataConnector(new DataConnector);
-        }
         return self::$_dataConnector;
     }
     
@@ -59,7 +57,7 @@ trait Entity
      *************************************************************************/
     protected function getModel()
     {
-        $class = get_class($this);
+        $class = $this->_model;
         return new $class;
     }
 
