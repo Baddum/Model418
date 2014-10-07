@@ -4,9 +4,8 @@ namespace Test\Elephant418\Packy\Resources\SeparateCase;
 
 use Elephant418\Packy\DataConnector;
 
-trait TestEntity
+trait ResourceEntity
 {
-
 
 
     /* CONSTRUCTOR
@@ -14,7 +13,7 @@ trait TestEntity
     protected function initDataConnector()
     {
         $dataConnector = new DataConnector();
-        $dataConnector->setDataFolder(__DIR__.'/data');
+        $dataConnector->setDataFolder(__DIR__.'/../data');
         $this->setDataConnector($dataConnector);
     }
 

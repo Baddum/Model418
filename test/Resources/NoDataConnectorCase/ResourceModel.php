@@ -1,12 +1,11 @@
 <?php
 
-namespace Test\Elephant418\Packy\Resources\SeparateCase;
+namespace Test\Elephant418\Packy\Resources\NoDataConnectorCase;
 
 use Elephant418\Packy\Model;
 
-class TestModel extends Model
+class ResourceModel extends Model
 {
-    use TestEntity;
     
     
     /* ATTRIBUTES

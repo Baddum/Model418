@@ -5,7 +5,7 @@ namespace Test\Elephant418\Packy\Resources\SimpleCase;
 use Elephant418\Packy\DataConnector;
 use Elephant418\Packy\Model;
 
-class TestModel extends Model
+class ResourceModel extends Model
 {
     
     
@@ -20,7 +20,7 @@ class TestModel extends Model
     protected function initDataConnector()
     {
         $dataConnector = new DataConnector();
-        $dataConnector->setDataFolder(__DIR__.'/data');
+        $dataConnector->setDataFolder(__DIR__.'/../data');
         $this->setDataConnector($dataConnector);
     }
 

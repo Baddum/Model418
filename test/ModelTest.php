@@ -4,13 +4,14 @@ namespace Test\Elephant418\Packy;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-use Test\Elephant418\Packy\Resources\SimpleCase\TestModel as SimpleModel;
-use Test\Elephant418\Packy\Resources\SeparateCase\TestModel as SeparateModel;
+use Test\Elephant418\Packy\Resources\SimpleCase\ResourceModel as SimpleModel;
+use Test\Elephant418\Packy\Resources\SeparateCase\ResourceModel as SeparateModel;
+use Test\Elephant418\Packy\Resources\NoDataConnectorCase\ResourceModel as NoDataConnectorModel;
 
 class ArrayObjectTest extends \PHPUnit_Framework_TestCase
 {
     
-    public function testSimple()
+    public function testSimpleAccessor()
     {
         $model = (new SimpleModel)->fetchById('test');
         $this->assertEquals('myValue', $model['myName'], 'Get model attribute value with array accessor');
@@ -18,15 +19,21 @@ class ArrayObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('myValue', $model->get('myName'), 'Get model attribute value with method accessor');
     }
 
-    public function testCustomFetch()
+    public function testSimpleCustomFetch()
     {
         $model = (new SimpleModel)->fetchTest();
         $this->assertEquals('myValue', $model->myName);
     }
 
-    public function testSeparateCustomFetch()
+    public function testSeparate()
     {
         $model = (new SeparateModel)->fetchTest();
         $this->assertEquals('myValue', $model->myName);
+    }
+
+    public function testNoDataConnector()
+    {
+        $this->setExpectedException('LogicException');
+        (new NoDataConnectorModel)->fetchById('test');
     }
 }
