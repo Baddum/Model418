@@ -2,7 +2,7 @@
 
 namespace Elephant418\Packy;
 
-class Entity
+trait Entity
 {
 
 
@@ -10,25 +10,7 @@ class Entity
      *************************************************************************/
     protected static $_dataConnector;
     protected $_model = 'Elephant418\\Packy\\Model';
-    
 
-
-    /* CONSTRUCTOR
-     *************************************************************************/
-    public function __construct()
-    {
-        $this->setDataConnector(new DataConnector());
-    }
-
-    public function getDataConnector()
-    {
-        return self::$_dataConnector;
-    }
-    
-    public function setDataConnector($dataConnector)
-    {
-        self::$_dataConnector = $dataConnector;
-    }
 
 
     /* FETCHING METHODS
@@ -50,6 +32,20 @@ class Entity
         $dataList = $this->getDataConnector()->fetchAll($limit, $offset, $count);
         return $this->resultAsModelList($dataList);
     }
+    
+
+
+    /* PRIVATE DATA CONNECTOR ACCESSOR
+     *************************************************************************/
+    protected function getDataConnector()
+    {
+        return self::$_dataConnector;
+    }
+
+    protected function setDataConnector($dataConnector)
+    {
+        self::$_dataConnector = $dataConnector;
+    }
 
     
 
@@ -57,7 +53,7 @@ class Entity
      *************************************************************************/
     protected function getModel()
     {
-        $class = $this->_model;
+        $class = get_class($this);
         return new $class;
     }
 
