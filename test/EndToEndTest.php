@@ -8,7 +8,7 @@ use Test\Elephant418\Packy\Resources\SimpleCase\ResourceModel as SimpleModel;
 use Test\Elephant418\Packy\Resources\SeparateCase\ResourceModel as SeparateModel;
 use Test\Elephant418\Packy\Resources\NoDataConnectorCase\ResourceModel as NoDataConnectorModel;
 
-class ArrayObjectTest extends \PHPUnit_Framework_TestCase
+class EndToEndTest extends \PHPUnit_Framework_TestCase
 {
     
     public function testSimpleAccessor()

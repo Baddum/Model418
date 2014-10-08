@@ -2,7 +2,7 @@
 
 namespace Test\Elephant418\Packy\Resources\SimpleCase;
 
-use Elephant418\Packy\DataConnector;
+use Elephant418\Packy\DataConnector\FileDataConnector as DataConnector;
 use Elephant418\Packy\Model;
 
 class ResourceModel extends Model

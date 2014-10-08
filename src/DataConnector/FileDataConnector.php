@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Packy;
+namespace Elephant418\Packy\DataConnector;
 
-class DataConnector
+class FileDataConnector
 {
 
 
@@ -11,16 +11,8 @@ class DataConnector
     protected $dataFolder;
 
 
-    /* CONSTRUCTOR
+    /* SETTER
      *************************************************************************/
-    public function __construct()
-    {
-    }
-    
-    public function setIdField($idField) {
-        $this->idField = $idField;
-    }
-
     public function setDataFolder($dataFolder) {
         $this->dataFolder = $dataFolder;
     }
@@ -30,11 +22,9 @@ class DataConnector
      *************************************************************************/
     public function fetchById($id)
     {
-        $sourceFile = $this->getSourceFileById($id);
-        if (!file_exists($sourceFile)) {
-            return null;
-        }
-        return $this->getDataFromSourceFile($id, $sourceFile);
+        $sourceFileName = $this->getSourceFileNameById($id);
+        $sourceText = (new FileRequest)->getOne($sourceFileName);
+        return $this->getDataFromText($id, $sourceText);
     }
 
     public function fetchByIdList($idList)
@@ -67,18 +57,17 @@ class DataConnector
 
     /* PROTECTED SOURCE FILE METHODS
      *************************************************************************/
-    protected function getDataFromSourceFile($id, $filePath)
+    protected function getDataFromText($id, $fileText)
     {
-        $data = array();
-        $data['id'] = $id;
-        $jsonData = json_decode(file_get_contents($filePath), true);
-        if (is_array($jsonData)) {
-            $data = array_merge($data, $jsonData);
+        $data = json_decode($fileText, true);
+        if (!is_array($data)) {
+            return null;
         }
+        $data['id'] = $id;
         return $data;
     }
 
-    protected function getSourceFileById($id)
+    protected function getSourceFileNameById($id)
     {
         return $this->dataFolder.'/'.$id.'.json';
     }

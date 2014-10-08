@@ -2,7 +2,7 @@
 
 namespace Test\Elephant418\Packy\Resources\SeparateCase;
 
-use Elephant418\Packy\DataConnector;
+use Elephant418\Packy\DataConnector\FileDataConnector as DataConnector;
 
 trait ResourceEntity
 {
