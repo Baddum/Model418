@@ -7,8 +7,8 @@ use Elephant418\Packy\Model;
 class ResourceModel extends Model
 {
     use ResourceEntity;
-    
-    
+
+
     /* ATTRIBUTES
      *************************************************************************/
     protected $_schema = array('myName' => 'defaultValue');

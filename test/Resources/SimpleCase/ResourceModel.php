@@ -7,20 +7,20 @@ use Elephant418\Packy\Model;
 
 class ResourceModel extends Model
 {
-    
-    
+
+
     /* ATTRIBUTES
      *************************************************************************/
     protected $_schema = array('myName' => 'defaultValue');
-
 
 
     /* CONSTRUCTOR
      *************************************************************************/
     protected function initDataConnector()
     {
-        $dataConnector = new DataConnector();
-        $dataConnector->setDataFolder(__DIR__.'/../data');
+        $dataConnector = (new DataConnector)
+            ->setDataFolder(__DIR__ . '/../data')
+            ->setIdField('myName');
         return $dataConnector;
     }
 

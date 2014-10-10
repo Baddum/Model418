@@ -17,7 +17,7 @@ class Model extends ArrayObject
      *************************************************************************/
     public function exists()
     {
-        return ($this->id !== NULL);
+        return !is_null($this->id);
     }
 
     public function name()

@@ -33,6 +33,24 @@ trait Entity
     }
 
 
+    /* SAVE METHODS
+     *************************************************************************/
+    public function save()
+    {
+        $id = $this->getDataConnector()->save($this->id, $this->toArray());
+        if (is_null($this->id)) {
+            $this->id = $id;
+        }
+    }
+
+    public function delete()
+    {
+        if (!is_null($this->id)) {
+            $this->getDataConnector()->delete($this->id);
+        }
+    }
+
+
     /* PRIVATE DATA CONNECTOR ACCESSOR
      *************************************************************************/
     protected function initDataConnector()

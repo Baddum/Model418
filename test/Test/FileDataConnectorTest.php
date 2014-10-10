@@ -23,7 +23,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     {
         $expectedDataFolder = __DIR__;
         $actualDataFolder = (new FileDataConnector)
-            ->setDataFolder($expectedDataFolder.'/')
+            ->setDataFolder($expectedDataFolder . '/')
             ->getDataFolder();
         $this->assertEquals($expectedDataFolder, $actualDataFolder);
     }
@@ -35,7 +35,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         (new FileDataConnector)
             ->setDataFolder($unexistingDataFolder);
     }
-    
+
 
     /* FETCHING TEST METHODS
      *************************************************************************/
@@ -52,25 +52,25 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getFileRequestStub();
         $stub->expects($this->once())
             ->method('getContents')
-            ->with($dataFolder.'/'.$id.'.json')
+            ->with($dataFolder . '/' . $id . '.json')
             ->will($this->returnValue(json_encode($data, true)));
 
         $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
         $actualData = $dataConnector->fetchById($id);
         $this->assertEquals($expectedData, $actualData);
     }
-    
+
     public function providerJsonData()
     {
         $data = array();
         $data['empty'] = array();
-        $data['dataType'] = array('string'=>'some value', 'number'=>42, 'array'=>array('first'=>2, 'second'=>2), 'list'=>array(2, '3'));
+        $data['dataType'] = array('string' => 'some value', 'number' => 42, 'array' => array('first' => 2, 'second' => 2), 'list' => array(2, '3'));
         foreach (array_keys($data) as $key) {
             $data[$key] = array($data[$key]);
         }
         return $data;
     }
-    
+
     /**
      * @dataProvider providerIdList
      */
@@ -95,7 +95,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $dataConnector = $this->getFileDataConnector($stub);
         $actualDataList = $dataConnector->fetchAll();
         $this->assertEquals($idList, array_keys($actualDataList));
-        
+
         $actualCount = 0;
         $actualDataList = $dataConnector->fetchAll(null, null, $actualCount);
         $this->assertEquals($idList, array_keys($actualDataList));
@@ -131,7 +131,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     {
         $limit = 1;
         $offset = 1;
-        $expectedSize = min(1, max(0, count($idList)-$offset));
+        $expectedSize = min(1, max(0, count($idList) - $offset));
 
         $stub = $this->getFetchAllStub($idList, $expectedSize, 2);
         $dataConnector = $this->getFileDataConnector($stub);
@@ -163,24 +163,27 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
 
     /* PROTECTED METHODS
      *************************************************************************/
-    protected function getFileDataConnector($stub, $dataFolder = __DIR__) {
+    protected function getFileDataConnector($stub, $dataFolder = __DIR__)
+    {
         return (new FileDataConnector($stub))
             ->setDataFolder($dataFolder);
     }
 
-    protected function getFileRequestStub() {
+    protected function getFileRequestStub()
+    {
         return $this->getMock('Elephant418\\Packy\\DataConnector\\FileRequest');
     }
 
-    protected function getFetchAllStub($idList, $occurrenceContents, $occurrenceList) {
+    protected function getFetchAllStub($idList, $occurrenceContents, $occurrenceList)
+    {
         $stub = $this->getFileRequestStub();
         $stub->expects($this->exactly($occurrenceList * $occurrenceContents))
             ->method('getContents')
             ->will($this->returnValue('{}', true));
         $stub->expects($this->exactly($occurrenceList))
             ->method('getList')
-            ->will($this->returnValue(array_map(function($a){
-                return __DIR__.'/'.$a.'.json';
+            ->will($this->returnValue(array_map(function ($a) {
+                return __DIR__ . '/' . $a . '.json';
             }, $idList), true));
         return $stub;
     }

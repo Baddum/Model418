@@ -2,13 +2,16 @@
 
 namespace Elephant418\Packy\DataConnector;
 
-class FileDataConnector
+use Elephant418\Packy\IDataConnector;
+
+class FileDataConnector implements IDataConnector
 {
 
 
     /* ATTRIBUTES
      *************************************************************************/
     protected $fileRequest;
+    protected $idField = 'name';
     protected $dataFolder;
 
 
@@ -27,6 +30,12 @@ class FileDataConnector
     public function getDataFolder()
     {
         return $this->dataFolder;
+    }
+
+    public function setIdField($idField)
+    {
+        $this->idField = $idField;
+        return $this;
     }
 
 
@@ -78,6 +87,36 @@ class FileDataConnector
     }
 
 
+    /* SAVE METHODS
+     *************************************************************************/
+    public function save($id, $data)
+    {
+        $exists = !is_null($id);
+        if (!$exists) {
+            $name = '';
+            $suffix = 0;
+            if (isset($data[$this->idField])) {
+                $name = $data[$this->idField];
+            }
+            do {
+                $id = $this->getIdByNameAndSuffix($name, $suffix);
+                $sourceFileName = $this->getSourceFileNameById($id);
+                $suffix++;
+            } while ($this->fileRequest->exists($sourceFileName));
+        } else {
+            $sourceFileName = $this->getSourceFileNameById($id);
+        }
+        $this->fileRequest->putContents($sourceFileName, json_encode($data));
+        return $id;
+    }
+
+    public function delete($id)
+    {
+        $sourceFileName = $this->getSourceFileNameById($id);
+        return $this->fileRequest->unlink($sourceFileName);
+    }
+
+
     /* PROTECTED SOURCE FILE METHODS
      *************************************************************************/
     protected function getDataFromText($id, $fileText)
@@ -93,6 +132,23 @@ class FileDataConnector
     protected function getSourceFileNameById($id)
     {
         return $this->dataFolder . '/' . $id . '.json';
+    }
+
+    protected function getIdByNameAndSuffix($name = '', $suffix = 0)
+    {
+        $id = '';
+        if (!empty($name)) {
+            $id = $name;
+        } else if (!$suffix) {
+            $suffix = 1;
+        }
+        if ($suffix) {
+            if (!empty($id)) {
+                $id .= '-';
+            }
+            $id .= $suffix;
+        }
+        return $id;
     }
 
     protected function getAllIds()

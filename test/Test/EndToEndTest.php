@@ -34,4 +34,23 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('LogicException');
         (new NoDataConnectorModel)->fetchById('test');
     }
+
+    public function testSaveAndDelete()
+    {
+        $model = new SimpleModel;
+        $model->myName = 'truc';
+        $this->assertFalse($model->exists(), 'The model does not exist');
+        $this->assertEquals('truc', $model->myName);
+        $model->save();
+        $this->assertTrue($model->exists(), 'The model exists');
+        $id = $model->id;
+        unset($model);
+        $model = (new SimpleModel)->fetchById($id);
+        $this->assertTrue($model->exists(), 'The model exists');
+        $this->assertEquals('truc', $model->myName);
+        $model->delete();
+        unset($model);
+        $model = (new SimpleModel)->fetchById($id);
+        $this->assertFalse($model->exists(), 'The model exists');
+    }
 }
