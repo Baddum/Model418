@@ -1,7 +1,7 @@
 Packy
 =====
 [![Latest Stable Version](https://poser.pugx.org/elephant418/packy/v/stable.svg)](https://github.com/Elephant418/Packy)
-[![Build Status](https://travis-ci.org/Elephant418/Packy.png?branch=v3.x)](https://travis-ci.org/Elephant418/Packy)
+[![Build Status](https://travis-ci.org/Elephant418/Packy.png?branch=master)](https://travis-ci.org/Elephant418/Packy)
 [![Code Climate](https://codeclimate.com/github/Elephant418/Packy/badges/gpa.svg)](https://codeclimate.com/github/Elephant418/Packy)
 [![Test Coverage](https://codeclimate.com/github/Elephant418/Packy/badges/coverage.svg)](https://codeclimate.com/github/Elephant418/Packy)
 [![Total Downloads](https://poser.pugx.org/elephant418/packy/downloads.svg)](https://packagist.org/packages/elephant418/packy)
