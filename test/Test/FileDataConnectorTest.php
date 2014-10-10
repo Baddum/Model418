@@ -63,17 +63,19 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function providerJsonData()
     {
         $data = array();
-        $data['empty'] = array(array());
-        $data['dataType'] = array(array('string'=>'some value', 'number'=>42, 'array'=>array('first'=>2, 'second'=>2), 'list'=>array(2, '3')));
+        $data['empty'] = array();
+        $data['dataType'] = array('string'=>'some value', 'number'=>42, 'array'=>array('first'=>2, 'second'=>2), 'list'=>array(2, '3'));
+        foreach (array_keys($data) as $key) {
+            $data[$key] = array($data[$key]);
+        }
         return $data;
     }
     
     /**
      * @dataProvider providerIdList
      */
-    public function testFetchByIdLis()
+    public function testFetchByIdList($idList)
     {
-        $idList = array('1', '2', '3');
         $stub = $this->getFileRequestStub();
         $stub->expects($this->exactly(count($idList)))
             ->method('getContents')
@@ -84,6 +86,26 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($idList, array_keys($actualDataList));
     }
 
+    /**
+     * @dataProvider providerIdList
+     */
+    public function testFetchAll($idList)
+    {
+        $stub = $this->getFileRequestStub();
+        $stub->expects($this->exactly(count($idList)))
+            ->method('getContents')
+            ->will($this->returnValue('{}', true));
+        $stub->expects($this->once())
+            ->method('getList')
+            ->will($this->returnValue(array_map(function($a){
+                return __DIR__.'/'.$a.'.json';
+            }, $idList), true));
+
+        $dataConnector = $this->getFileDataConnector($stub);
+        $actualDataList = $dataConnector->fetchAll();
+        $this->assertEquals($idList, array_keys($actualDataList));
+    }
+
     public function providerIdList()
     {
         $data = array();
@@ -91,6 +113,9 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $data['one'] = array('1');
         $data['two'] = array('coco', 'ananas');
         $data['three'] = array('some', 'id', 'list');
+        foreach (array_keys($data) as $key) {
+            $data[$key] = array($data[$key]);
+        }
         return $data;
     }
 
