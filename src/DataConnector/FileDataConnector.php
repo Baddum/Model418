@@ -72,7 +72,7 @@ class FileDataConnector
             $offset = 0;
         }
         if (!is_null($limit)) {
-            $idList = array_slice($idList, $offset, $offset + $limit);
+            $idList = array_slice($idList, $offset, $limit);
         }
         return $this->fetchByIdList($idList);
     }

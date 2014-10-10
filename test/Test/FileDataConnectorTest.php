@@ -91,19 +91,60 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testFetchAll($idList)
     {
-        $stub = $this->getFileRequestStub();
-        $stub->expects($this->exactly(count($idList)))
-            ->method('getContents')
-            ->will($this->returnValue('{}', true));
-        $stub->expects($this->once())
-            ->method('getList')
-            ->will($this->returnValue(array_map(function($a){
-                return __DIR__.'/'.$a.'.json';
-            }, $idList), true));
-
+        $stub = $this->getFetchAllStub($idList, count($idList), 2);
         $dataConnector = $this->getFileDataConnector($stub);
         $actualDataList = $dataConnector->fetchAll();
         $this->assertEquals($idList, array_keys($actualDataList));
+        
+        $actualCount = 0;
+        $actualDataList = $dataConnector->fetchAll(null, null, $actualCount);
+        $this->assertEquals($idList, array_keys($actualDataList));
+        $this->assertEquals(count($idList), $actualCount);
+    }
+
+    /**
+     * @dataProvider providerIdList
+     */
+    public function testFetchAllWithLimit($idList)
+    {
+        $limit = 1;
+        $expectedSize = min(1, count($idList));
+
+        $stub = $this->getFetchAllStub($idList, $expectedSize, 2);
+        $dataConnector = $this->getFileDataConnector($stub);
+        $actualDataList = $dataConnector->fetchAll($limit);
+        $this->assertEquals($expectedSize, count($actualDataList));
+        if ($expectedSize > 0) {
+            $this->assertEquals($idList[0], array_keys($actualDataList)[0]);
+        }
+
+        $actualCount = 0;
+        $actualDataList = $dataConnector->fetchAll($limit, null, $actualCount);
+        $this->assertEquals($expectedSize, count($actualDataList));
+        $this->assertEquals(count($idList), $actualCount);
+    }
+
+    /**
+     * @dataProvider providerIdList
+     */
+    public function testFetchAllWithOffset($idList)
+    {
+        $limit = 1;
+        $offset = 1;
+        $expectedSize = min(1, max(0, count($idList)-$offset));
+
+        $stub = $this->getFetchAllStub($idList, $expectedSize, 2);
+        $dataConnector = $this->getFileDataConnector($stub);
+        $actualDataList = $dataConnector->fetchAll($limit, $offset);
+        $this->assertEquals($expectedSize, count($actualDataList));
+        if ($expectedSize > 0) {
+            $this->assertEquals($idList[$offset], array_keys($actualDataList)[0]);
+        }
+
+        $actualCount = 0;
+        $actualDataList = $dataConnector->fetchAll($limit, $offset, $actualCount);
+        $this->assertEquals($expectedSize, count($actualDataList));
+        $this->assertEquals(count($idList), $actualCount);
     }
 
     public function providerIdList()
@@ -129,5 +170,18 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
 
     protected function getFileRequestStub() {
         return $this->getMock('Elephant418\\Packy\\DataConnector\\FileRequest');
+    }
+
+    protected function getFetchAllStub($idList, $occurrenceContents, $occurrenceList) {
+        $stub = $this->getFileRequestStub();
+        $stub->expects($this->exactly($occurrenceList * $occurrenceContents))
+            ->method('getContents')
+            ->will($this->returnValue('{}', true));
+        $stub->expects($this->exactly($occurrenceList))
+            ->method('getList')
+            ->will($this->returnValue(array_map(function($a){
+                return __DIR__.'/'.$a.'.json';
+            }, $idList), true));
+        return $stub;
     }
 }
