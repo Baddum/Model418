@@ -2,8 +2,6 @@
 
 namespace Test\Elephant418\Packy\Test;
 
-require_once(__DIR__ . '/../autoload.php');
-
 use Test\Elephant418\Packy\Resources\SimpleCase\ResourceModel as SimpleModel;
 use Test\Elephant418\Packy\Resources\SeparateCase\ResourceModel as SeparateModel;
 use Test\Elephant418\Packy\Resources\NoDataConnectorCase\ResourceModel as NoDataConnectorModel;
