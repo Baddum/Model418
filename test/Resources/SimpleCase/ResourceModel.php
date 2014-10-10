@@ -21,7 +21,7 @@ class ResourceModel extends Model
     {
         $dataConnector = new DataConnector();
         $dataConnector->setDataFolder(__DIR__.'/../data');
-        $this->setDataConnector($dataConnector);
+        return $dataConnector;
     }
 
 

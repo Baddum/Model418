@@ -28,10 +28,13 @@ class Model extends ArrayObject
 
     /* INITIALIZATION
      *************************************************************************/
-    public function __construct()
+    public function __construct($dataConnector = null)
     {
         parent::__construct();
-        $this->initDataConnector();
+        if (!$dataConnector) {
+            $dataConnector = $this->initDataConnector();
+        }
+        $this->setDataConnector($dataConnector);
     }
 
     public function initByData($data)

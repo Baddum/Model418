@@ -18,12 +18,12 @@ class FileDataConnector
     {
         $realDataFolder = realpath($dataFolder);
         if (!$realDataFolder) {
-            throw new \RuntimeException('This data folder does not exist: '.$dataFolder);
+            throw new \RuntimeException('This data folder does not exist: ' . $dataFolder);
         }
         $this->dataFolder = $realDataFolder;
         return $this;
     }
-    
+
     public function getDataFolder()
     {
         return $this->dataFolder;
