@@ -8,6 +8,7 @@ class FileDataConnector
 
     /* ATTRIBUTES
      *************************************************************************/
+    protected $fileRequest;
     protected $dataFolder;
 
 
@@ -15,7 +16,28 @@ class FileDataConnector
      *************************************************************************/
     public function setDataFolder($dataFolder)
     {
-        $this->dataFolder = $dataFolder;
+        $realDataFolder = realpath($dataFolder);
+        if (!$realDataFolder) {
+            throw new \RuntimeException('This data folder does not exist: '.$dataFolder);
+        }
+        $this->dataFolder = $realDataFolder;
+        return $this;
+    }
+    
+    public function getDataFolder()
+    {
+        return $this->dataFolder;
+    }
+
+
+    /* CONSTRUCTOR
+     *************************************************************************/
+    public function __construct($fileRequest = null)
+    {
+        if (!$fileRequest) {
+            $fileRequest = new FileRequest;
+        }
+        $this->fileRequest = $fileRequest;
     }
 
 
@@ -24,7 +46,7 @@ class FileDataConnector
     public function fetchById($id)
     {
         $sourceFileName = $this->getSourceFileNameById($id);
-        $sourceText = (new FileRequest)->getContents($sourceFileName);
+        $sourceText = $this->fileRequest->getContents($sourceFileName);
         return $this->getDataFromText($id, $sourceText);
     }
 
@@ -76,7 +98,7 @@ class FileDataConnector
     protected function getAllIds()
     {
         $idList = array();
-        $fileList = (new FileRequest)->getList($this->dataFolder . '/*.json');
+        $fileList = $this->fileRequest->getList($this->dataFolder . '/*.json');
         foreach ($fileList as $file) {
             $file = basename($file);
             $id = substr($file, 0, strrpos($file, '.'));
