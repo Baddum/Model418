@@ -23,7 +23,7 @@ class FileDataConnector
     public function fetchById($id)
     {
         $sourceFileName = $this->getSourceFileNameById($id);
-        $sourceText = (new FileRequest)->getOne($sourceFileName);
+        $sourceText = (new FileRequest)->getContents($sourceFileName);
         return $this->getDataFromText($id, $sourceText);
     }
 
@@ -75,7 +75,8 @@ class FileDataConnector
     protected function getAllIds()
     {
         $idList = array();
-        foreach (glob($this->dataFolder.'/*.json') as $file) {
+        $fileList = (new FileRequest)->getList($this->dataFolder.'/*.json');
+        foreach ($fileList as $file) {
             $file = basename($file);
             $id = substr($file, 0, strrpos($file, '.'));
             $idList[] = $id;

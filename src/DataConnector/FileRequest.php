@@ -5,16 +5,21 @@ namespace Elephant418\Packy\DataConnector;
 class FileRequest
 {
     
-    public function getOne($file)
+    public function getContents($fileName)
     {
-        if (!file_exists($file)) {
+        if (!file_exists($fileName)) {
             return null;
         }
-        return file_get_contents($file);
+        return file_get_contents($fileName);
     }
 
-    protected function getAll($pattern)
+    public function putContents($fileName, $data)
     {
-        return glob($pattern);
+        return file_put_contents($fileName, $data);
+    }
+
+    public function getList($filePattern)
+    {
+        return glob($filePattern);
     }
 }
