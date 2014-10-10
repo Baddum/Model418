@@ -4,7 +4,7 @@ namespace Elephant418\Packy\DataConnector;
 
 class FileRequest
 {
-    
+
     public function getContents($fileName)
     {
         if (!file_exists($fileName)) {

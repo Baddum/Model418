@@ -10,7 +10,7 @@ use Test\Elephant418\Packy\Resources\NoDataConnectorCase\ResourceModel as NoData
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
 {
-    
+
     public function testSimpleAccessor()
     {
         $model = (new SimpleModel)->fetchById('test');

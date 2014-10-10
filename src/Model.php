@@ -12,7 +12,6 @@ class Model extends ArrayObject
     public $id;
     protected $_schema = array();
 
-    
 
     /* GETTER
      *************************************************************************/
@@ -26,7 +25,6 @@ class Model extends ArrayObject
         return $this->id;
     }
 
-    
 
     /* INITIALIZATION
      *************************************************************************/
@@ -35,7 +33,7 @@ class Model extends ArrayObject
         parent::__construct();
         $this->initDataConnector();
     }
-    
+
     public function initByData($data)
     {
         $this->id = $data['id'];

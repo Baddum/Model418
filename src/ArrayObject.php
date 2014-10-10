@@ -11,7 +11,6 @@ class ArrayObject extends \ArrayObject
     protected $_schema = array();
 
 
-
     /* CONSTRUCTOR
      *************************************************************************/
     public function __construct()
@@ -26,12 +25,12 @@ class ArrayObject extends \ArrayObject
     {
         return $this->offsetGet($name);
     }
-    
+
     public function set($name, $value)
     {
         return $this->offsetSet($name, $value);
     }
-    
+
     public function offsetSet($name, $value)
     {
         if (isset($this->_schema[$name])) {
@@ -44,7 +43,7 @@ class ArrayObject extends \ArrayObject
     {
         $this->offsetSet($index, NULL);
     }
-    
+
     public function toArray()
     {
         return $this->getArrayCopy();

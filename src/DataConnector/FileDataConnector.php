@@ -13,7 +13,8 @@ class FileDataConnector
 
     /* SETTER
      *************************************************************************/
-    public function setDataFolder($dataFolder) {
+    public function setDataFolder($dataFolder)
+    {
         $this->dataFolder = $dataFolder;
     }
 
@@ -48,7 +49,7 @@ class FileDataConnector
         if (is_null($offset)) {
             $offset = 0;
         }
-        if (! is_null($limit)) {
+        if (!is_null($limit)) {
             $idList = array_slice($idList, $offset, $offset + $limit);
         }
         return $this->fetchByIdList($idList);
@@ -69,13 +70,13 @@ class FileDataConnector
 
     protected function getSourceFileNameById($id)
     {
-        return $this->dataFolder.'/'.$id.'.json';
+        return $this->dataFolder . '/' . $id . '.json';
     }
 
     protected function getAllIds()
     {
         $idList = array();
-        $fileList = (new FileRequest)->getList($this->dataFolder.'/*.json');
+        $fileList = (new FileRequest)->getList($this->dataFolder . '/*.json');
         foreach ($fileList as $file) {
             $file = basename($file);
             $id = substr($file, 0, strrpos($file, '.'));

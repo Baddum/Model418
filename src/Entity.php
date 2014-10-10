@@ -12,7 +12,6 @@ trait Entity
     protected $_model = 'Elephant418\\Packy\\Model';
 
 
-
     /* FETCHING METHODS
      *************************************************************************/
     public function fetchById($id)
@@ -32,7 +31,6 @@ trait Entity
         $dataList = $this->getDataConnector()->fetchAll($limit, $offset, $count);
         return $this->resultAsModelList($dataList);
     }
-    
 
 
     /* PRIVATE DATA CONNECTOR ACCESSOR
@@ -41,7 +39,7 @@ trait Entity
     {
         throw new \LogicException('This method must be overridden');
     }
-    
+
     protected function getDataConnector()
     {
         return self::$_dataConnector;
@@ -52,7 +50,6 @@ trait Entity
         self::$_dataConnector = $dataConnector;
     }
 
-    
 
     /* PRIVATE MODEL METHODS
      *************************************************************************/
@@ -76,5 +73,5 @@ trait Entity
     {
         return $this->getModel()->initByData($data);
     }
-    
+
 }
