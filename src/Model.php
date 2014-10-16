@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Packy;
+namespace Elephant418\Model418;
 
 class Model extends ArrayObject
 {

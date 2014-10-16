@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Packy\DataConnector;
+namespace Elephant418\Model418\DataConnector;
 
 class FileRequest
 {

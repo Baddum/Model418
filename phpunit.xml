@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit colors="true" bootstrap="test/bootstrap.php">
-    <testsuite name="Packy">
+    <testsuite name="Model418">
         <directory>./test/</directory>
     </testsuite>
     <logging>

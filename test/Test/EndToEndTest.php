@@ -1,10 +1,10 @@
 <?php
 
-namespace Test\Elephant418\Packy\Test;
+namespace Test\Elephant418\Model418\Test;
 
-use Test\Elephant418\Packy\Resources\SimpleCase\ResourceModel as SimpleModel;
-use Test\Elephant418\Packy\Resources\SeparateCase\ResourceModel as SeparateModel;
-use Test\Elephant418\Packy\Resources\NoDataConnectorCase\ResourceModel as NoDataConnectorModel;
+use Test\Elephant418\Model418\Resources\SimpleCase\ResourceModel as SimpleModel;
+use Test\Elephant418\Model418\Resources\SeparateCase\ResourceModel as SeparateModel;
+use Test\Elephant418\Model418\Resources\NoDataConnectorCase\ResourceModel as NoDataConnectorModel;
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
 {

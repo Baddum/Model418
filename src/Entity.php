@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Packy;
+namespace Elephant418\Model418;
 
 trait Entity
 {
@@ -9,7 +9,7 @@ trait Entity
     /* ATTRIBUTES
      *************************************************************************/
     protected static $_dataConnector;
-    protected $_model = 'Elephant418\\Packy\\Model';
+    protected $_model = 'Elephant418\\Model418\\Model';
 
 
     /* FETCHING METHODS

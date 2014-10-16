@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Elephant418\Packy\Test;
+namespace Test\Elephant418\Model418\Test;
 
-use Elephant418\Packy\DataConnector\FileDataConnector;
+use Elephant418\Model418\DataConnector\FileDataConnector;
 
 class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
 {
@@ -171,7 +171,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
 
     protected function getFileRequestStub()
     {
-        return $this->getMock('Elephant418\\Packy\\DataConnector\\FileRequest');
+        return $this->getMock('Elephant418\\Model418\\DataConnector\\FileRequest');
     }
 
     protected function getFetchAllStub($idList, $occurrenceContents, $occurrenceList)

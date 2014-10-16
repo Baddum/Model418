@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Packy\DataConnector;
+namespace Elephant418\Model418\DataConnector;
 
-use Elephant418\Packy\IDataConnector;
+use Elephant418\Model418\IDataConnector;
 
 class FileDataConnector implements IDataConnector
 {

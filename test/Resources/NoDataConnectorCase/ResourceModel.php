@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Elephant418\Packy\Resources\NoDataConnectorCase;
+namespace Test\Elephant418\Model418\Resources\NoDataConnectorCase;
 
-use Elephant418\Packy\Model;
+use Elephant418\Model418\Model;
 
 class ResourceModel extends Model
 {
