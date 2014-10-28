@@ -138,7 +138,7 @@ class FileDataConnector implements IDataConnector
         return $id;
     }
 
-    protected function getIdByNameAndSuffix($name = '', $suffix = null)
+    protected function getIdByNameAndSuffix($name = '', $suffix = 0)
     {
         $id = array();
         if (!empty($name)) {
