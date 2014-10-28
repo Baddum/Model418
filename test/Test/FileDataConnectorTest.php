@@ -54,8 +54,8 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
             ->method('getContents')
             ->with($dataFolder . '/' . $id . '.json')
             ->will($this->returnValue(json_encode($data, true)));
-
         $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
+        
         $actualData = $dataConnector->fetchById($id);
         $this->assertEquals($expectedData, $actualData);
     }
@@ -64,11 +64,10 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     {
         $data = array();
         $data['empty'] = array();
-        $data['dataType'] = array('string' => 'some value', 'number' => 42, 'array' => array('first' => 2, 'second' => 2), 'list' => array(2, '3'));
-        foreach (array_keys($data) as $key) {
-            $data[$key] = array($data[$key]);
-        }
-        return $data;
+        $data['list'] = array(3, 1, 14, 1, 59);
+        $data['associative'] = array('string' => 'some value', 'number' => 42);
+        $data['nested'] = array('associative' => $data['associative'], 'list' => $data['list']);
+        return $this->provideOnlyOneArgument($data);
     }
 
     /**
@@ -91,11 +90,19 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testFetchAll($idList)
     {
-        $stub = $this->getFetchAllStub($idList, count($idList), 2);
+        $stub = $this->getFetchAllStub($idList, count($idList));
         $dataConnector = $this->getFileDataConnector($stub);
         $actualDataList = $dataConnector->fetchAll();
         $this->assertEquals($idList, array_keys($actualDataList));
+    }
 
+    /**
+     * @dataProvider providerIdList
+     */
+    public function testFetchAllCount($idList)
+    {
+        $stub = $this->getFetchAllStub($idList, count($idList));
+        $dataConnector = $this->getFileDataConnector($stub);
         $actualCount = 0;
         $actualDataList = $dataConnector->fetchAll(null, null, $actualCount);
         $this->assertEquals($idList, array_keys($actualDataList));
@@ -103,60 +110,97 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider providerIdList
+     * @dataProvider providerIdListLimit
      */
-    public function testFetchAllWithLimit($idList)
+    public function testFetchAllWithLimit($idList, $limit, $expectedIdList)
     {
-        $limit = 1;
-        $expectedSize = min(1, count($idList));
-
-        $stub = $this->getFetchAllStub($idList, $expectedSize, 2);
+        $stub = $this->getFetchAllStub($idList, count($expectedIdList));
         $dataConnector = $this->getFileDataConnector($stub);
         $actualDataList = $dataConnector->fetchAll($limit);
-        $this->assertEquals($expectedSize, count($actualDataList));
-        if ($expectedSize > 0) {
-            $this->assertEquals($idList[0], array_keys($actualDataList)[0]);
-        }
-
-        $actualCount = 0;
-        $actualDataList = $dataConnector->fetchAll($limit, null, $actualCount);
-        $this->assertEquals($expectedSize, count($actualDataList));
-        $this->assertEquals(count($idList), $actualCount);
+        $this->assertEquals(count($expectedIdList), count($actualDataList));
+        $this->assertEquals($expectedIdList, array_keys($actualDataList));
     }
 
     /**
-     * @dataProvider providerIdList
+     * @dataProvider providerIdListLimit
      */
-    public function testFetchAllWithOffset($idList)
+    public function testFetchAllWithLimitCount($idList, $limit, $expectedIdList)
     {
-        $limit = 1;
-        $offset = 1;
-        $expectedSize = min(1, max(0, count($idList) - $offset));
+        $stub = $this->getFetchAllStub($idList, count($expectedIdList));
+        $dataConnector = $this->getFileDataConnector($stub);
+        $actualCount = 0;
+        $actualDataList = $dataConnector->fetchAll($limit, null, $actualCount);
+        $this->assertEquals(count($expectedIdList), count($actualDataList));
+        $this->assertEquals(count($idList), $actualCount);
+        $this->assertEquals($expectedIdList, array_keys($actualDataList));
+    }
 
-        $stub = $this->getFetchAllStub($idList, $expectedSize, 2);
+    /**
+     * @dataProvider providerIdListLimitOffset
+     */
+    public function testFetchAllWithLimitOffset($idList, $limit, $offset, $expectedIdList)
+    {
+        $stub = $this->getFetchAllStub($idList, count($expectedIdList));
         $dataConnector = $this->getFileDataConnector($stub);
         $actualDataList = $dataConnector->fetchAll($limit, $offset);
-        $this->assertEquals($expectedSize, count($actualDataList));
-        if ($expectedSize > 0) {
-            $this->assertEquals($idList[$offset], array_keys($actualDataList)[0]);
-        }
+        $this->assertEquals(count($expectedIdList), count($actualDataList));
+        $this->assertEquals($expectedIdList, array_keys($actualDataList));
+    }
 
+    /**
+     * @dataProvider providerIdListLimitOffset
+     */
+    public function testFetchAllWithLimitOffsetCount($idList, $limit, $offset, $expectedIdList)
+    {
+        $stub = $this->getFetchAllStub($idList, count($expectedIdList));
+        $dataConnector = $this->getFileDataConnector($stub);
         $actualCount = 0;
         $actualDataList = $dataConnector->fetchAll($limit, $offset, $actualCount);
-        $this->assertEquals($expectedSize, count($actualDataList));
+        $this->assertEquals(count($expectedIdList), count($actualDataList));
         $this->assertEquals(count($idList), $actualCount);
+        $this->assertEquals($expectedIdList, array_keys($actualDataList));
     }
 
     public function providerIdList()
     {
         $data = array();
-        $data['none'] = array();
+        $data['empty'] = array();
         $data['one'] = array('1');
         $data['two'] = array('coco', 'ananas');
         $data['three'] = array('some', 'id', 'list');
-        foreach (array_keys($data) as $key) {
-            $data[$key] = array($data[$key]);
-        }
+        return $this->provideOnlyOneArgument($data);
+    }
+
+    public function providerIdListLimit()
+    {
+        $list = array('some', 'id', 'list');
+        $data = array();
+        $data['empty-1'] = array(array(), 1, array());
+        $data['empty-5'] = array(array(), 5, array());
+        $data['alone-1'] = array(array('1'), 1, array('1'));
+        $data['alone-5'] = array(array('1'), 5, array('1'));
+        $data['list-1'] = array($list, 1, array('some'));
+        $data['list-5'] = array($list, 5, $list);
+        return $data;
+    }
+
+    public function providerIdListLimitOffset()
+    {
+        $list = array('some', 'id', 'list');
+        $data = array();
+        $data['empty-1-0'] = array(array(), 1, 0, array());
+        $data['empty-5-1'] = array(array(), 5, 1, array());
+        $data['empty-5-3'] = array(array(), 5, 3, array());
+        $data['alone-1-0'] = array(array('1'), 1, 0, array('1'));
+        $data['alone-1-1'] = array(array('1'), 1, 1, array());
+        $data['alone-5-0'] = array(array('1'), 5, 0, array('1'));
+        $data['alone-5-1'] = array(array('1'), 5, 1, array());
+        $data['list-1-0'] = array($list, 1, 0, array('some'));
+        $data['list-1-1'] = array($list, 1, 1, array('id'));
+        $data['list-1-3'] = array($list, 1, 3, array());
+        $data['list-5-0'] = array($list, 5, 0, $list);
+        $data['list-5-1'] = array($list, 5, 1, array('id', 'list'));
+        $data['list-5-3'] = array($list, 5, 3, array());
         return $data;
     }
 
@@ -174,7 +218,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('Elephant418\\Model418\\DataConnector\\FileRequest');
     }
 
-    protected function getFetchAllStub($idList, $occurrenceContents, $occurrenceList)
+    protected function getFetchAllStub($idList, $occurrenceContents, $occurrenceList=1)
     {
         $stub = $this->getFileRequestStub();
         $stub->expects($this->exactly($occurrenceList * $occurrenceContents))
@@ -186,5 +230,13 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
                 return __DIR__ . '/' . $a . '.json';
             }, $idList), true));
         return $stub;
+    }
+
+    protected function provideOnlyOneArgument($data)
+    {
+        foreach (array_keys($data) as $key) {
+            $data[$key] = array($data[$key]);
+        }
+        return $data;
     }
 }
