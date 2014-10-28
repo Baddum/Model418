@@ -37,10 +37,10 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    /* FETCHING TEST METHODS
+    /* FETCH BY ID TEST METHODS
      *************************************************************************/
     /**
-     * @dataProvider providerJsonData
+     * @dataProvider providerFetchByIdData
      */
     public function testFetchById($data)
     {
@@ -60,7 +60,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedData, $actualData);
     }
 
-    public function providerJsonData()
+    public function providerFetchByIdData()
     {
         $data = array();
         $data['empty'] = array();
@@ -70,6 +70,9 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         return $this->provideOnlyOneArgument($data);
     }
 
+
+    /* FETCH BY ID LIST TEST METHODS
+     *************************************************************************/
     /**
      * @dataProvider providerIdList
      */
@@ -85,6 +88,9 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($idList, array_keys($actualDataList));
     }
 
+
+    /* FETCH ALL TEST METHODS
+     *************************************************************************/
     /**
      * @dataProvider providerIdList
      */
@@ -204,7 +210,42 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         return $data;
     }
 
+    
+    /* SAVE TEST METHODS
+     *************************************************************************/
+    /**
+     * @dataProvider providerSaveData
+     */
+    public function testSaveIntoANewFile($data, $expectedId)
+    {
+        $dataFolder = __DIR__;
 
+        $stub = $this->getFileRequestStub();
+        $stub
+            ->expects($this->once())
+            ->method('exists')
+            ->with(__DIR__.'/'.$expectedId.'.json')
+            ->will($this->returnValue(false));
+        $stub
+            ->expects($this->once())
+            ->method('putContents')
+            ->with(__DIR__.'/'.$expectedId.'.json', json_encode($data, true));
+        
+        $this->getFileDataConnector($stub, $dataFolder)
+            ->setIdField('name')
+            ->save(null, $data);
+    }
+
+    public function providerSaveData()
+    {
+        $data = array();
+        $data['empty'] = array(array(), '1');
+        $data['no-name'] = array(array('age'=>'24', 'city'=>'Lyon'), '1');
+        $data['named'] = array(array('name'=>'Albert', 'city'=>'Lyon'), 'Albert');
+        return $data;
+    }
+
+    
     /* PROTECTED METHODS
      *************************************************************************/
     protected function getFileDataConnector($stub, $dataFolder = __DIR__)
