@@ -216,7 +216,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerSaveData
      */
-    public function testSaveIntoANewFile($data, $expectedId)
+    public function testSaveNewEntry($data, $expectedId)
     {
         $dataFolder = __DIR__;
 
@@ -231,9 +231,26 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
             ->method('putContents')
             ->with(__DIR__.'/'.$expectedId.'.json', json_encode($data, true));
         
-        $this->getFileDataConnector($stub, $dataFolder)
-            ->setIdField('name')
-            ->save(null, $data);
+        $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
+        $actualId = $dataConnector->save(null, $data);
+        $this->assertEquals($expectedId, $actualId);
+    }
+
+    /**
+     * @dataProvider providerSaveData
+     */
+    public function testSaveUpdate($data, $id)
+    {
+        $dataFolder = __DIR__;
+
+        $stub = $this->getFileRequestStub();
+        $stub
+            ->expects($this->once())
+            ->method('putContents')
+            ->with($dataFolder.'/'.$id.'.json', json_encode($data, true));
+
+        $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
+        $dataConnector->save($id, $data);
     }
 
     public function providerSaveData()
@@ -245,13 +262,53 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         return $data;
     }
 
+    /**
+     * @dataProvider providerSaveDataWithExistingFile
+     */
+    public function testSaveNewEntryWithExistingFile($data, $tryMax, $expectedId)
+    {
+        $dataFolder = __DIR__;
+        $tryItem = 0;
+
+        $stub = $this->getFileRequestStub();
+        $stub
+            ->expects($this->exactly($tryMax))
+            ->method('exists')
+            ->will($this->returnCallback(function() use (&$tryItem, $tryMax) {
+                $tryItem++;
+                return ($tryItem < $tryMax);
+            }));
+        $stub
+            ->expects($this->once())
+            ->method('putContents')
+            ->with(__DIR__.'/'.$expectedId.'.json');
+
+        $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
+        $actualId = $dataConnector->save(null, $data);
+        $this->assertEquals($expectedId, $actualId);
+    }
+
+    public function providerSaveDataWithExistingFile()
+    {
+        $data = array();
+        $data['empty-1'] = array(array(), 1, '1');
+        $data['empty-4'] = array(array(), 4, '4');
+        $data['no-name-1'] = array(array('age'=>'24', 'city'=>'Lyon'), 1, '1');
+        $data['no-name-4'] = array(array('age'=>'24', 'city'=>'Lyon'), 4, '4');
+        $data['named-1'] = array(array('name'=>'Albert', 'city'=>'Lyon'), 1, 'Albert');
+        $data['named-2'] = array(array('name'=>'Albert', 'city'=>'Lyon'), 2, 'Albert-2');
+        $data['named-4'] = array(array('name'=>'Albert', 'city'=>'Lyon'), 4, 'Albert-4');
+        return $data;
+    }
+
     
     /* PROTECTED METHODS
      *************************************************************************/
-    protected function getFileDataConnector($stub, $dataFolder = __DIR__)
+    protected function getFileDataConnector($stub, $dataFolder = __DIR__, $idField = 'name')
     {
         return (new FileDataConnector($stub))
-            ->setDataFolder($dataFolder);
+            ->setDataFolder($dataFolder)
+            ->setIdField($idField);
     }
 
     protected function getFileRequestStub()
@@ -264,7 +321,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getFileRequestStub();
         $stub->expects($this->exactly($occurrenceList * $occurrenceContents))
             ->method('getContents')
-            ->will($this->returnValue('{}', true));
+            ->will($this->returnValue('{}'));
         $stub->expects($this->exactly($occurrenceList))
             ->method('getList')
             ->will($this->returnValue(array_map(function ($a) {
