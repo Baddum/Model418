@@ -94,18 +94,12 @@ class FileDataConnector implements IDataConnector
         $exists = !is_null($id);
         if (!$exists) {
             $name = '';
-            $suffix = 0;
             if (isset($data[$this->idField])) {
                 $name = $data[$this->idField];
             }
-            do {
-                $id = $this->getIdByNameAndSuffix($name, $suffix);
-                $sourceFileName = $this->getSourceFileNameById($id);
-                $suffix++;
-            } while ($this->fileRequest->exists($sourceFileName));
-        } else {
-            $sourceFileName = $this->getSourceFileNameById($id);
+            $id = $this->findAvailableIdByName($name);
         }
+        $sourceFileName = $this->getSourceFileNameById($id);
         $this->fileRequest->putContents($sourceFileName, json_encode($data));
         return $id;
     }
@@ -133,22 +127,27 @@ class FileDataConnector implements IDataConnector
     {
         return $this->dataFolder . '/' . $id . '.json';
     }
-
-    protected function getIdByNameAndSuffix($name = '', $suffix = 0)
-    {
-        $id = '';
-        if (!empty($name)) {
-            $id = $name;
-        } else if (!$suffix) {
-            $suffix = 1;
-        }
-        if ($suffix) {
-            if (!empty($id)) {
-                $id .= '-';
-            }
-            $id .= $suffix;
-        }
+    
+    protected function findAvailableIdByName($name) {
+        $suffix = 0;
+        do {
+            $id = $this->getIdByNameAndSuffix($name, $suffix);
+            $sourceFileName = $this->getSourceFileNameById($id);
+            $suffix++;
+        } while ($this->fileRequest->exists($sourceFileName));
         return $id;
+    }
+
+    protected function getIdByNameAndSuffix($name = '', $suffix = null)
+    {
+        $id = array();
+        if (!empty($name)) {
+            $id[] = $name;
+        }
+        if ($suffix > 0 || empty($id)) {
+            $id[] = $suffix+1;
+        }
+        return implode('-', $id);
     }
 
     protected function getAllIds()
