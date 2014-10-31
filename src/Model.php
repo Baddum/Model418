@@ -2,18 +2,18 @@
 
 namespace Elephant418\Model418;
 
-class Model extends ArrayObject
+class Model extends ArrayObject implements IModel
 {
-    use Entity;
 
 
     /* ATTRIBUTES
      *************************************************************************/
     public $id;
-    protected $_schema = array();
+    protected static $_schema = array();
+    protected static $_entity = array();
 
 
-    /* GETTER
+    /* GETTER & SETTER
      *************************************************************************/
     public function exists()
     {
@@ -25,22 +25,31 @@ class Model extends ArrayObject
         return $this->id;
     }
 
+    public function offsetSet($name, $value)
+    {
+        if ($this->hasSchema($name)) {
+            parent::offsetSet($name, $value);
+        }
+        return $this;
+    }
+
 
     /* INITIALIZATION
      *************************************************************************/
-    public function __construct($dataConnector = null)
+    public function __construct($entity = null)
     {
         parent::__construct();
-        if (!$dataConnector) {
-            $dataConnector = $this->initDataConnector();
+        $this->injectEntity($entity);
+        if (!$this->hasSchema()) {
+            $schema = $this->initSchema();
+            $this->setSchema($schema);
         }
-        $this->setDataConnector($dataConnector);
     }
 
     public function initByData($data)
     {
         $this->id = $data['id'];
-        foreach ($this->_schema as $attributeName => $attributeValue) {
+        foreach ($this->getSchema() as $attributeName => $attributeValue) {
             if (isset($data[$attributeName])) {
                 $attributeValue = $data[$attributeName];
             }
@@ -52,6 +61,107 @@ class Model extends ArrayObject
 
     protected function initialize()
     {
+    }
 
+
+    /* PUBLIC STORING METHODS
+     *************************************************************************/
+    public function save()
+    {
+        $id = $this->getEntity()->saveById($this->id, $this->toArray());
+        if (is_null($this->id)) {
+            $this->id = $id;
+        }
+        return $this;
+    }
+
+    public function delete()
+    {
+        if (!is_null($this->id)) {
+            $this->getEntity()->deleteById($this->id);
+        }
+        return $this;
+    }
+
+    public function fetch()
+    {
+        return $this->getEntity();
+    }
+
+
+    /* PROTECTED SCHEMA METHODS
+     *************************************************************************/
+    protected function initSchema()
+    {
+        throw new \LogicException('This method must be overridden');
+    }
+
+    protected function hasSchema($key = null)
+    {
+        if (!isset(static::$_schema[get_class($this)])) {
+            return false;
+        }
+        if (is_null($key)) {
+            return true;
+        }
+        $schema = static::$_schema[get_class($this)];
+        return isset($schema[$key]);
+    }
+
+    protected function setSchema($schema)
+    {
+        static::$_schema[get_class($this)] = $schema;
+        return $this;
+    }
+
+    protected function getSchema($key = null)
+    {
+        if (!$this->hasSchema()) {
+            return array();
+        }
+        $schema = static::$_schema[get_class($this)];
+        if (is_null($key)) {
+            return $schema;
+        }
+        if (!$this->hasSchema($key)) {
+            return array();
+        }
+        return $schema[$key];
+    }
+
+
+    /* ENTITY METHODS
+     *************************************************************************/
+    protected function initEntity()
+    {
+        throw new \LogicException('This method must be overridden');
+    }
+    
+    protected function injectEntity($entity) {
+        if (!$this->hasEntity() && !$entity) {
+            $entity = $this->initEntity();
+        }
+        if ($entity) {
+            $this->setEntity($entity);
+        }
+    }
+
+    protected function hasEntity()
+    {
+        return isset(static::$_entity[get_class($this)]);
+    }
+
+    protected function setEntity($entity)
+    {
+        static::$_entity[get_class($this)] = $entity;
+        return $this;
+    }
+
+    protected function getEntity()
+    {
+        if (!$this->hasEntity()) {
+            return null;
+        }
+        return static::$_entity[get_class($this)];
     }
 }

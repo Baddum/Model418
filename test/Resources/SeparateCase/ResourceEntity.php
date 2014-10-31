@@ -3,8 +3,9 @@
 namespace Test\Elephant418\Model418\Resources\SeparateCase;
 
 use Elephant418\Model418\DataConnector\FileDataConnector as DataConnector;
+use Elephant418\Model418\Entity;
 
-trait ResourceEntity
+class ResourceEntity extends Entity
 {
 
 
@@ -20,8 +21,8 @@ trait ResourceEntity
 
     /* FETCHING METHODS
      *************************************************************************/
-    public function fetchTest()
+    public function test()
     {
-        return $this->fetchById('test');
+        return $this->byId('test');
     }
 }

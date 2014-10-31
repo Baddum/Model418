@@ -11,7 +11,7 @@ interface IDataConnector
 
     public function fetchAll($limit = null, $offset = null, &$count = false);
 
-    public function save($id, $data);
+    public function saveById($id, $data);
 
-    public function delete($id);
+    public function deleteById($id);
 }

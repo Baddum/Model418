@@ -8,10 +8,10 @@ use Test\Elephant418\Model418\Resources\NoDataConnectorCase\ResourceModel as NoD
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
 {
-
+    
     public function testSimpleAccessor()
     {
-        $model = (new SimpleModel)->fetchById('test');
+        $model = (new SimpleModel)->fetch()->byId('test');
         $this->assertEquals('myValue', $model['myName'], 'Get model attribute value with array accessor');
         $this->assertEquals('myValue', $model->myName, 'Get model attribute value with object accessor');
         $this->assertEquals('myValue', $model->get('myName'), 'Get model attribute value with method accessor');
@@ -19,22 +19,21 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
 
     public function testSimpleCustomFetch()
     {
-        $model = (new SimpleModel)->fetchTest();
+        $model = (new SimpleModel)->fetch()->test();
         $this->assertEquals('myValue', $model->myName);
     }
-
+    
     public function testSeparate()
     {
-        $model = (new SeparateModel)->fetchTest();
+        $model = (new SeparateModel)->fetch()->test();
         $this->assertEquals('myValue', $model->myName);
     }
-
+    
     public function testNoDataConnector()
     {
         $this->setExpectedException('LogicException');
-        (new NoDataConnectorModel)->fetchById('test');
+        (new NoDataConnectorModel)->fetch()->byId('test');
     }
-
     public function testSaveAndDelete()
     {
         $model = new SimpleModel;
@@ -45,12 +44,12 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($model->exists(), 'The model exists');
         $id = $model->id;
         unset($model);
-        $model = (new SimpleModel)->fetchById($id);
+        $model = (new SimpleModel)->fetch()->byId($id);
         $this->assertTrue($model->exists(), 'The model exists');
         $this->assertEquals('truc', $model->myName);
         $model->delete();
         unset($model);
-        $model = (new SimpleModel)->fetchById($id);
+        $model = (new SimpleModel)->fetch()->byId($id);
         $this->assertFalse($model->exists(), 'The model exists');
     }
 }

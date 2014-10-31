@@ -3,18 +3,13 @@
 namespace Test\Elephant418\Model418\Resources\SimpleCase;
 
 use Elephant418\Model418\DataConnector\FileDataConnector as DataConnector;
-use Elephant418\Model418\Model;
+use Elephant418\Model418\ModelEntity;
 
-class ResourceModel extends Model
+class ResourceModel extends ModelEntity
 {
 
 
-    /* ATTRIBUTES
-     *************************************************************************/
-    protected $_schema = array('myName' => 'defaultValue');
-
-
-    /* CONSTRUCTOR
+    /* INITIALIZATION
      *************************************************************************/
     protected function initDataConnector()
     {
@@ -24,11 +19,16 @@ class ResourceModel extends Model
         return $dataConnector;
     }
 
+    protected function initSchema()
+    {
+        return array('myName' => 'defaultValue');
+    }
+
 
     /* FETCHING METHODS
      *************************************************************************/
-    public function fetchTest()
+    public function test()
     {
-        return $this->fetchById('test');
+        return $this->fetch()->byId('test');
     }
 }

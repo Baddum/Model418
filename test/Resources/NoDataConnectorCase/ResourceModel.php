@@ -2,13 +2,16 @@
 
 namespace Test\Elephant418\Model418\Resources\NoDataConnectorCase;
 
-use Elephant418\Model418\Model;
+use Elephant418\Model418\ModelEntity;
 
-class ResourceModel extends Model
+class ResourceModel extends ModelEntity
 {
 
 
-    /* ATTRIBUTES
+    /* INITIALIZATION
      *************************************************************************/
-    protected $_schema = array('myName' => 'defaultValue');
+    protected function initSchema()
+    {
+        return array('myName' => 'defaultValue');
+    }
 }

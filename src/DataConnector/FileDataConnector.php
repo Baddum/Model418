@@ -89,7 +89,7 @@ class FileDataConnector implements IDataConnector
 
     /* SAVE METHODS
      *************************************************************************/
-    public function save($id, $data)
+    public function saveById($id, $data)
     {
         $exists = !is_null($id);
         if (!$exists) {
@@ -104,7 +104,7 @@ class FileDataConnector implements IDataConnector
         return $id;
     }
 
-    public function delete($id)
+    public function deleteById($id)
     {
         $sourceFileName = $this->getSourceFileNameById($id);
         return $this->fileRequest->unlink($sourceFileName);

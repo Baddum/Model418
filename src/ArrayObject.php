@@ -6,11 +6,6 @@ class ArrayObject extends \ArrayObject
 {
 
 
-    /* ATTRIBUTES
-     *************************************************************************/
-    protected $_schema = array();
-
-
     /* CONSTRUCTOR
      *************************************************************************/
     public function __construct()
@@ -29,14 +24,6 @@ class ArrayObject extends \ArrayObject
     public function set($name, $value)
     {
         return $this->offsetSet($name, $value);
-    }
-
-    public function offsetSet($name, $value)
-    {
-        if (isset($this->_schema[$name])) {
-            parent::offsetSet($name, $value);
-        }
-        return $this;
     }
 
     public function offsetUnset($index)

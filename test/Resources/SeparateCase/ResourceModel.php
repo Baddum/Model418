@@ -6,10 +6,17 @@ use Elephant418\Model418\Model;
 
 class ResourceModel extends Model
 {
-    use ResourceEntity;
 
 
-    /* ATTRIBUTES
+    /* INITIALIZATION
      *************************************************************************/
-    protected $_schema = array('myName' => 'defaultValue');
+    protected function initSchema()
+    {
+        return array('myName' => 'defaultValue');
+    }
+    
+    protected function initEntity()
+    {
+        return new ResourceEntity($this);
+    }
 }

@@ -232,7 +232,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
             ->with(__DIR__.'/'.$expectedId.'.json', json_encode($data, true));
         
         $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
-        $actualId = $dataConnector->save(null, $data);
+        $actualId = $dataConnector->saveById(null, $data);
         $this->assertEquals($expectedId, $actualId);
     }
 
@@ -250,7 +250,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
             ->with($dataFolder.'/'.$id.'.json', json_encode($data, true));
 
         $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
-        $dataConnector->save($id, $data);
+        $dataConnector->saveById($id, $data);
     }
 
     public function providerSaveData()
@@ -284,7 +284,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
             ->with(__DIR__.'/'.$expectedId.'.json');
 
         $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
-        $actualId = $dataConnector->save(null, $data);
+        $actualId = $dataConnector->saveById(null, $data);
         $this->assertEquals($expectedId, $actualId);
     }
 
