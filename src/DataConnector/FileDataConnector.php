@@ -12,24 +12,38 @@ class FileDataConnector implements IDataConnector
      *************************************************************************/
     protected $fileRequest;
     protected $idField = 'name';
-    protected $dataFolder;
+    protected $dataFolderList = array();
 
 
     /* SETTER
      *************************************************************************/
     public function setDataFolder($dataFolder)
     {
+        return $this->setDataFolderList(array($dataFolder));
+    }
+    
+    public function setDataFolderList($dataFolderList)
+    {
+        $validDataFolderList = array();
+        foreach ($dataFolderList as $dataFolder) {
+            $validDataFolderList[] = $this->validDataFolder($dataFolder);
+        }
+        $this->dataFolderList = $validDataFolderList;
+        return $this;
+    }
+
+    protected function validDataFolder($dataFolder)
+    {
         $realDataFolder = realpath($dataFolder);
         if (!$realDataFolder) {
             throw new \RuntimeException('This data folder does not exist: ' . $dataFolder);
         }
-        $this->dataFolder = $realDataFolder;
-        return $this;
+        return $realDataFolder;
     }
 
-    public function getDataFolder()
+    public function getWritableDataFolder()
     {
-        return $this->dataFolder;
+        return array_values($this->dataFolderList)[0];
     }
 
     public function setIdField($idField)
@@ -54,9 +68,14 @@ class FileDataConnector implements IDataConnector
      *************************************************************************/
     public function fetchById($id)
     {
-        $sourceFileName = $this->getSourceFileNameById($id);
-        $sourceText = $this->fileRequest->getContents($sourceFileName);
-        return $this->getDataFromText($id, $sourceText);
+        foreach ($this->dataFolderList as $dataFolder) {
+            $filePath = $this->getSourceFilePath($dataFolder, $id);
+            $sourceText = $this->fileRequest->getContents($filePath);
+            if ($sourceText) {
+                return $this->getDataFromText($id, $sourceText);
+            }
+        }
+        return null;
     }
 
     public function fetchByIdList($idList)
@@ -99,15 +118,15 @@ class FileDataConnector implements IDataConnector
             }
             $id = $this->findAvailableIdByName($name);
         }
-        $sourceFileName = $this->getSourceFileNameById($id);
-        $this->fileRequest->putContents($sourceFileName, json_encode($data));
+        $filePath = $this->getWritableFilePathById($id);
+        $this->fileRequest->putContents($filePath, json_encode($data));
         return $id;
     }
 
     public function deleteById($id)
     {
-        $sourceFileName = $this->getSourceFileNameById($id);
-        return $this->fileRequest->unlink($sourceFileName);
+        $filePath = $this->getWritableFilePathById($id);
+        return $this->fileRequest->unlink($filePath);
     }
 
 
@@ -123,18 +142,23 @@ class FileDataConnector implements IDataConnector
         return $data;
     }
 
-    protected function getSourceFileNameById($id)
+    protected function getSourceFilePath($dataFolder, $id)
     {
-        return $this->dataFolder . '/' . $id . '.json';
+        return $dataFolder . '/' . $id . '.json';
+    }
+
+    protected function getWritableFilePathById($id)
+    {
+        return $this->getSourceFilePath($this->getWritableDataFolder(), $id);
     }
     
     protected function findAvailableIdByName($name) {
         $suffix = 0;
         do {
             $id = $this->getIdByNameAndSuffix($name, $suffix);
-            $sourceFileName = $this->getSourceFileNameById($id);
+            $filePath = $this->getWritableFilePathById($id);
             $suffix++;
-        } while ($this->fileRequest->exists($sourceFileName));
+        } while ($this->fileRequest->exists($filePath));
         return $id;
     }
 
@@ -153,13 +177,15 @@ class FileDataConnector implements IDataConnector
     protected function getAllIds()
     {
         $idList = array();
-        $fileList = $this->fileRequest->getList($this->dataFolder . '/*.json');
-        foreach ($fileList as $file) {
-            $file = basename($file);
-            $id = substr($file, 0, strrpos($file, '.'));
-            $idList[] = $id;
+        foreach ($this->dataFolderList as $dataFolder) {
+            $fileList = $this->fileRequest->getList($dataFolder . '/*.json');
+            foreach ($fileList as $file) {
+                $file = basename($file);
+                $id = substr($file, 0, strrpos($file, '.'));
+                $idList[] = $id;
+            }
         }
-        return $idList;
+        return array_unique($idList);
     }
 
 
