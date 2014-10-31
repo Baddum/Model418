@@ -43,7 +43,7 @@ class FileDataConnector implements IDataConnector
 
     public function getWritableDataFolder()
     {
-        return array_values($this->dataFolderList)[0];
+        return reset($this->dataFolderList);
     }
 
     public function setIdField($idField)
