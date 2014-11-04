@@ -21,8 +21,8 @@ class ResourceEntity extends Entity
 
     /* FETCHING METHODS
      *************************************************************************/
-    public function test()
+    public function fetchTest()
     {
-        return $this->byId('test');
+        return $this->fetchById('test');
     }
 }

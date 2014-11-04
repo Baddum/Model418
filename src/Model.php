@@ -83,7 +83,7 @@ class Model extends ArrayObject implements IModel
         return $this;
     }
 
-    public function fetch()
+    public function query()
     {
         return $this->getEntity();
     }

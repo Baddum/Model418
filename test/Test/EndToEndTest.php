@@ -12,7 +12,7 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
     
     public function testSimpleAccessor()
     {
-        $model = (new SimpleModel)->fetch()->byId('test');
+        $model = (new SimpleModel)->query()->fetchById('test');
         $this->assertEquals('myValue', $model['myName'], 'Get model attribute value with array accessor');
         $this->assertEquals('myValue', $model->myName, 'Get model attribute value with object accessor');
         $this->assertEquals('myValue', $model->get('myName'), 'Get model attribute value with method accessor');
@@ -20,20 +20,20 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
 
     public function testSimpleCustomFetch()
     {
-        $model = (new SimpleModel)->fetch()->test();
+        $model = (new SimpleModel)->query()->fetchTest();
         $this->assertEquals('myValue', $model->myName);
     }
     
     public function testSeparate()
     {
-        $model = (new SeparateModel)->fetch()->test();
+        $model = (new SeparateModel)->query()->fetchTest();
         $this->assertEquals('myValue', $model->myName);
     }
     
     public function testNoDataConnection()
     {
         $this->setExpectedException('LogicException');
-        (new NoDataConnectionModel)->fetch()->byId('test');
+        (new NoDataConnectionModel)->query()->fetchById('test');
     }
     
     public function testSaveAndDelete()
@@ -46,30 +46,32 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($model->exists(), 'The model exists');
         $id = $model->id;
         unset($model);
-        $model = (new SimpleModel)->fetch()->byId($id);
+        $model = (new SimpleModel)->query()->fetchById($id);
         $this->assertTrue($model->exists(), 'The model exists');
         $this->assertEquals('truc', $model->myName);
         $model->delete();
         unset($model);
-        $model = (new SimpleModel)->fetch()->byId($id);
+        $model = (new SimpleModel)->query()->fetchById($id);
         $this->assertFalse($model->exists(), 'The model exists');
     }
     
     public function testMultipleDataSource()
     {
-        $model = (new SimpleModel)->fetch()->byId('test');
+        $simpleEntity = (new SimpleModel)->query();
+        $multipleDataSourceEntity = (new MultipleDataSourceModel)->query();
+        $model = $simpleEntity->fetchById('test');
         $this->assertTrue($model->exists(), 'The model `test` fetched with a simple source exists');
-        $model = (new MultipleDataSourceModel)->fetch()->byId('test');
+        $model = $multipleDataSourceEntity->fetchById('test');
         $this->assertTrue($model->exists(), 'The model `test` fetched with multiple sources exists');
         
-        $model = (new SimpleModel)->fetch()->byId('test2');
+        $model = $simpleEntity->fetchById('test2');
         $this->assertFalse($model->exists(), 'The model `test2` fetched with a simple source does not exist');
-        $model = (new MultipleDataSourceModel)->fetch()->byId('test2');
+        $model = $multipleDataSourceEntity->fetchById('test2');
         $this->assertTrue($model->exists(), 'The model `test2` fetched with multiple sources exists');
         
-        $model = (new SimpleModel)->fetch()->byId('test3');
+        $model = $simpleEntity->fetchById('test3');
         $this->assertFalse($model->exists(), 'The model `test3` fetched with a simple source does not exist');
-        $model = (new MultipleDataSourceModel)->fetch()->byId('test3');
+        $model = $multipleDataSourceEntity->fetchById('test3');
         $this->assertFalse($model->exists(), 'The model `test3` fetched with multiple sources does not exist');
         
         $model = (new MultipleDataSourceModel)

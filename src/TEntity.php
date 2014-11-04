@@ -14,19 +14,19 @@ trait TEntity
 
     /* FETCHING METHODS
      *************************************************************************/
-    public function byId($id)
+    public function fetchById($id)
     {
         $data = $this->getDataConnection()->fetchById($id);
         return $this->resultAsModel($data);
     }
 
-    public function byIdList($idList)
+    public function fetchByIdList($idList)
     {
         $dataList = $this->getDataConnection()->fetchByIdList($idList);
         return $this->resultAsModelList($dataList);
     }
 
-    public function all($limit = null, $offset = null, &$count = false)
+    public function fetchAll($limit = null, $offset = null, &$count = false)
     {
         $dataList = $this->getDataConnection()->fetchAll($limit, $offset, $count);
         return $this->resultAsModelList($dataList);

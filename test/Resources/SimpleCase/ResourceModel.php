@@ -27,8 +27,8 @@ class ResourceModel extends ModelEntity
 
     /* FETCHING METHODS
      *************************************************************************/
-    public function test()
+    public function fetchTest()
     {
-        return $this->fetch()->byId('test');
+        return $this->fetchById('test');
     }
 }

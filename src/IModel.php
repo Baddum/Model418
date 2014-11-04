@@ -15,5 +15,5 @@ interface IModel
 
     public function delete();
 
-    public function fetch();
+    public function query();
 }

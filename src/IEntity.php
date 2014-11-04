@@ -5,11 +5,11 @@ namespace Elephant418\Model418;
 interface IEntity
 {
 
-    public function byId($id);
+    public function fetchById($id);
 
-    public function byIdList($idList);
+    public function fetchByIdList($idList);
 
-    public function all($limit = null, $offset = null, &$count = false);
+    public function fetchAll($limit = null, $offset = null, &$count = false);
 
     public function saveById($id, $data);
 
