@@ -2,7 +2,7 @@
 
 namespace Test\Elephant418\Model418\Resources\MultipleDataSourceCase;
 
-use Elephant418\Model418\DataConnector\FileDataConnector as DataConnector;
+use Elephant418\Model418\DataConnection\FileDataConnection as DataConnection;
 use Elephant418\Model418\ModelEntity;
 
 class ResourceModel extends ModelEntity
@@ -11,9 +11,9 @@ class ResourceModel extends ModelEntity
 
     /* INITIALIZATION
      *************************************************************************/
-    protected function initDataConnector()
+    protected function initDataConnection()
     {
-        $dataConnector = (new DataConnector)
+        $dataConnector = (new DataConnection)
             ->setDataFolderList([__DIR__ . '/../data', __DIR__ . '/../data2'])
             ->setIdField('myName');
         return $dataConnector;
@@ -28,6 +28,6 @@ class ResourceModel extends ModelEntity
     /* PUBLIC METHODS
      *************************************************************************/
     public function getWritableDataFolder() {
-        return $this->getDataConnector()->getWritableDataFolder();
+        return $this->getDataConnection()->getWritableDataFolder();
     }
 }

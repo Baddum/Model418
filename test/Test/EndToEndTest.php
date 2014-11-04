@@ -4,7 +4,7 @@ namespace Test\Elephant418\Model418\Test;
 
 use Test\Elephant418\Model418\Resources\SimpleCase\ResourceModel as SimpleModel;
 use Test\Elephant418\Model418\Resources\SeparateCase\ResourceModel as SeparateModel;
-use Test\Elephant418\Model418\Resources\NoDataConnectorCase\ResourceModel as NoDataConnectorModel;
+use Test\Elephant418\Model418\Resources\NoDataConnectionCase\ResourceModel as NoDataConnectionModel;
 use Test\Elephant418\Model418\Resources\MultipleDataSourceCase\ResourceModel as MultipleDataSourceModel;
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
@@ -30,10 +30,10 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('myValue', $model->myName);
     }
     
-    public function testNoDataConnector()
+    public function testNoDataConnection()
     {
         $this->setExpectedException('LogicException');
-        (new NoDataConnectorModel)->fetch()->byId('test');
+        (new NoDataConnectionModel)->fetch()->byId('test');
     }
     
     public function testSaveAndDelete()

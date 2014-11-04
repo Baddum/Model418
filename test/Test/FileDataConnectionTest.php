@@ -2,9 +2,9 @@
 
 namespace Test\Elephant418\Model418\Test;
 
-use Elephant418\Model418\DataConnector\FileDataConnector;
+use Elephant418\Model418\DataConnection\FileDataConnection;
 
-class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
+class FileDataConnectionTest extends \PHPUnit_Framework_TestCase
 {
 
 
@@ -13,7 +13,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function testDataFolderWithoutEndingSlash()
     {
         $expectedDataFolder = __DIR__;
-        $actualDataFolder = (new FileDataConnector)
+        $actualDataFolder = (new FileDataConnection)
             ->setDataFolder($expectedDataFolder)
             ->getWritableDataFolder();
         $this->assertEquals($expectedDataFolder, $actualDataFolder);
@@ -22,7 +22,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function testDataFolderWithEndingSlash()
     {
         $expectedDataFolder = __DIR__;
-        $actualDataFolder = (new FileDataConnector)
+        $actualDataFolder = (new FileDataConnection)
             ->setDataFolder($expectedDataFolder . '/')
             ->getWritableDataFolder();
         $this->assertEquals($expectedDataFolder, $actualDataFolder);
@@ -32,7 +32,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     {
         $unexistingDataFolder = '/my/unexisting/data/folder';
         $this->setExpectedException('RuntimeException');
-        (new FileDataConnector)
+        (new FileDataConnection)
             ->setDataFolder($unexistingDataFolder);
     }
 
@@ -49,12 +49,12 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $expectedData = $data;
         $expectedData['id'] = $id;
 
-        $stub = $this->getFileRequestStub();
+        $stub = $this->getFileDataRequestStub();
         $stub->expects($this->once())
             ->method('getContents')
             ->with($dataFolder . '/' . $id . '.json')
             ->will($this->returnValue(json_encode($data, true)));
-        $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
+        $dataConnector = $this->getFileDataConnection($stub, $dataFolder);
         
         $actualData = $dataConnector->fetchById($id);
         $this->assertEquals($expectedData, $actualData);
@@ -78,12 +78,12 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testFetchByIdList($idList)
     {
-        $stub = $this->getFileRequestStub();
+        $stub = $this->getFileDataRequestStub();
         $stub->expects($this->exactly(count($idList)))
             ->method('getContents')
             ->will($this->returnValue('{}', true));
 
-        $dataConnector = $this->getFileDataConnector($stub);
+        $dataConnector = $this->getFileDataConnection($stub);
         $actualDataList = $dataConnector->fetchByIdList($idList);
         $this->assertEquals($idList, array_keys($actualDataList));
     }
@@ -97,7 +97,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function testFetchAll($idList)
     {
         $stub = $this->getFetchAllStub($idList, count($idList));
-        $dataConnector = $this->getFileDataConnector($stub);
+        $dataConnector = $this->getFileDataConnection($stub);
         $actualDataList = $dataConnector->fetchAll();
         $this->assertEquals($idList, array_keys($actualDataList));
     }
@@ -108,7 +108,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function testFetchAllCount($idList)
     {
         $stub = $this->getFetchAllStub($idList, count($idList));
-        $dataConnector = $this->getFileDataConnector($stub);
+        $dataConnector = $this->getFileDataConnection($stub);
         $actualCount = 0;
         $actualDataList = $dataConnector->fetchAll(null, null, $actualCount);
         $this->assertEquals($idList, array_keys($actualDataList));
@@ -121,7 +121,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function testFetchAllWithLimit($idList, $limit, $expectedIdList)
     {
         $stub = $this->getFetchAllStub($idList, count($expectedIdList));
-        $dataConnector = $this->getFileDataConnector($stub);
+        $dataConnector = $this->getFileDataConnection($stub);
         $actualDataList = $dataConnector->fetchAll($limit);
         $this->assertEquals(count($expectedIdList), count($actualDataList));
         $this->assertEquals($expectedIdList, array_keys($actualDataList));
@@ -133,7 +133,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function testFetchAllWithLimitCount($idList, $limit, $expectedIdList)
     {
         $stub = $this->getFetchAllStub($idList, count($expectedIdList));
-        $dataConnector = $this->getFileDataConnector($stub);
+        $dataConnector = $this->getFileDataConnection($stub);
         $actualCount = 0;
         $actualDataList = $dataConnector->fetchAll($limit, null, $actualCount);
         $this->assertEquals(count($expectedIdList), count($actualDataList));
@@ -147,7 +147,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function testFetchAllWithLimitOffset($idList, $limit, $offset, $expectedIdList)
     {
         $stub = $this->getFetchAllStub($idList, count($expectedIdList));
-        $dataConnector = $this->getFileDataConnector($stub);
+        $dataConnector = $this->getFileDataConnection($stub);
         $actualDataList = $dataConnector->fetchAll($limit, $offset);
         $this->assertEquals(count($expectedIdList), count($actualDataList));
         $this->assertEquals($expectedIdList, array_keys($actualDataList));
@@ -159,7 +159,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     public function testFetchAllWithLimitOffsetCount($idList, $limit, $offset, $expectedIdList)
     {
         $stub = $this->getFetchAllStub($idList, count($expectedIdList));
-        $dataConnector = $this->getFileDataConnector($stub);
+        $dataConnector = $this->getFileDataConnection($stub);
         $actualCount = 0;
         $actualDataList = $dataConnector->fetchAll($limit, $offset, $actualCount);
         $this->assertEquals(count($expectedIdList), count($actualDataList));
@@ -220,7 +220,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     {
         $dataFolder = __DIR__;
 
-        $stub = $this->getFileRequestStub();
+        $stub = $this->getFileDataRequestStub();
         $stub
             ->expects($this->once())
             ->method('exists')
@@ -231,7 +231,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
             ->method('putContents')
             ->with(__DIR__.'/'.$expectedId.'.json', json_encode($data, true));
         
-        $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
+        $dataConnector = $this->getFileDataConnection($stub, $dataFolder);
         $actualId = $dataConnector->saveById(null, $data);
         $this->assertEquals($expectedId, $actualId);
     }
@@ -243,13 +243,13 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     {
         $dataFolder = __DIR__;
 
-        $stub = $this->getFileRequestStub();
+        $stub = $this->getFileDataRequestStub();
         $stub
             ->expects($this->once())
             ->method('putContents')
             ->with($dataFolder.'/'.$id.'.json', json_encode($data, true));
 
-        $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
+        $dataConnector = $this->getFileDataConnection($stub, $dataFolder);
         $dataConnector->saveById($id, $data);
     }
 
@@ -270,7 +270,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
         $dataFolder = __DIR__;
         $tryItem = 0;
 
-        $stub = $this->getFileRequestStub();
+        $stub = $this->getFileDataRequestStub();
         $stub
             ->expects($this->exactly($tryMax))
             ->method('exists')
@@ -283,7 +283,7 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
             ->method('putContents')
             ->with(__DIR__.'/'.$expectedId.'.json');
 
-        $dataConnector = $this->getFileDataConnector($stub, $dataFolder);
+        $dataConnector = $this->getFileDataConnection($stub, $dataFolder);
         $actualId = $dataConnector->saveById(null, $data);
         $this->assertEquals($expectedId, $actualId);
     }
@@ -304,21 +304,21 @@ class FileDataConnectorTest extends \PHPUnit_Framework_TestCase
     
     /* PROTECTED METHODS
      *************************************************************************/
-    protected function getFileDataConnector($stub, $dataFolder = __DIR__, $idField = 'name')
+    protected function getFileDataConnection($stub, $dataFolder = __DIR__, $idField = 'name')
     {
-        return (new FileDataConnector($stub))
+        return (new FileDataConnection($stub))
             ->setDataFolder($dataFolder)
             ->setIdField($idField);
     }
 
-    protected function getFileRequestStub()
+    protected function getFileDataRequestStub()
     {
-        return $this->getMock('Elephant418\\Model418\\DataConnector\\FileRequest');
+        return $this->getMock('Elephant418\\Model418\\DataConnection\\FileDataRequest');
     }
 
     protected function getFetchAllStub($idList, $occurrenceContents, $occurrenceList=1)
     {
-        $stub = $this->getFileRequestStub();
+        $stub = $this->getFileDataRequestStub();
         $stub->expects($this->exactly($occurrenceList * $occurrenceContents))
             ->method('getContents')
             ->will($this->returnValue('{}'));

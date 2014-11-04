@@ -16,64 +16,64 @@ trait TEntity
      *************************************************************************/
     public function byId($id)
     {
-        $data = $this->getDataConnector()->fetchById($id);
+        $data = $this->getDataConnection()->fetchById($id);
         return $this->resultAsModel($data);
     }
 
     public function byIdList($idList)
     {
-        $dataList = $this->getDataConnector()->fetchByIdList($idList);
+        $dataList = $this->getDataConnection()->fetchByIdList($idList);
         return $this->resultAsModelList($dataList);
     }
 
     public function all($limit = null, $offset = null, &$count = false)
     {
-        $dataList = $this->getDataConnector()->fetchAll($limit, $offset, $count);
+        $dataList = $this->getDataConnection()->fetchAll($limit, $offset, $count);
         return $this->resultAsModelList($dataList);
     }
 
     public function saveById($id, $data)
     {
-        return $this->getDataConnector()->saveById($id, $data);
+        return $this->getDataConnection()->saveById($id, $data);
     }
 
     public function deleteById($id)
     {
-        return $this->getDataConnector()->deleteById($id);
+        return $this->getDataConnection()->deleteById($id);
     }
 
 
     /* PROTECTED DATA CONNECTOR ACCESSOR
      *************************************************************************/
-    protected function initDataConnector()
+    protected function initDataConnection()
     {
         throw new \LogicException('This method must be overridden');
     }
 
-    protected function injectDataConnector($dataConnector)
+    protected function injectDataConnection($dataConnector)
     {
-        if (!$this->hasDataConnector() && !$dataConnector) {
-            $dataConnector = $this->initDataConnector();
+        if (!$this->hasDataConnection() && !$dataConnector) {
+            $dataConnector = $this->initDataConnection();
         }
         if ($dataConnector) {
-            $this->setDataConnector($dataConnector);
+            $this->setDataConnection($dataConnector);
         }
     }
 
-    protected function hasDataConnector()
+    protected function hasDataConnection()
     {
         return isset(static::$_dataConnector[get_class($this)]);
     }
 
-    protected function setDataConnector($dataConnector)
+    protected function setDataConnection($dataConnector)
     {
         static::$_dataConnector[get_class($this)] = $dataConnector;
         return $this;
     }
 
-    protected function getDataConnector()
+    protected function getDataConnection()
     {
-        if (!$this->hasDataConnector()) {
+        if (!$this->hasDataConnection()) {
             return null;
         }
         return static::$_dataConnector[get_class($this)];

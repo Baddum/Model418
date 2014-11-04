@@ -13,7 +13,7 @@ class ModelEntity extends Model implements IEntity
     {
         parent::__construct();
         $this->_modelClass = get_class($this);
-        $this->injectDataConnector($dataConnector);
+        $this->injectDataConnection($dataConnector);
     }
 
 

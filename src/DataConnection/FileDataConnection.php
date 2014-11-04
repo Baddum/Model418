@@ -1,16 +1,16 @@
 <?php
 
-namespace Elephant418\Model418\DataConnector;
+namespace Elephant418\Model418\DataConnection;
 
-use Elephant418\Model418\IDataConnector;
+use Elephant418\Model418\IDataConnection;
 
-class FileDataConnector implements IDataConnector
+class FileDataConnection implements IDataConnection
 {
 
 
     /* ATTRIBUTES
      *************************************************************************/
-    protected $fileRequest;
+    protected $fileDataRequest;
     protected $idField = 'name';
     protected $dataFolderList = array();
 
@@ -55,12 +55,12 @@ class FileDataConnector implements IDataConnector
 
     /* CONSTRUCTOR
      *************************************************************************/
-    public function __construct($fileRequest = null)
+    public function __construct($fileDataRequest = null)
     {
-        if (!$fileRequest) {
-            $fileRequest = new FileRequest;
+        if (!$fileDataRequest) {
+            $fileDataRequest = new FileDataRequest;
         }
-        $this->fileRequest = $fileRequest;
+        $this->fileDataRequest = $fileDataRequest;
     }
 
 
@@ -70,7 +70,7 @@ class FileDataConnector implements IDataConnector
     {
         foreach ($this->dataFolderList as $dataFolder) {
             $filePath = $this->getSourceFilePath($dataFolder, $id);
-            $sourceText = $this->fileRequest->getContents($filePath);
+            $sourceText = $this->fileDataRequest->getContents($filePath);
             if ($sourceText) {
                 return $this->getDataFromText($id, $sourceText);
             }
@@ -119,14 +119,14 @@ class FileDataConnector implements IDataConnector
             $id = $this->findAvailableIdByName($name);
         }
         $filePath = $this->getWritableFilePathById($id);
-        $this->fileRequest->putContents($filePath, json_encode($data));
+        $this->fileDataRequest->putContents($filePath, json_encode($data));
         return $id;
     }
 
     public function deleteById($id)
     {
         $filePath = $this->getWritableFilePathById($id);
-        return $this->fileRequest->unlink($filePath);
+        return $this->fileDataRequest->unlink($filePath);
     }
 
 
@@ -158,7 +158,7 @@ class FileDataConnector implements IDataConnector
             $id = $this->getIdByNameAndSuffix($name, $suffix);
             $filePath = $this->getWritableFilePathById($id);
             $suffix++;
-        } while ($this->fileRequest->exists($filePath));
+        } while ($this->fileDataRequest->exists($filePath));
         return $id;
     }
 
@@ -178,7 +178,7 @@ class FileDataConnector implements IDataConnector
     {
         $idList = array();
         foreach ($this->dataFolderList as $dataFolder) {
-            $fileList = $this->fileRequest->getList($dataFolder . '/*.json');
+            $fileList = $this->fileDataRequest->getList($dataFolder . '/*.json');
             foreach ($fileList as $file) {
                 $file = basename($file);
                 $id = substr($file, 0, strrpos($file, '.'));

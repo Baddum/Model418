@@ -12,6 +12,6 @@ class Entity implements IEntity
     public function __construct($model, $dataConnector = null)
     {
         $this->_modelClass = get_class($model);
-        $this->injectDataConnector($dataConnector);
+        $this->injectDataConnection($dataConnector);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\DataConnector;
+namespace Elephant418\Model418\DataConnection;
 
-class FileRequest
+class FileDataRequest
 {
 
     public function getContents($fileName)

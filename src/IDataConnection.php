@@ -2,7 +2,7 @@
 
 namespace Elephant418\Model418;
 
-interface IDataConnector
+interface IDataConnection
 {
 
     public function fetchById($id);
