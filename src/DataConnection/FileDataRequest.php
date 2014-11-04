@@ -2,34 +2,70 @@
 
 namespace Elephant418\Model418\DataConnection;
 
-class FileDataRequest
+abstract class FileDataRequest implements IFileDataRequest
 {
+    
+    /* ATTRIBUTES
+     *************************************************************************/
+    public static $extension = '';
+    
 
-    public function getContents($fileName)
+    /* PUBLIC METHODS
+     *************************************************************************/
+    public function getContents($folder, $id)
     {
-        if (!$this->exists($fileName)) {
+        if (!$this->exists($folder, $id)) {
             return null;
         }
-        return file_get_contents($fileName);
+        $filePath = $this->getFilePath($folder, $id);
+        $text = file_get_contents($filePath);
+        $data = $this->getDataFromText($id, $text);
+        return $data;
     }
 
-    public function exists($fileName)
+    public function putContents($folder, $id, $data)
     {
-        return file_exists($fileName);
+        $filePath = $this->getFilePath($folder, $id);
+        $text = $this->getTextFromData($id, $data);
+        return file_put_contents($filePath, $text);
+    }
+    
+    public function exists($folder, $id)
+    {
+        $filePath = $this->getFilePath($folder, $id);
+        return file_exists($filePath);
     }
 
-    public function putContents($fileName, $data)
+    public function unlink($folder, $id)
     {
-        return file_put_contents($fileName, $data);
+        $filePath = $this->getFilePath($folder, $id);
+        return unlink($filePath);
     }
 
-    public function getList($filePattern)
+    public function getFolderList($folder)
     {
+        $filePattern = $this->getFilePath($folder);
         return glob($filePattern);
     }
 
-    public function unlink($fileName)
+
+    /* PROTECTED METHODS
+     *************************************************************************/
+    protected function getFilePath($folder, $id='*') {
+        $filePath = $folder.'/'.$id;
+        if (!static::$extension) {
+            return $filePath;
+        }
+        return $filePath.'.'.static::$extension;
+    }
+    
+    protected function getDataFromText($id, $text)
     {
-        return unlink($fileName);
+        return $text;
+    }
+
+    protected function getTextFromData($id, $data)
+    {
+        return $data;
     }
 }

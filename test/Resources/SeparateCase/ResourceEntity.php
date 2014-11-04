@@ -13,9 +13,9 @@ class ResourceEntity extends Entity
      *************************************************************************/
     protected function initDataConnection()
     {
-        $dataConnector = new DataConnection();
-        $dataConnector->setDataFolder(__DIR__ . '/../data');
-        return $dataConnector;
+        $dataConnection = new DataConnection();
+        $dataConnection->setDataFolder(__DIR__ . '/../data');
+        return $dataConnection;
     }
 
 

@@ -13,10 +13,10 @@ class ResourceModel extends ModelEntity
      *************************************************************************/
     protected function initDataConnection()
     {
-        $dataConnector = (new DataConnection)
+        $dataConnection = (new DataConnection)
             ->setDataFolderList([__DIR__ . '/../data', __DIR__ . '/../data2'])
             ->setIdField('myName');
-        return $dataConnector;
+        return $dataConnection;
     }
 
     protected function initSchema()

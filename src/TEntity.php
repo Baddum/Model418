@@ -8,7 +8,7 @@ trait TEntity
 
     /* ATTRIBUTES
      *************************************************************************/
-    protected static $_dataConnector = array();
+    protected static $_dataConnection = array();
     protected $_modelClass;
 
 
@@ -50,24 +50,24 @@ trait TEntity
         throw new \LogicException('This method must be overridden');
     }
 
-    protected function injectDataConnection($dataConnector)
+    protected function injectDataConnection($dataConnection)
     {
-        if (!$this->hasDataConnection() && !$dataConnector) {
-            $dataConnector = $this->initDataConnection();
+        if (!$this->hasDataConnection() && !$dataConnection) {
+            $dataConnection = $this->initDataConnection();
         }
-        if ($dataConnector) {
-            $this->setDataConnection($dataConnector);
+        if ($dataConnection) {
+            $this->setDataConnection($dataConnection);
         }
     }
 
     protected function hasDataConnection()
     {
-        return isset(static::$_dataConnector[get_class($this)]);
+        return isset(static::$_dataConnection[get_class($this)]);
     }
 
-    protected function setDataConnection($dataConnector)
+    protected function setDataConnection($dataConnection)
     {
-        static::$_dataConnector[get_class($this)] = $dataConnector;
+        static::$_dataConnection[get_class($this)] = $dataConnection;
         return $this;
     }
 
@@ -76,7 +76,7 @@ trait TEntity
         if (!$this->hasDataConnection()) {
             return null;
         }
-        return static::$_dataConnector[get_class($this)];
+        return static::$_dataConnection[get_class($this)];
     }
 
 

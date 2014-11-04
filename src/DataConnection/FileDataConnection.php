@@ -17,9 +17,19 @@ class FileDataConnection implements IDataConnection
 
     /* SETTER
      *************************************************************************/
+    public function setIdField($idField)
+    {
+        $this->idField = $idField;
+        return $this;
+    }
+
+
+    /* DATA FOLDER METHODS
+     *************************************************************************/
     public function setDataFolder($dataFolder)
     {
-        return $this->setDataFolderList(array($dataFolder));
+        $this->setDataFolderList(array($dataFolder));
+        return $this;
     }
     
     public function setDataFolderList($dataFolderList)
@@ -46,21 +56,21 @@ class FileDataConnection implements IDataConnection
         return reset($this->dataFolderList);
     }
 
-    public function setIdField($idField)
+
+    /* DATA FOLDER METHODS
+     *************************************************************************/
+    public function setFileDataRequest($fileDataRequest)
     {
-        $this->idField = $idField;
+        $this->fileDataRequest = $fileDataRequest;
         return $this;
     }
 
-
-    /* CONSTRUCTOR
-     *************************************************************************/
-    public function __construct($fileDataRequest = null)
+    public function getFileDataRequest()
     {
-        if (!$fileDataRequest) {
-            $fileDataRequest = new FileDataRequest;
+        if (!$this->fileDataRequest) {
+            return new JSONFileDataRequest;
         }
-        $this->fileDataRequest = $fileDataRequest;
+        return $this->fileDataRequest;
     }
 
 
@@ -69,10 +79,9 @@ class FileDataConnection implements IDataConnection
     public function fetchById($id)
     {
         foreach ($this->dataFolderList as $dataFolder) {
-            $filePath = $this->getSourceFilePath($dataFolder, $id);
-            $sourceText = $this->fileDataRequest->getContents($filePath);
-            if ($sourceText) {
-                return $this->getDataFromText($id, $sourceText);
+            $data = $this->getFileDataRequest()->getContents($dataFolder, $id);
+            if ($data) {
+                return $data;
             }
         }
         return null;
@@ -118,47 +127,24 @@ class FileDataConnection implements IDataConnection
             }
             $id = $this->findAvailableIdByName($name);
         }
-        $filePath = $this->getWritableFilePathById($id);
-        $this->fileDataRequest->putContents($filePath, json_encode($data));
+        $this->getFileDataRequest()->putContents($this->getWritableDataFolder(), $id, $data);
         return $id;
     }
 
     public function deleteById($id)
     {
-        $filePath = $this->getWritableFilePathById($id);
-        return $this->fileDataRequest->unlink($filePath);
+        return $this->getFileDataRequest()->unlink($this->getWritableDataFolder(), $id);
     }
 
 
     /* PROTECTED SOURCE FILE METHODS
      *************************************************************************/
-    protected function getDataFromText($id, $fileText)
-    {
-        $data = json_decode($fileText, true);
-        if (!is_array($data)) {
-            return null;
-        }
-        $data['id'] = $id;
-        return $data;
-    }
-
-    protected function getSourceFilePath($dataFolder, $id)
-    {
-        return $dataFolder . '/' . $id . '.json';
-    }
-
-    protected function getWritableFilePathById($id)
-    {
-        return $this->getSourceFilePath($this->getWritableDataFolder(), $id);
-    }
-    
     protected function findAvailableIdByName($name) {
         $suffix = 0;
         do {
             $id = $this->getIdByNameAndSuffix($name, $suffix);
-            $filePath = $this->getWritableFilePathById($id);
             $suffix++;
-        } while ($this->fileDataRequest->exists($filePath));
+        } while ($this->getFileDataRequest()->exists($this->getWritableDataFolder(), $id));
         return $id;
     }
 
@@ -178,7 +164,7 @@ class FileDataConnection implements IDataConnection
     {
         $idList = array();
         foreach ($this->dataFolderList as $dataFolder) {
-            $fileList = $this->fileDataRequest->getList($dataFolder . '/*.json');
+            $fileList = $this->getFileDataRequest()->getFolderList($dataFolder);
             foreach ($fileList as $file) {
                 $file = basename($file);
                 $id = substr($file, 0, strrpos($file, '.'));
