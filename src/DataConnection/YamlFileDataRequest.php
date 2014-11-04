@@ -2,20 +2,24 @@
 
 namespace Elephant418\Model418\DataConnection;
 
-class JSONFileDataRequest extends FileDataRequest
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
+
+class YamlFileDataRequest extends FileDataRequest
 {
 
     /* ATTRIBUTES
      *************************************************************************/
-    public static $extension = 'json';
+    public static $extension = 'yml';
 
 
     /* PROTECTED METHODS
      *************************************************************************/
     protected function getDataFromText($text)
     {
-        $data = json_decode($text, true);
-        if (!is_array($data)) {
+        try {
+            $data = Yaml::parse($text);
+        } catch (ParseException $e) {
             return null;
         }
         return $data;
@@ -23,6 +27,6 @@ class JSONFileDataRequest extends FileDataRequest
     
     protected function getTextFromData($data)
     {
-        return json_encode($data);
+        return Yaml::dump($data, 3);
     }
 }

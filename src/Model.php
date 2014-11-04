@@ -48,6 +48,9 @@ class Model extends ArrayObject implements IModel
 
     public function initByData($data)
     {
+        if (!isset($data['id'])) {
+            throw new \Exception('Try to retrieve incomplete data');
+        }
         $this->id = $data['id'];
         foreach ($this->getSchema() as $attributeName => $attributeValue) {
             if (isset($data[$attributeName])) {

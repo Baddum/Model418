@@ -6,6 +6,7 @@ use Test\Elephant418\Model418\Resources\SimpleCase\ResourceModel as SimpleModel;
 use Test\Elephant418\Model418\Resources\SeparateCase\ResourceModel as SeparateModel;
 use Test\Elephant418\Model418\Resources\NoDataConnectionCase\ResourceModel as NoDataConnectionModel;
 use Test\Elephant418\Model418\Resources\MultipleDataSourceCase\ResourceModel as MultipleDataSourceModel;
+use Test\Elephant418\Model418\Resources\YamlCase\ResourceModel as YamlModel;
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,5 +82,12 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(file_exists($filePath), 'The data source file for `test4` is in the right folder');
         $model->delete();
         $this->assertFalse(file_exists($filePath), 'The data source file for `test4` was deleted from the right folder');
+    }
+
+    public function testYamlDataSource()
+    {
+        $model = (new YamlModel)->query()->fetchYaml();
+        $this->assertTrue($model->exists(), 'The model exists');
+        $this->assertEquals('myValue', $model->myName);
     }
 }

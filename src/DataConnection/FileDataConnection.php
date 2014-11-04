@@ -122,7 +122,7 @@ class FileDataConnection implements IDataConnection
         $exists = !is_null($id);
         if (!$exists) {
             $name = '';
-            if (isset($data[$this->idField])) {
+            if (isset($data[$this->idField]) && is_string($data[$this->idField])) {
                 $name = $data[$this->idField];
             }
             $id = $this->findAvailableIdByName($name);

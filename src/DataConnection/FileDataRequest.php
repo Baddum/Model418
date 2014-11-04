@@ -19,14 +19,20 @@ abstract class FileDataRequest implements IFileDataRequest
         }
         $filePath = $this->getFilePath($folder, $id);
         $text = file_get_contents($filePath);
-        $data = $this->getDataFromText($id, $text);
+        $data = null;
+        if ($text) {
+            $data = $this->getDataFromText($text);
+            if (is_array($data)) {
+                $data['id'] = $id;
+            }
+        }
         return $data;
     }
 
     public function putContents($folder, $id, $data)
     {
         $filePath = $this->getFilePath($folder, $id);
-        $text = $this->getTextFromData($id, $data);
+        $text = $this->getTextFromData($data);
         return file_put_contents($filePath, $text);
     }
     
@@ -59,13 +65,13 @@ abstract class FileDataRequest implements IFileDataRequest
         return $filePath.'.'.static::$extension;
     }
     
-    protected function getDataFromText($id, $text)
+    protected function getDataFromText($text)
     {
-        return $text;
+        throw new \LogicException('This method must be overridden');
     }
 
-    protected function getTextFromData($id, $data)
+    protected function getTextFromData($data)
     {
-        return $data;
+        throw new \LogicException('This method must be overridden');
     }
 }

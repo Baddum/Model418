@@ -100,7 +100,11 @@ trait TEntity
 
     protected function resultAsModel($data)
     {
-        return $this->getModel()->initByData($data);
+        $model = $this->getModel();
+        if ($data) {
+            $model->initByData($data);
+        }
+        return $model;
     }
 
 }
