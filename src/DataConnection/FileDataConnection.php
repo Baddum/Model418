@@ -61,6 +61,9 @@ class FileDataConnection implements IDataConnection
      *************************************************************************/
     public function setFileDataRequest($fileDataRequest)
     {
+        if (is_string($fileDataRequest)) {
+            $fileDataRequest = (new FileDataRequestFactory)->get($fileDataRequest);
+        }
         $this->fileDataRequest = $fileDataRequest;
         return $this;
     }
@@ -173,6 +176,8 @@ class FileDataConnection implements IDataConnection
         }
         return array_unique($idList);
     }
-
-
 }
+
+(new FileDataRequestFactory)
+    ->register('Elephant418\\Model418\\DataConnection\\JSONFileDataRequest')
+    ->register('Elephant418\\Model418\\DataConnection\\YamlFileDataRequest');

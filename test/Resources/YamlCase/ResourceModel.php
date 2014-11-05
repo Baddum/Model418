@@ -15,7 +15,7 @@ class ResourceModel extends ModelEntity
     protected function initDataConnection()
     {
         $dataConnection = (new DataConnection)
-            ->setFileDataRequest(new YamlFileDataRequest())
+            ->setFileDataRequest('Yaml')
             ->setDataFolder(__DIR__ . '/../data')
             ->setIdField('myName');
         return $dataConnection;

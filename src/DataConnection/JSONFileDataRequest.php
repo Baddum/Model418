@@ -8,6 +8,7 @@ class JSONFileDataRequest extends FileDataRequest
     /* ATTRIBUTES
      *************************************************************************/
     public static $extension = 'json';
+    public static $factoryIndexList = array('json');
 
 
     /* PROTECTED METHODS

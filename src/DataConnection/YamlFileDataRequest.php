@@ -11,6 +11,7 @@ class YamlFileDataRequest extends FileDataRequest
     /* ATTRIBUTES
      *************************************************************************/
     public static $extension = 'yml';
+    public static $factoryIndexList = array('yaml', 'yml');
 
 
     /* PROTECTED METHODS
