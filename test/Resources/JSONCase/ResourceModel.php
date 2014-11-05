@@ -1,9 +1,8 @@
 <?php
 
-namespace Test\Elephant418\Model418\Resources\YamlCase;
+namespace Test\Elephant418\Model418\Resources\JSONCase;
 
 use Elephant418\Model418\DataConnection\FileDataConnection as DataConnection;
-use Elephant418\Model418\DataConnection\YamlFileDataRequest;
 use Elephant418\Model418\ModelEntity;
 
 class ResourceModel extends ModelEntity
@@ -15,7 +14,7 @@ class ResourceModel extends ModelEntity
     protected function initDataConnection()
     {
         $dataConnection = (new DataConnection)
-            ->setFileDataRequest('Yaml')
+            ->setFileDataRequest('JSON')
             ->setDataFolder(__DIR__ . '/../data')
             ->setIdField('myName');
         return $dataConnection;
@@ -32,8 +31,8 @@ class ResourceModel extends ModelEntity
 
     /* FETCHING METHODS
      *************************************************************************/
-    public function fetchYaml()
+    public function fetchTest()
     {
-        return $this->fetchById('yaml');
+        return $this->fetchById('json');
     }
 }

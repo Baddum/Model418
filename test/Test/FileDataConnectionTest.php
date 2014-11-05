@@ -341,7 +341,7 @@ class FileDataConnectionTest extends \PHPUnit_Framework_TestCase
         $stub->expects($this->exactly($occurrenceList))
             ->method('getFolderList')
             ->will($this->returnValue(array_map(function ($a) {
-                return __DIR__ . '/' . $a . '.json';
+                return __DIR__ . '/' . $a . '.yml';
             }, $idList), true));
         return $stub;
     }

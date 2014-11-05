@@ -71,7 +71,7 @@ class FileDataConnection implements IDataConnection
     public function getFileDataRequest()
     {
         if (!$this->fileDataRequest) {
-            return new JSONFileDataRequest;
+            return (new FileDataRequestFactory)->get('yml');
         }
         return $this->fileDataRequest;
     }
