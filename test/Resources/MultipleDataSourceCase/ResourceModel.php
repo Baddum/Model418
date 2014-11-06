@@ -2,7 +2,7 @@
 
 namespace Test\Elephant418\Model418\Resources\MultipleDataSourceCase;
 
-use Elephant418\Model418\DataConnection\FileDataConnection as DataConnection;
+use Elephant418\Model418\FileDataConnection as DataConnection;
 use Elephant418\Model418\ModelEntity;
 
 class ResourceModel extends ModelEntity

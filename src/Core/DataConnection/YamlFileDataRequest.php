@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Model418\DataConnection;
+namespace Elephant418\Model418\Core\DataConnection;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;

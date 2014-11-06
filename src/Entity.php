@@ -2,6 +2,9 @@
 
 namespace Elephant418\Model418;
 
+use Elephant418\Model418\Core\IEntity;
+use Elephant418\Model418\Core\TEntity;
+
 class Entity implements IEntity
 {
     use TEntity;
