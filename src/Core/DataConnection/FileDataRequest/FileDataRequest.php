@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Model418\Core\DataConnection;
+namespace Elephant418\Model418\Core\DataConnection\FileDataRequest;
 
 abstract class FileDataRequest implements IFileDataRequest
 {

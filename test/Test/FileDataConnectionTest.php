@@ -313,7 +313,7 @@ class FileDataConnectionTest extends \PHPUnit_Framework_TestCase
 
     protected function getFileDataRequestStub()
     {
-        return $this->getMock('Elephant418\\Model418\\Core\\DataConnection\\FileDataRequest');
+        return $this->getMock('Elephant418\\Model418\\Core\\DataConnection\\FileDataRequest\\FileDataRequest');
     }
 
     protected function addGetContentsMethodToStub($stub, $occurrence = null, $dataList = array())

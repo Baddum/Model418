@@ -2,7 +2,7 @@
 
 namespace Elephant418\Model418;
 
-use Elephant418\Model418\Core\DataConnection\FileDataRequestFactory;
+use Elephant418\Model418\Core\DataConnection\FileDataRequest\FileDataRequestFactory;
 use Elephant418\Model418\Core\DataConnection\IDataConnection;
 
 class FileDataConnection implements IDataConnection
@@ -180,5 +180,5 @@ class FileDataConnection implements IDataConnection
 }
 
 (new FileDataRequestFactory)
-    ->register('Elephant418\\Model418\\Core\\DataConnection\\JSONFileDataRequest')
-    ->register('Elephant418\\Model418\\Core\\DataConnection\\YamlFileDataRequest');
+    ->register('Elephant418\\Model418\\Core\\DataConnection\\FileDataRequest\\JSONFileDataRequest')
+    ->register('Elephant418\\Model418\\Core\\DataConnection\\FileDataRequest\\YamlFileDataRequest');
