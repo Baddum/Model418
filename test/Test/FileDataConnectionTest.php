@@ -15,7 +15,7 @@ class FileDataConnectionTest extends \PHPUnit_Framework_TestCase
         $expectedDataFolder = __DIR__;
         $actualDataFolder = (new FileDataConnection)
             ->setDataFolder($expectedDataFolder)
-            ->getWritableDataFolder();
+            ->getDataFolder();
         $this->assertEquals($expectedDataFolder, $actualDataFolder);
     }
 
@@ -24,7 +24,7 @@ class FileDataConnectionTest extends \PHPUnit_Framework_TestCase
         $expectedDataFolder = __DIR__;
         $actualDataFolder = (new FileDataConnection)
             ->setDataFolder($expectedDataFolder . '/')
-            ->getWritableDataFolder();
+            ->getDataFolder();
         $this->assertEquals($expectedDataFolder, $actualDataFolder);
     }
 

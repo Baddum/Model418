@@ -5,7 +5,6 @@ namespace Test\Elephant418\Model418\Test;
 use Test\Elephant418\Model418\Resources\SimpleCase\ResourceModel as SimpleModel;
 use Test\Elephant418\Model418\Resources\SeparateCase\ResourceModel as SeparateModel;
 use Test\Elephant418\Model418\Resources\NoDataConnectionCase\ResourceModel as NoDataConnectionModel;
-use Test\Elephant418\Model418\Resources\MultipleDataSourceCase\ResourceModel as MultipleDataSourceModel;
 use Test\Elephant418\Model418\Resources\JSONCase\ResourceModel as JSONModel;
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
@@ -54,34 +53,6 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
         unset($model);
         $model = (new SimpleModel)->query()->fetchById($id);
         $this->assertFalse($model->exists(), 'The model exists');
-    }
-    
-    public function testMultipleDataSource()
-    {
-        $simpleEntity = (new SimpleModel)->query();
-        $multipleDataSourceEntity = (new MultipleDataSourceModel)->query();
-        $model = $simpleEntity->fetchById('test');
-        $this->assertTrue($model->exists(), 'The model `test` fetched with a simple source exists');
-        $model = $multipleDataSourceEntity->fetchById('test');
-        $this->assertTrue($model->exists(), 'The model `test` fetched with multiple sources exists');
-        
-        $model = $simpleEntity->fetchById('test2');
-        $this->assertFalse($model->exists(), 'The model `test2` fetched with a simple source does not exist');
-        $model = $multipleDataSourceEntity->fetchById('test2');
-        $this->assertTrue($model->exists(), 'The model `test2` fetched with multiple sources exists');
-        
-        $model = $simpleEntity->fetchById('test3');
-        $this->assertFalse($model->exists(), 'The model `test3` fetched with a simple source does not exist');
-        $model = $multipleDataSourceEntity->fetchById('test3');
-        $this->assertFalse($model->exists(), 'The model `test3` fetched with multiple sources does not exist');
-        
-        $model = (new MultipleDataSourceModel)
-            ->set('myName', 'test4')
-            ->save();
-        $filePath = $model->getWritableDataFolder().'/'.$model->id.'.yml';
-        $this->assertTrue(file_exists($filePath), 'The data source file for `test4` is in the right folder');
-        $model->delete();
-        $this->assertFalse(file_exists($filePath), 'The data source file for `test4` was deleted from the right folder');
     }
 
     public function testJSONDataSource()

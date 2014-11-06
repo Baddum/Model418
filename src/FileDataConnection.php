@@ -17,8 +17,8 @@ class FileDataConnection implements IDataConnection
     /* ATTRIBUTES
      *************************************************************************/
     protected $fileDataRequest;
+    protected $dataFolder;
     protected $idField = 'name';
-    protected $dataFolderList = array();
 
 
     /* SETTER
@@ -32,19 +32,14 @@ class FileDataConnection implements IDataConnection
 
     /* DATA FOLDER METHODS
      *************************************************************************/
-    public function setDataFolder($dataFolder)
+    public function getDataFolder()
     {
-        $this->setDataFolderList(array($dataFolder));
-        return $this;
+        return $this->dataFolder;
     }
     
-    public function setDataFolderList($dataFolderList)
+    public function setDataFolder($dataFolder)
     {
-        $validDataFolderList = array();
-        foreach ($dataFolderList as $dataFolder) {
-            $validDataFolderList[] = $this->validDataFolder($dataFolder);
-        }
-        $this->dataFolderList = $validDataFolderList;
+        $this->dataFolder = $this->validDataFolder($dataFolder);
         return $this;
     }
 
@@ -55,11 +50,6 @@ class FileDataConnection implements IDataConnection
             throw new \RuntimeException('This data folder does not exist: ' . $dataFolder);
         }
         return $realDataFolder;
-    }
-
-    public function getWritableDataFolder()
-    {
-        return reset($this->dataFolderList);
     }
 
 
@@ -87,11 +77,9 @@ class FileDataConnection implements IDataConnection
      *************************************************************************/
     public function fetchById($id)
     {
-        foreach ($this->dataFolderList as $dataFolder) {
-            $data = $this->getFileDataRequest()->getContents($dataFolder, $id);
-            if ($data) {
-                return $data;
-            }
+        $data = $this->getFileDataRequest()->getContents($this->dataFolder, $id);
+        if ($data) {
+            return $data;
         }
         return null;
     }
@@ -136,13 +124,13 @@ class FileDataConnection implements IDataConnection
             }
             $id = $this->findAvailableIdByName($name);
         }
-        $this->getFileDataRequest()->putContents($this->getWritableDataFolder(), $id, $data);
+        $this->getFileDataRequest()->putContents($this->dataFolder, $id, $data);
         return $id;
     }
 
     public function deleteById($id)
     {
-        return $this->getFileDataRequest()->unlink($this->getWritableDataFolder(), $id);
+        return $this->getFileDataRequest()->unlink($this->dataFolder, $id);
     }
 
 
@@ -153,7 +141,7 @@ class FileDataConnection implements IDataConnection
         do {
             $id = $this->getIdByNameAndSuffix($name, $suffix);
             $suffix++;
-        } while ($this->getFileDataRequest()->exists($this->getWritableDataFolder(), $id));
+        } while ($this->getFileDataRequest()->exists($this->dataFolder, $id));
         return $id;
     }
 
@@ -172,14 +160,12 @@ class FileDataConnection implements IDataConnection
     protected function getAllIds()
     {
         $idList = array();
-        foreach ($this->dataFolderList as $dataFolder) {
-            $fileList = $this->getFileDataRequest()->getFolderList($dataFolder);
-            foreach ($fileList as $file) {
-                $file = basename($file);
-                $id = substr($file, 0, strrpos($file, '.'));
-                $idList[] = $id;
-            }
+        $fileList = $this->getFileDataRequest()->getFolderList($this->dataFolder);
+        foreach ($fileList as $file) {
+            $file = basename($file);
+            $id = substr($file, 0, strrpos($file, '.'));
+            $idList[] = $id;
         }
-        return array_unique($idList);
+        return $idList;
     }
 }
