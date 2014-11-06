@@ -2,12 +2,15 @@
 
 namespace Elephant418\Model418\Core\DataConnection\FileDataRequest;
 
+use Elephant418\Model418\Core\DataConnection\FileDataRequest\FileDataRequestFactory;
+
 abstract class FileDataRequest implements IFileDataRequest
 {
     
     /* ATTRIBUTES
      *************************************************************************/
     public static $extension = '';
+    public static $factoryIndexList = array();
     
 
     /* PUBLIC METHODS
@@ -52,6 +55,14 @@ abstract class FileDataRequest implements IFileDataRequest
     {
         $filePattern = $this->getFilePath($folder);
         return glob($filePattern);
+    }
+
+
+    /* STATIC METHODS
+     *************************************************************************/
+    public static function register()
+    {
+        (new FileDataRequestFactory)->register(get_called_class());
     }
 
 

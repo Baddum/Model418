@@ -104,19 +104,19 @@ class Model extends ArrayObject implements IModel
 
     protected function hasSchema($key = null)
     {
-        if (!isset(static::$_schema[get_class($this)])) {
+        if (!isset(static::$_schema[get_called_class()])) {
             return false;
         }
         if (is_null($key)) {
             return true;
         }
-        $schema = static::$_schema[get_class($this)];
+        $schema = static::$_schema[get_called_class()];
         return isset($schema[$key]);
     }
 
     protected function setSchema($schema)
     {
-        static::$_schema[get_class($this)] = $schema;
+        static::$_schema[get_called_class()] = $schema;
         return $this;
     }
 
@@ -125,7 +125,7 @@ class Model extends ArrayObject implements IModel
         if (!$this->hasSchema()) {
             return array();
         }
-        $schema = static::$_schema[get_class($this)];
+        $schema = static::$_schema[get_called_class()];
         if (is_null($key)) {
             return $schema;
         }
@@ -154,12 +154,12 @@ class Model extends ArrayObject implements IModel
 
     protected function hasEntity()
     {
-        return isset(static::$_entity[get_class($this)]);
+        return isset(static::$_entity[get_called_class()]);
     }
 
     protected function setEntity($entity)
     {
-        static::$_entity[get_class($this)] = $entity;
+        static::$_entity[get_called_class()] = $entity;
         return $this;
     }
 
@@ -168,6 +168,6 @@ class Model extends ArrayObject implements IModel
         if (!$this->hasEntity()) {
             return null;
         }
-        return static::$_entity[get_class($this)];
+        return static::$_entity[get_called_class()];
     }
 }

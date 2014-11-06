@@ -62,12 +62,12 @@ trait TEntity
 
     protected function hasDataConnection()
     {
-        return isset(static::$_dataConnection[get_class($this)]);
+        return isset(static::$_dataConnection[get_called_class()]);
     }
 
     protected function setDataConnection($dataConnection)
     {
-        static::$_dataConnection[get_class($this)] = $dataConnection;
+        static::$_dataConnection[get_called_class()] = $dataConnection;
         return $this;
     }
 
@@ -76,7 +76,7 @@ trait TEntity
         if (!$this->hasDataConnection()) {
             return null;
         }
-        return static::$_dataConnection[get_class($this)];
+        return static::$_dataConnection[get_called_class()];
     }
 
 

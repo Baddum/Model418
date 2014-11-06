@@ -15,7 +15,7 @@ class ModelEntity extends Model implements IEntity
     public function __construct($dataConnection = null)
     {
         parent::__construct();
-        $this->_modelClass = get_class($this);
+        $this->_modelClass = get_called_class();
         $this->injectDataConnection($dataConnection);
     }
 

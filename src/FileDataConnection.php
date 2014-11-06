@@ -3,7 +3,12 @@
 namespace Elephant418\Model418;
 
 use Elephant418\Model418\Core\DataConnection\FileDataRequest\FileDataRequestFactory;
+use Elephant418\Model418\Core\DataConnection\FileDataRequest\JSONFileDataRequest;
+use Elephant418\Model418\Core\DataConnection\FileDataRequest\YamlFileDataRequest;
 use Elephant418\Model418\Core\DataConnection\IDataConnection;
+
+JSONFileDataRequest::register();
+YamlFileDataRequest::register();
 
 class FileDataConnection implements IDataConnection
 {
@@ -178,7 +183,3 @@ class FileDataConnection implements IDataConnection
         return array_unique($idList);
     }
 }
-
-(new FileDataRequestFactory)
-    ->register('Elephant418\\Model418\\Core\\DataConnection\\FileDataRequest\\JSONFileDataRequest')
-    ->register('Elephant418\\Model418\\Core\\DataConnection\\FileDataRequest\\YamlFileDataRequest');
