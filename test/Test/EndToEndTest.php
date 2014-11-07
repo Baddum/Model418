@@ -7,6 +7,7 @@ use Test\Elephant418\Model418\Resources\SeparateCase\ResourceModel as SeparateMo
 use Test\Elephant418\Model418\Resources\NoDataConnectionCase\ResourceModel as NoDataConnectionModel;
 use Test\Elephant418\Model418\Resources\JSONCase\ResourceModel as JSONModel;
 use Test\Elephant418\Model418\Resources\SubAttributeCase\ResourceModel as SubAttributeModel;
+use Test\Elephant418\Model418\Resources\MdAttributeCase\ResourceModel as MdAttributeModel;
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
 {
@@ -99,5 +100,27 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
             ->query()
             ->fetchById('myValue');
         $this->assertFalse($model->exists(), 'model `myValue` should not exist anymore');
+    }
+
+    public function testFetchMdAttribute()
+    {
+        $model = (new SimpleModel)->query()->fetchTest();
+        $this->assertNull($model->article, 'model `content` attribute is null');
+
+        $model = (new MdAttributeModel)->query()->fetchTest();
+        $this->assertTrue(is_string($model->content), 'model `content` attribute is a string');
+    }
+
+    public function testSaveMdAttribute()
+    {
+        $model = (new MdAttributeModel)
+            ->query()
+            ->fetchTest()
+            ->duplicate()
+            ->set('content', '<h3>Coco</h3>')
+            ->save();
+        $md = file_get_contents(__DIR__.'/../Resources/data/myValue.article.md');
+        $this->assertEquals('### Coco', $md, 'model `content` attribute is converted to Markdown');
+        $model->delete();
     }
 }

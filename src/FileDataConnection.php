@@ -5,10 +5,12 @@ namespace Elephant418\Model418;
 use Elephant418\Model418\Core\DataConnection\FileDataRequest\FileDataRequestFactory;
 use Elephant418\Model418\Core\DataConnection\FileDataRequest\JSONFileDataRequest;
 use Elephant418\Model418\Core\DataConnection\FileDataRequest\YamlFileDataRequest;
+use Elephant418\Model418\Core\DataConnection\FileDataRequest\MarkdownFileDataRequest;
 use Elephant418\Model418\Core\DataConnection\IDataConnection;
 
 JSONFileDataRequest::register();
 YamlFileDataRequest::register();
+MarkdownFileDataRequest::register();
 
 class FileDataConnection implements IDataConnection
 {
@@ -56,12 +58,9 @@ class FileDataConnection implements IDataConnection
 
     /* DATA FOLDER METHODS
      *************************************************************************/
-    public function setFileDataRequest($fileDataRequest)
+    public function setFileDataRequest($format)
     {
-        if (is_string($fileDataRequest)) {
-            $fileDataRequest = (new FileDataRequestFactory)->get($fileDataRequest);
-        }
-        $this->fileDataRequest = $fileDataRequest;
+        $this->fileDataRequest = $this->getFileDataRequestFromName($format);
         return $this;
     }
 
@@ -72,19 +71,34 @@ class FileDataConnection implements IDataConnection
         }
         return $this->fileDataRequest;
     }
+    
+    protected function getFileDataRequestFromName($format)
+    {
+        if (is_string($format)) {
+            $format = (new FileDataRequestFactory)->get($format);
+        }
+        return $format;
+    }
 
 
     /* SUB ATTRIBUTES METHODS
      *************************************************************************/
-    public function addSubAttribute($key, $id = null)
+    public function setSubAttribute($key, $id = null, $format = null)
     {
+        $this->unsetSubAttribute($key);
         if (is_null($id)) {
             $id = $key;
         }
         if (in_array($id, $this->subAttributeList)) {
             throw new \RuntimeException('Another sub attribute use the id: '.$id);
         }
-        $this->subAttributeList[$key] = $id;
+        $subAttribute = array();
+        $subAttribute['id'] = $id;
+        if (!is_null($format)) {
+            $fileDataRequest = $this->getFileDataRequestFromName($format);
+            $subAttribute['fileDataRequest'] = $fileDataRequest;
+        }
+        $this->subAttributeList[$key] = $subAttribute;
         return $this;
     }
     
@@ -172,26 +186,36 @@ class FileDataConnection implements IDataConnection
     protected function saveSubAttributeById($id, $subKey, $subData)
     {
         $subId = $this->getSubAttributeId($id, $subKey);
-        $this->getFileDataRequest()->putContents($this->dataFolder, $subId, $subData);
+        $this->getSubAttributeFileDataRequest($subKey)
+            ->putContents($this->dataFolder, $subId, $subData);
     }
 
     protected function deleteSubAttributeById($id, $subKey)
     {
         $subId = $this->getSubAttributeId($id, $subKey);
-        $this->getFileDataRequest()->unlink($this->dataFolder, $subId);
+        $this->getSubAttributeFileDataRequest($subKey)
+            ->unlink($this->dataFolder, $subId);
     }
 
     protected function fetchSubAttributeById($id, $subKey)
     {
         $subId = $this->getSubAttributeId($id, $subKey);
-        $subData = $this->getFileDataRequest()->getContents($this->dataFolder, $subId);
+        $subData = $this->getSubAttributeFileDataRequest($subKey)
+            ->getContents($this->dataFolder, $subId);
         return $subData;
     }
 
     protected function getSubAttributeId($id, $subKey)
     {
-        $subId = $id.'.'.$this->subAttributeList[$subKey];
+        $subId = $id.'.'.$this->subAttributeList[$subKey]['id'];
         return $subId;
+    }
+    
+    protected function getSubAttributeFileDataRequest($subKey) {
+        if (isset($this->subAttributeList[$subKey]['fileDataRequest'])) {
+            return $this->subAttributeList[$subKey]['fileDataRequest'];
+        }
+        return $this->getFileDataRequest();
     }
 
 
