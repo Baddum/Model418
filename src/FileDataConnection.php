@@ -19,6 +19,7 @@ class FileDataConnection implements IDataConnection
     protected $fileDataRequest;
     protected $dataFolder;
     protected $idField = 'name';
+    protected $subAttributeList = array();
 
 
     /* SETTER
@@ -73,12 +74,36 @@ class FileDataConnection implements IDataConnection
     }
 
 
+    /* SUB ATTRIBUTES METHODS
+     *************************************************************************/
+    public function addSubAttribute($key, $id = null)
+    {
+        if (is_null($id)) {
+            $id = $key;
+        }
+        if (in_array($id, $this->subAttributeList)) {
+            throw new \RuntimeException('Another sub attribute use the id: '.$id);
+        }
+        $this->subAttributeList[$key] = $id;
+        return $this;
+    }
+    
+    public function unsetSubAttribute($key)
+    {
+        unset($this->subAttributeList[$key]);
+        return $this;
+    }
+
+
     /* FETCHING METHODS
      *************************************************************************/
     public function fetchById($id)
     {
         $data = $this->getFileDataRequest()->getContents($this->dataFolder, $id);
         if ($data) {
+            foreach (array_keys($this->subAttributeList) as $subKey) {
+                $data[$subKey] = $this->fetchSubAttributeById($id, $subKey);
+            }
             return $data;
         }
         return null;
@@ -118,11 +143,15 @@ class FileDataConnection implements IDataConnection
     {
         $exists = !is_null($id);
         if (!$exists) {
-            $name = '';
-            if (isset($data[$this->idField]) && is_string($data[$this->idField])) {
-                $name = $data[$this->idField];
+            $id = $this->findAvailableIdByData($data);
+        }
+        foreach (array_keys($this->subAttributeList) as $subKey) {
+            $subData = null;
+            if (isset($data[$subKey])) {
+                $subData = $data[$subKey];
+                unset($data[$subKey]);
             }
-            $id = $this->findAvailableIdByName($name);
+            $this->saveSubAttributeById($id, $subKey, $subData);
         }
         $this->getFileDataRequest()->putContents($this->dataFolder, $id, $data);
         return $id;
@@ -130,13 +159,49 @@ class FileDataConnection implements IDataConnection
 
     public function deleteById($id)
     {
-        return $this->getFileDataRequest()->unlink($this->dataFolder, $id);
+        foreach (array_keys($this->subAttributeList) as $subKey) {
+            $this->deleteSubAttributeById($id, $subKey);
+        }
+        $status = $this->getFileDataRequest()->unlink($this->dataFolder, $id);
+        return $status;
+    }
+
+
+    /* PROTECTED SUB ATTRIBUTE METHODS
+     *************************************************************************/
+    protected function saveSubAttributeById($id, $subKey, $subData)
+    {
+        $subId = $this->getSubAttributeId($id, $subKey);
+        $this->getFileDataRequest()->putContents($this->dataFolder, $subId, $subData);
+    }
+
+    protected function deleteSubAttributeById($id, $subKey)
+    {
+        $subId = $this->getSubAttributeId($id, $subKey);
+        $this->getFileDataRequest()->unlink($this->dataFolder, $subId);
+    }
+
+    protected function fetchSubAttributeById($id, $subKey)
+    {
+        $subId = $this->getSubAttributeId($id, $subKey);
+        $subData = $this->getFileDataRequest()->getContents($this->dataFolder, $subId);
+        return $subData;
+    }
+
+    protected function getSubAttributeId($id, $subKey)
+    {
+        $subId = $id.'.'.$this->subAttributeList[$subKey];
+        return $subId;
     }
 
 
     /* PROTECTED SOURCE FILE METHODS
      *************************************************************************/
-    protected function findAvailableIdByName($name) {
+    protected function findAvailableIdByData($data) {
+        $name = '';
+        if (isset($data[$this->idField]) && is_string($data[$this->idField])) {
+            $name = $data[$this->idField];
+        }
         $suffix = 0;
         do {
             $id = $this->getIdByNameAndSuffix($name, $suffix);

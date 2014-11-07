@@ -21,6 +21,14 @@ class ArrayObject extends \ArrayObject
         return $this->offsetGet($name);
     }
 
+    public function offsetGet($name)
+    {
+        if (!$this->offsetExists($name)) {
+            return null;
+        }
+        return parent::offsetGet($name);
+    }
+
     public function set($name, $value)
     {
         return $this->offsetSet($name, $value);

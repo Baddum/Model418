@@ -28,6 +28,12 @@ class Model extends ArrayObject implements IModel
         return $this->id;
     }
 
+    public function duplicate()
+    {
+        $this->id = null;
+        return $this;
+    }
+
     public function offsetSet($name, $value)
     {
         if ($this->hasSchema($name)) {
