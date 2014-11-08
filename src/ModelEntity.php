@@ -12,11 +12,11 @@ class ModelEntity extends Model implements IEntity
 
     /* INITIALIZATION
      *************************************************************************/
-    public function __construct($dataConnection = null)
+    public function __construct($provider = null)
     {
         parent::__construct();
         $this->_modelClass = get_called_class();
-        $this->injectDataConnection($dataConnection);
+        $this->injectProvider($provider);
     }
 
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Elephant418\Model418\Core\DataConnection\FileDataRequest;
+namespace Elephant418\Model418\Core\Request;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
-class YamlFileDataRequest extends FileDataRequest
+class YamlFileRequest extends FileRequest
 {
 
     /* ATTRIBUTES

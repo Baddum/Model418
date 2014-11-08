@@ -12,9 +12,9 @@ class Entity implements IEntity
 
     /* INITIALIZATION
      *************************************************************************/
-    public function __construct($model, $dataConnection = null)
+    public function __construct($model, $provider = null)
     {
         $this->_modelClass = get_class($model);
-        $this->injectDataConnection($dataConnection);
+        $this->injectProvider($provider);
     }
 }

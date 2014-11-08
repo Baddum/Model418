@@ -2,7 +2,7 @@
 
 namespace Test\Elephant418\Model418\Resources\SubAttributeCase;
 
-use Elephant418\Model418\FileDataConnection as DataConnection;
+use Elephant418\Model418\FileProvider as Provider;
 use Elephant418\Model418\ModelEntity;
 
 class ResourceModel extends ModelEntity
@@ -11,13 +11,13 @@ class ResourceModel extends ModelEntity
 
     /* INITIALIZATION
      *************************************************************************/
-    protected function initDataConnection()
+    protected function initProvider()
     {
-        $dataConnection = (new DataConnection)
-            ->setDataFolder(__DIR__ . '/../data')
+        $provider = (new Provider)
+            ->setFolder(__DIR__ . '/../data')
             ->setSubAttribute('event')
             ->setIdField('myName');
-        return $dataConnection;
+        return $provider;
     }
 
     protected function initSchema()

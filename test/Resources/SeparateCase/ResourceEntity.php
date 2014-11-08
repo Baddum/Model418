@@ -2,7 +2,7 @@
 
 namespace Test\Elephant418\Model418\Resources\SeparateCase;
 
-use Elephant418\Model418\FileDataConnection as DataConnection;
+use Elephant418\Model418\FileProvider as Provider;
 use Elephant418\Model418\Entity;
 
 class ResourceEntity extends Entity
@@ -11,11 +11,11 @@ class ResourceEntity extends Entity
 
     /* CONSTRUCTOR
      *************************************************************************/
-    protected function initDataConnection()
+    protected function initProvider()
     {
-        $dataConnection = new DataConnection();
-        $dataConnection->setDataFolder(__DIR__ . '/../data');
-        return $dataConnection;
+        $provider = (new Provider)
+            ->setFolder(__DIR__ . '/../data');
+        return $provider;
     }
 
 

@@ -2,9 +2,9 @@
 
 namespace Elephant418\Model418;
 
-use Elephant418\Model418\Core\DataConnection\SingleFileDataConnection;
+use Elephant418\Model418\Core\Provider\SingleFileProvider;
 
-class FileDataConnection extends SingleFileDataConnection
+class FileProvider extends SingleFileProvider
 {
 
 
@@ -27,8 +27,8 @@ class FileDataConnection extends SingleFileDataConnection
         $subAttribute = array();
         $subAttribute['id'] = $id;
         if (!is_null($format)) {
-            $fileDataRequest = $this->getFileDataRequestFromName($format);
-            $subAttribute['fileDataRequest'] = $fileDataRequest;
+            $fileRequest = $this->getFileRequestFromName($format);
+            $subAttribute['fileRequest'] = $fileRequest;
         }
         $this->subAttributeList[$key] = $subAttribute;
         return $this;
@@ -89,22 +89,22 @@ class FileDataConnection extends SingleFileDataConnection
     protected function saveSubAttributeById($id, $subKey, $subData)
     {
         $subId = $this->getSubAttributeId($id, $subKey);
-        $this->getSubAttributeFileDataRequest($subKey)
-            ->putContents($this->dataFolder, $subId, $subData);
+        $this->getSubAttributeFileRequest($subKey)
+            ->putContents($this->folder, $subId, $subData);
     }
 
     protected function deleteSubAttributeById($id, $subKey)
     {
         $subId = $this->getSubAttributeId($id, $subKey);
-        $this->getSubAttributeFileDataRequest($subKey)
-            ->unlink($this->dataFolder, $subId);
+        $this->getSubAttributeFileRequest($subKey)
+            ->unlink($this->folder, $subId);
     }
 
     protected function fetchSubAttributeById($id, $subKey)
     {
         $subId = $this->getSubAttributeId($id, $subKey);
-        $subData = $this->getSubAttributeFileDataRequest($subKey)
-            ->getContents($this->dataFolder, $subId);
+        $subData = $this->getSubAttributeFileRequest($subKey)
+            ->getContents($this->folder, $subId);
         return $subData;
     }
 
@@ -114,10 +114,10 @@ class FileDataConnection extends SingleFileDataConnection
         return $subId;
     }
     
-    protected function getSubAttributeFileDataRequest($subKey) {
-        if (isset($this->subAttributeList[$subKey]['fileDataRequest'])) {
-            return $this->subAttributeList[$subKey]['fileDataRequest'];
+    protected function getSubAttributeFileRequest($subKey) {
+        if (isset($this->subAttributeList[$subKey]['fileRequest'])) {
+            return $this->subAttributeList[$subKey]['fileRequest'];
         }
-        return $this->getFileDataRequest();
+        return $this->getFileRequest();
     }
 }

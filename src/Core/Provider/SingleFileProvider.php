@@ -1,25 +1,25 @@
 <?php
 
-namespace Elephant418\Model418\Core\DataConnection;
+namespace Elephant418\Model418\Core\Provider;
 
-use Elephant418\Model418\Core\DataConnection\FileDataRequest\FileDataRequestFactory;
-use Elephant418\Model418\Core\DataConnection\FileDataRequest\JSONFileDataRequest;
-use Elephant418\Model418\Core\DataConnection\FileDataRequest\YamlFileDataRequest;
-use Elephant418\Model418\Core\DataConnection\FileDataRequest\MarkdownFileDataRequest;
+use Elephant418\Model418\Core\Request\FileRequestFactory;
+use Elephant418\Model418\Core\Request\JSONFileRequest;
+use Elephant418\Model418\Core\Request\YamlFileRequest;
+use Elephant418\Model418\Core\Request\MarkdownFileRequest;
 
-JSONFileDataRequest::register();
-YamlFileDataRequest::register();
-MarkdownFileDataRequest::register();
+JSONFileRequest::register();
+YamlFileRequest::register();
+MarkdownFileRequest::register();
 
-class SingleFileDataConnection implements IDataConnection
+class SingleFileProvider implements IProvider
 {
-    use TNoRelationDataConnection;
+    use TNoRelationProvider;
 
 
     /* ATTRIBUTES
      *************************************************************************/
-    protected $fileDataRequest;
-    protected $dataFolder;
+    protected $fileRequest;
+    protected $folder;
     protected $idField = 'name';
 
 
@@ -32,49 +32,49 @@ class SingleFileDataConnection implements IDataConnection
     }
 
 
-    /* DATA FOLDER METHODS
+    /* FOLDER METHODS
      *************************************************************************/
-    public function getDataFolder()
+    public function getFolder()
     {
-        return $this->dataFolder;
+        return $this->folder;
     }
     
-    public function setDataFolder($dataFolder)
+    public function setFolder($folder)
     {
-        $this->dataFolder = $this->validDataFolder($dataFolder);
+        $this->folder = $this->validFolder($folder);
         return $this;
     }
 
-    protected function validDataFolder($dataFolder)
+    protected function validFolder($folder)
     {
-        $realDataFolder = realpath($dataFolder);
-        if (!$realDataFolder) {
-            throw new \RuntimeException('This data folder does not exist: ' . $dataFolder);
+        $realFolder = realpath($folder);
+        if (!$realFolder) {
+            throw new \RuntimeException('This data folder does not exist: ' . $folder);
         }
-        return $realDataFolder;
+        return $realFolder;
     }
 
 
-    /* FILE DATA REQUEST METHODS
+    /* FILE REQUEST METHODS
      *************************************************************************/
-    public function setFileDataRequest($format)
+    public function setFileRequest($format)
     {
-        $this->fileDataRequest = $this->getFileDataRequestFromName($format);
+        $this->fileRequest = $this->getFileRequestFromName($format);
         return $this;
     }
 
-    public function getFileDataRequest()
+    public function getFileRequest()
     {
-        if (!$this->fileDataRequest) {
-            return (new FileDataRequestFactory)->get('yml');
+        if (!$this->fileRequest) {
+            return (new FileRequestFactory)->get('yml');
         }
-        return $this->fileDataRequest;
+        return $this->fileRequest;
     }
     
-    protected function getFileDataRequestFromName($format)
+    protected function getFileRequestFromName($format)
     {
         if (is_string($format)) {
-            $format = (new FileDataRequestFactory)->get($format);
+            $format = (new FileRequestFactory)->get($format);
         }
         return $format;
     }
@@ -84,7 +84,7 @@ class SingleFileDataConnection implements IDataConnection
      *************************************************************************/
     public function fetchById($id)
     {
-        $data = $this->getFileDataRequest()->getContents($this->dataFolder, $id);
+        $data = $this->getFileRequest()->getContents($this->folder, $id);
         return $data;
     }
 
@@ -97,13 +97,13 @@ class SingleFileDataConnection implements IDataConnection
         if (!$exists) {
             $id = $this->findAvailableIdByData($data);
         }
-        $this->getFileDataRequest()->putContents($this->dataFolder, $id, $data);
+        $this->getFileRequest()->putContents($this->folder, $id, $data);
         return $id;
     }
 
     public function deleteById($id)
     {
-        $status = $this->getFileDataRequest()->unlink($this->dataFolder, $id);
+        $status = $this->getFileRequest()->unlink($this->folder, $id);
         return $status;
     }
 
@@ -119,7 +119,7 @@ class SingleFileDataConnection implements IDataConnection
         do {
             $id = $this->getIdByNameAndSuffix($name, $suffix);
             $suffix++;
-        } while ($this->getFileDataRequest()->exists($this->dataFolder, $id));
+        } while ($this->getFileRequest()->exists($this->folder, $id));
         return $id;
     }
 
@@ -138,7 +138,7 @@ class SingleFileDataConnection implements IDataConnection
     protected function getAllIds()
     {
         $idList = array();
-        $fileList = $this->getFileDataRequest()->getFolderList($this->dataFolder);
+        $fileList = $this->getFileRequest()->getFolderList($this->folder);
         foreach ($fileList as $file) {
             $file = basename($file);
             $id = substr($file, 0, strrpos($file, '.'));

@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\DataConnection;
+namespace Elephant418\Model418\Core\Provider;
 
-trait TNoRelationDataConnection
+trait TNoRelationProvider
 {
 
 

@@ -1,10 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\DataConnection\FileDataRequest;
+namespace Elephant418\Model418\Core\Request;
 
-use Elephant418\Model418\Core\DataConnection\FileDataRequest\FileDataRequestFactory;
-
-abstract class FileDataRequest implements IFileDataRequest
+abstract class FileRequest implements IFileRequest
 {
     
     /* ATTRIBUTES
@@ -62,7 +60,7 @@ abstract class FileDataRequest implements IFileDataRequest
      *************************************************************************/
     public static function register()
     {
-        (new FileDataRequestFactory)->register(get_called_class());
+        (new FileRequestFactory)->register(get_called_class());
     }
 
 

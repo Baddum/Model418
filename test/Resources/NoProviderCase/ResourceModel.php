@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Elephant418\Model418\Resources\NoDataConnectionCase;
+namespace Test\Elephant418\Model418\Resources\NoProviderCase;
 
 use Elephant418\Model418\ModelEntity;
 

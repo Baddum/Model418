@@ -1,11 +1,11 @@
 <?php
 
-namespace Elephant418\Model418\Core\DataConnection\FileDataRequest;
+namespace Elephant418\Model418\Core\Request;
 
 use \Michelf\MarkdownExtra;
 use \Markdownify\ConverterExtra as MarkdownifyExtra;
 
-class MarkdownFileDataRequest extends FileDataRequest
+class MarkdownFileRequest extends FileRequest
 {
 
     /* ATTRIBUTES

@@ -2,7 +2,7 @@
 
 namespace Test\Elephant418\Model418\Resources\JSONCase;
 
-use Elephant418\Model418\FileDataConnection as DataConnection;
+use Elephant418\Model418\FileProvider as Provider;
 use Elephant418\Model418\ModelEntity;
 
 class ResourceModel extends ModelEntity
@@ -11,13 +11,13 @@ class ResourceModel extends ModelEntity
 
     /* INITIALIZATION
      *************************************************************************/
-    protected function initDataConnection()
+    protected function initProvider()
     {
-        $dataConnection = (new DataConnection)
-            ->setFileDataRequest('JSON')
-            ->setDataFolder(__DIR__ . '/../data')
+        $provider = (new Provider)
+            ->setFileRequest('JSON')
+            ->setFolder(__DIR__ . '/../data')
             ->setIdField('myName');
-        return $dataConnection;
+        return $provider;
     }
 
     protected function initSchema()

@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\DataConnection\FileDataRequest;
+namespace Elephant418\Model418\Core\Request;
 
-class FileDataRequestFactory
+class FileRequestFactory
 {
     
     /* ATTRIBUTES
@@ -16,7 +16,7 @@ class FileDataRequestFactory
     {
         $id = strtolower($index);
         if (!isset(static::$indexList[$id])) {
-            throw new \RuntimeException('No FileDataRequest found for: '.$id);
+            throw new \RuntimeException('No FileRequest found for: '.$id);
         }
         $class = static::$indexList[$id];
         return new $class;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\DataConnection\FileDataRequest;
+namespace Elephant418\Model418\Core\Request;
 
-class JSONFileDataRequest extends FileDataRequest
+class JSONFileRequest extends FileRequest
 {
 
     /* ATTRIBUTES

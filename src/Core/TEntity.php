@@ -8,7 +8,7 @@ trait TEntity
 
     /* ATTRIBUTES
      *************************************************************************/
-    protected static $_dataConnection = array();
+    protected static $_provider = array();
     protected $_modelClass;
 
 
@@ -16,67 +16,67 @@ trait TEntity
      *************************************************************************/
     public function fetchById($id)
     {
-        $data = $this->getDataConnection()->fetchById($id);
+        $data = $this->getProvider()->fetchById($id);
         return $this->resultAsModel($data);
     }
 
     public function fetchByIdList($idList)
     {
-        $dataList = $this->getDataConnection()->fetchByIdList($idList);
+        $dataList = $this->getProvider()->fetchByIdList($idList);
         return $this->resultAsModelList($dataList);
     }
 
     public function fetchAll($limit = null, $offset = null, &$count = false)
     {
-        $dataList = $this->getDataConnection()->fetchAll($limit, $offset, $count);
+        $dataList = $this->getProvider()->fetchAll($limit, $offset, $count);
         return $this->resultAsModelList($dataList);
     }
 
     public function saveById($id, $data)
     {
-        return $this->getDataConnection()->saveById($id, $data);
+        return $this->getProvider()->saveById($id, $data);
     }
 
     public function deleteById($id)
     {
-        return $this->getDataConnection()->deleteById($id);
+        return $this->getProvider()->deleteById($id);
     }
 
 
-    /* PROTECTED DATA CONNECTOR ACCESSOR
+    /* PROTECTED PROVIDER METHODS
      *************************************************************************/
-    protected function initDataConnection()
+    protected function initProvider()
     {
         throw new \LogicException('This method must be overridden');
     }
 
-    protected function injectDataConnection($dataConnection)
+    protected function injectProvider($provider)
     {
-        if (!$this->hasDataConnection() && !$dataConnection) {
-            $dataConnection = $this->initDataConnection();
+        if (!$this->hasProvider() && !$provider) {
+            $provider = $this->initProvider();
         }
-        if ($dataConnection) {
-            $this->setDataConnection($dataConnection);
+        if ($provider) {
+            $this->setProvider($provider);
         }
     }
 
-    protected function hasDataConnection()
+    protected function hasProvider()
     {
-        return isset(static::$_dataConnection[get_called_class()]);
+        return isset(static::$_provider[get_called_class()]);
     }
 
-    protected function setDataConnection($dataConnection)
+    protected function setProvider($provider)
     {
-        static::$_dataConnection[get_called_class()] = $dataConnection;
+        static::$_provider[get_called_class()] = $provider;
         return $this;
     }
 
-    protected function getDataConnection()
+    protected function getProvider()
     {
-        if (!$this->hasDataConnection()) {
+        if (!$this->hasProvider()) {
             return null;
         }
-        return static::$_dataConnection[get_called_class()];
+        return static::$_provider[get_called_class()];
     }
 
 
