@@ -85,13 +85,7 @@ class SingleFileDataConnection implements IDataConnection
     public function fetchById($id)
     {
         $data = $this->getFileDataRequest()->getContents($this->dataFolder, $id);
-        if ($data) {
-            foreach (array_keys($this->subAttributeList) as $subKey) {
-                $data[$subKey] = $this->fetchSubAttributeById($id, $subKey);
-            }
-            return $data;
-        }
-        return null;
+        return $data;
     }
 
 
