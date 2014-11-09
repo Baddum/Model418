@@ -3,10 +3,12 @@
 namespace Elephant418\Model418\Core\Provider;
 
 use Elephant418\Model418\Core\Request\FileRequestFactory;
+use Elephant418\Model418\Core\Request\TextFileRequest;
 use Elephant418\Model418\Core\Request\JSONFileRequest;
 use Elephant418\Model418\Core\Request\YamlFileRequest;
 use Elephant418\Model418\Core\Request\MarkdownFileRequest;
 
+TextFileRequest::register();
 JSONFileRequest::register();
 YamlFileRequest::register();
 MarkdownFileRequest::register();
