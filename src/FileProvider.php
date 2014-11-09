@@ -110,7 +110,10 @@ class FileProvider extends SingleFileProvider
 
     protected function getSubAttributeId($id, $subKey)
     {
-        $subId = $id.'.'.$this->subAttributeList[$subKey]['id'];
+        $subId = $id;
+        if ($this->subAttributeList[$subKey]['id']) {
+            $subId .= '.'.$this->subAttributeList[$subKey]['id'];
+        }
         return $subId;
     }
     
