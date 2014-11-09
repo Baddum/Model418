@@ -3,9 +3,9 @@
 namespace Test\Elephant418\Model418\Resources\SeparateCase;
 
 use Elephant418\Model418\FileProvider as Provider;
-use Elephant418\Model418\Entity;
+use Elephant418\Model418\Query;
 
-class ResourceEntity extends Entity
+class ResourceQuery extends Query
 {
 
 

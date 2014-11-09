@@ -2,12 +2,12 @@
 
 namespace Elephant418\Model418;
 
-use Elephant418\Model418\Core\IEntity;
-use Elephant418\Model418\Core\TEntity;
+use Elephant418\Model418\Core\IQuery;
+use Elephant418\Model418\Core\TQuery;
 
-class ModelEntity extends Model implements IEntity
+class ModelQuery extends Model implements IQuery
 {
-    use TEntity;
+    use TQuery;
 
 
     /* INITIALIZATION
@@ -22,7 +22,7 @@ class ModelEntity extends Model implements IEntity
 
     /* PROTECTED ENTITY METHODS
      *************************************************************************/
-    protected function initEntity()
+    protected function initQuery()
     {
         return $this;
     }

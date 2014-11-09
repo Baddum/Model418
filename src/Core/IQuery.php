@@ -2,7 +2,7 @@
 
 namespace Elephant418\Model418\Core;
 
-interface IEntity
+interface IQuery
 {
 
     public function fetchById($id);

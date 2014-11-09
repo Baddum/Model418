@@ -2,12 +2,12 @@
 
 namespace Elephant418\Model418;
 
-use Elephant418\Model418\Core\IEntity;
-use Elephant418\Model418\Core\TEntity;
+use Elephant418\Model418\Core\IQuery;
+use Elephant418\Model418\Core\TQuery;
 
-class Entity implements IEntity
+class Query implements IQuery
 {
-    use TEntity;
+    use TQuery;
 
 
     /* INITIALIZATION

@@ -2,7 +2,7 @@
 
 namespace Elephant418\Model418\Core;
 
-trait TEntity
+trait TQuery
 {
 
 

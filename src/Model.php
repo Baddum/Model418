@@ -13,7 +13,7 @@ class Model extends ArrayObject implements IModel
      *************************************************************************/
     public $id;
     protected static $_schema = array();
-    protected static $_entity = array();
+    protected static $_query = array();
 
 
     /* GETTER & SETTER
@@ -45,10 +45,10 @@ class Model extends ArrayObject implements IModel
 
     /* INITIALIZATION
      *************************************************************************/
-    public function __construct($entity = null)
+    public function __construct($query = null)
     {
         parent::__construct();
-        $this->injectEntity($entity);
+        $this->injectQuery($query);
         if (!$this->hasSchema()) {
             $schema = $this->initSchema();
             $this->setSchema($schema);
@@ -80,7 +80,7 @@ class Model extends ArrayObject implements IModel
      *************************************************************************/
     public function save()
     {
-        $id = $this->getEntity()->saveById($this->id, $this->toArray());
+        $id = $this->getQuery()->saveById($this->id, $this->toArray());
         if (is_null($this->id)) {
             $this->id = $id;
         }
@@ -90,14 +90,14 @@ class Model extends ArrayObject implements IModel
     public function delete()
     {
         if (!is_null($this->id)) {
-            $this->getEntity()->deleteById($this->id);
+            $this->getQuery()->deleteById($this->id);
         }
         return $this;
     }
 
     public function query()
     {
-        return $this->getEntity();
+        return $this->getQuery();
     }
 
 
@@ -144,36 +144,36 @@ class Model extends ArrayObject implements IModel
 
     /* ENTITY METHODS
      *************************************************************************/
-    protected function initEntity()
+    protected function initQuery()
     {
         throw new \LogicException('This method must be overridden');
     }
     
-    protected function injectEntity($entity) {
-        if (!$this->hasEntity() && !$entity) {
-            $entity = $this->initEntity();
+    protected function injectQuery($query) {
+        if (!$this->hasQuery() && !$query) {
+            $query = $this->initQuery();
         }
-        if ($entity) {
-            $this->setEntity($entity);
+        if ($query) {
+            $this->setQuery($query);
         }
     }
 
-    protected function hasEntity()
+    protected function hasQuery()
     {
-        return isset(static::$_entity[get_called_class()]);
+        return isset(static::$_query[get_called_class()]);
     }
 
-    protected function setEntity($entity)
+    protected function setQuery($query)
     {
-        static::$_entity[get_called_class()] = $entity;
+        static::$_query[get_called_class()] = $query;
         return $this;
     }
 
-    protected function getEntity()
+    protected function getQuery()
     {
-        if (!$this->hasEntity()) {
+        if (!$this->hasQuery()) {
             return null;
         }
-        return static::$_entity[get_called_class()];
+        return static::$_query[get_called_class()];
     }
 }

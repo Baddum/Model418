@@ -15,8 +15,8 @@ class ResourceModel extends Model
         return array('myName' => 'defaultValue');
     }
     
-    protected function initEntity()
+    protected function initQuery()
     {
-        return new ResourceEntity($this);
+        return new ResourceQuery($this);
     }
 }
