@@ -55,6 +55,8 @@ $john->set('lastName', 'Doe')
 $john->delete();
 ```
 
+To go further, you should read [the complete documentation](https://github.com/Elephant418/Model418/blob/master/doc/Index.md).
+
 [&uarr; top](#readme)
 
 
