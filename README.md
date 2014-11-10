@@ -62,11 +62,10 @@ $john->delete();
 How to Install
 --------
 
-This library package requires `PHP 5.4` or later.
-
+This library package requires `PHP 5.4` or later.<br>
 Install [Composer](http://getcomposer.org/doc/01-basic-usage.md#installation) and run the following command to get the latest version:
 
-```
+```sh
 composer require elephant418/model418:~1.0
 ```
 
@@ -77,11 +76,11 @@ composer require elephant418/model418:~1.0
 How to Contribute
 --------
 
-### Here are ways to get involved:
+### Get involved
 
 1. [Star](https://github.com/elephant418/model418/stargazers) the project!
 2. [Report a bug](https://github.com/lephant418/model418/issues/new) that you find
-3. Tweet and blog about the advantages (and criticisms) of the library, and [Let me know](https://twitter.com/iamtzi) about it.
+3. Tweet and blog about Model418 and [Let me know](https://twitter.com/iamtzi) about it.
 
 ### Pull Requests
 
