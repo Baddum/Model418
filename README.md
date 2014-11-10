@@ -79,7 +79,7 @@ How to Contribute
 ### Get involved
 
 1. [Star](https://github.com/elephant418/model418/stargazers) the project!
-2. [Report a bug](https://github.com/lephant418/model418/issues/new) that you find
+2. [Report a bug](https://github.com/elephant418/model418/issues/new) that you find
 3. Tweet and blog about Model418 and [Let me know](https://twitter.com/iamtzi) about it.
 
 ### Pull Requests
