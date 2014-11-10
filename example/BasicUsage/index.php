@@ -1,8 +1,8 @@
 <?php
 
-namespace Model418\Example\BasicUsage;
-
+// Require composer autoload
 require_once( __DIR__ . '/../../vendor/autoload.php');
+use Model418\Example\BasicUsage\UserModel;
 
 // Retrieve all models
 $userList = (new UserModel)->query()->fetchAll();
