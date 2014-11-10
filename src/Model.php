@@ -120,8 +120,22 @@ class Model extends ArrayObject implements IModel
         return isset($schema[$key]);
     }
 
+    protected function uniformSchema($schema)
+    {
+        $uniformSchema = array();
+        foreach ($schema as $key => $defaultValue) {
+            if (is_int($key) && is_string($defaultValue)) {
+                $uniformSchema[$defaultValue] = '';
+            } else {
+                $uniformSchema[$key] = $defaultValue;
+            }
+        }
+        return $uniformSchema;
+    }
+
     protected function setSchema($schema)
     {
+        $schema = $this->uniformSchema($schema);
         static::$_schema[get_called_class()] = $schema;
         return $this;
     }
