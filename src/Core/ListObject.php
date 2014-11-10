@@ -2,7 +2,7 @@
 
 namespace Model418\Core;
 
-class ArrayObject extends \ArrayObject
+class ListObject extends \ArrayObject
 {
 
 
@@ -10,17 +10,12 @@ class ArrayObject extends \ArrayObject
      *************************************************************************/
     public function __construct($input = [])
     {
-        parent::__construct($input, \ArrayObject::ARRAY_AS_PROPS);
+        $this->exchangeArray(array_values($input));
     }
 
 
     /* GETTER & SETTER
      *************************************************************************/
-    public function get($name)
-    {
-        return $this->offsetGet($name);
-    }
-
     public function offsetGet($name)
     {
         if (!$this->offsetExists($name)) {
@@ -28,15 +23,22 @@ class ArrayObject extends \ArrayObject
         }
         return parent::offsetGet($name);
     }
-
-    public function set($name, $value)
+    
+    public function offsetSet($index, $value)
     {
-        return $this->offsetSet($name, $value);
+        if (!is_int($index)) {
+            throw new \Exception('Index type not supported: ' . $index);
+        }
+        if ($index > $this->count() + 1) {
+            throw new \Exception('Index value not supported: ' . $index);
+        }
+        return $this->offsetSet($index, $value);
     }
 
-    public function offsetUnset($index)
+    public function add($value)
     {
-        $this->offsetSet($index, NULL);
+        $this->append($value);
+        return $this;
     }
 
     public function toArray()

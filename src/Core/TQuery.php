@@ -2,6 +2,8 @@
 
 namespace Model418\Core;
 
+use Model418\ModelList;
+
 trait TQuery
 {
 
@@ -93,9 +95,10 @@ trait TQuery
         $modelList = array();
         foreach ($dataList as $data) {
             $model = $this->getModel();
-            $modelList[$model->id] = $model->initByData($data);
+            $model = $model->initByData($data);
+            $modelList[$model->id] = $model;
         }
-        return $modelList;
+        return (new ModelList)->init($modelList);
     }
 
     protected function resultAsModel($data)
