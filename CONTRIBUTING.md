@@ -32,4 +32,4 @@ Pull requests Workflow
 
 1. Fork the library repository
 2. Create a new branch for each feature or improvement
-3. Send a pull request from each feature branch to the **develop** branch
+3. Send a pull request from each feature branch to the **v1.x** branch

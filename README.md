@@ -9,8 +9,8 @@ Model418
 
 
 
-Model418 is a nice-to-use & highly flexible `ORM`.
-It maps your data, from a database or another source, and its relationships into accessible objects.
+Model418 is a nice-to-use & highly flexible `ORM`.<br>
+It maps your data, from a database or another source, and its relationships into accessible objects.<br>
 It could be used with or without a framework.
 
 1. [Features](#features)
@@ -35,43 +35,24 @@ For now, Model418 supports only *File system* storage with the following encodin
 Let's code
 --------
 
-### Retrieve all models
+```php
+// Retrieve all models
+$userList = (new UserModel)->query()->fetchAll();
 
-```
-$users = (new UserModel)->query()->fetchAll();
-```
-
-### Retrieve by primary key
-
-```
-$users = (new UserModel)->query()->fetchById(1);
-```
-
-### Save a new Model
-
-```
+// Save a new Model
 $user = (new UserModel)
-    ->set('name', 'John')
+    ->set('firstName', 'John')
     ->save();
-```
-
-### Update an existing Model
-
-```
-$user = (new UserModel)
-    ->query()
-    ->fetchById(1)
-    ->set('name', 'John')
+    
+// Retrieve by primary key
+$john = (new UserModel)->query()->fetchById(1);
+    
+// Update an existing Model
+$john->set('lastName', 'Doe')
     ->save();
-```
-
-### Delete an existing Model
-
-```
-$user = (new UserModel)
-    ->query()
-    ->fetchById(1)
-    ->delete();
+    
+// Delete an existing Model
+$john->delete();
 ```
 
 [&uarr; top](#readme)
@@ -102,9 +83,10 @@ How to Contribute
 2. [Report a bug](https://github.com/jarednova/timber/issues/new) that you find
 3. Tweet and blog about the advantages (and criticisms) of the library, and [Let me know](https://twitter.com/iamtzi) about it.
 
-#### Pull Requests
+### Pull Requests
 
-Pull requests are highly appreciated. You should read the [Contributing Guidelines](https://github.com/Elephant418/Model418/blob/master/CONTRIBUTING.md) to go further. 
+Pull requests are highly appreciated.<br>
+You should read the [Contributing Guidelines](https://github.com/Elephant418/Model418/blob/master/CONTRIBUTING.md) to go further. 
 
 [&uarr; top](#readme)
 
@@ -113,5 +95,5 @@ Pull requests are highly appreciated. You should read the [Contributing Guidelin
 Author & Community
 --------
 
-Model418 is under [MIT License](http://opensource.org/licenses/MIT).
+Model418 is under [MIT License](http://opensource.org/licenses/MIT).<br>
 It was created & maintained by [Thomas ZILLIOX](http://tzi.fr).
