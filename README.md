@@ -85,7 +85,7 @@ How to Contribute
 ### Pull Requests
 
 Pull requests are highly appreciated.<br>
-You should read the [Contributing Guidelines](https://github.com/Elephant418/Model418/blob/master/CONTRIBUTING.md) to go further. 
+Please review the [guidelines for contributing](https://github.com/Elephant418/Model418/blob/master/CONTRIBUTING.md) to go further. 
 
 [&uarr; top](#readme)
 
