@@ -1,9 +1,9 @@
 <?php
 
-namespace Test\Elephant418\Model418\Resources\SimpleCase;
+namespace Test\Model418\Resources\SimpleCase;
 
-use Elephant418\Model418\FileProvider as Provider;
-use Elephant418\Model418\ModelQuery;
+use Model418\FileProvider as Provider;
+use Model418\ModelQuery;
 
 class ResourceModel extends ModelQuery
 {

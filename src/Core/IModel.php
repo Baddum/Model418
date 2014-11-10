@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Model418\Core;
+namespace Model418\Core;
 
 interface IModel
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Elephant418\Model418;
+namespace Model418;
 
-use Elephant418\Model418\Core\ArrayObject;
-use Elephant418\Model418\Core\IModel;
+use Model418\Core\ArrayObject;
+use Model418\Core\IModel;
 
 class Model extends ArrayObject implements IModel
 {

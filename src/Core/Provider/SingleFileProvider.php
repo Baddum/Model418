@@ -1,12 +1,12 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider;
+namespace Model418\Core\Provider;
 
-use Elephant418\Model418\Core\Request\FileRequestFactory;
-use Elephant418\Model418\Core\Request\TextFileRequest;
-use Elephant418\Model418\Core\Request\JSONFileRequest;
-use Elephant418\Model418\Core\Request\YamlFileRequest;
-use Elephant418\Model418\Core\Request\MarkdownFileRequest;
+use Model418\Core\Request\FileRequestFactory;
+use Model418\Core\Request\TextFileRequest;
+use Model418\Core\Request\JSONFileRequest;
+use Model418\Core\Request\YamlFileRequest;
+use Model418\Core\Request\MarkdownFileRequest;
 
 TextFileRequest::register();
 JSONFileRequest::register();

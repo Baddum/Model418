@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Elephant418\Model418\Resources\SeparateCase;
+namespace Test\Model418\Resources\SeparateCase;
 
-use Elephant418\Model418\Model;
+use Model418\Model;
 
 class ResourceModel extends Model
 {

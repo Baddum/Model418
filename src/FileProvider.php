@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418;
+namespace Model418;
 
-use Elephant418\Model418\Core\Provider\SingleFileProvider;
+use Model418\Core\Provider\SingleFileProvider;
 
 class FileProvider extends SingleFileProvider
 {

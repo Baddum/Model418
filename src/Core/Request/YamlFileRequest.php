@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Model418\Core\Request;
+namespace Model418\Core\Request;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Elephant418\Model418\Test;
+namespace Test\Model418\Test;
 
-use Elephant418\Model418\FileProvider;
+use Model418\FileProvider;
 
 class FileProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -313,7 +313,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
 
     protected function getFileRequestStub()
     {
-        return $this->getMock('Elephant418\\Model418\\Core\\Request\\FileRequest');
+        return $this->getMock('Model418\\Core\\Request\\FileRequest');
     }
 
     protected function addGetContentsMethodToStub($stub, $occurrence = null, $dataList = array())

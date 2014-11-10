@@ -1,13 +1,13 @@
 <?php
 
-namespace Test\Elephant418\Model418\Test;
+namespace Test\Model418\Test;
 
-use Test\Elephant418\Model418\Resources\SimpleCase\ResourceModel as SimpleModel;
-use Test\Elephant418\Model418\Resources\SeparateCase\ResourceModel as SeparateModel;
-use Test\Elephant418\Model418\Resources\NoProviderCase\ResourceModel as NoProviderModel;
-use Test\Elephant418\Model418\Resources\JSONCase\ResourceModel as JSONModel;
-use Test\Elephant418\Model418\Resources\SubAttributeCase\ResourceModel as SubAttributeModel;
-use Test\Elephant418\Model418\Resources\MdAttributeCase\ResourceModel as MdAttributeModel;
+use Test\Model418\Resources\SimpleCase\ResourceModel as SimpleModel;
+use Test\Model418\Resources\SeparateCase\ResourceModel as SeparateModel;
+use Test\Model418\Resources\NoProviderCase\ResourceModel as NoProviderModel;
+use Test\Model418\Resources\JSONCase\ResourceModel as JSONModel;
+use Test\Model418\Resources\SubAttributeCase\ResourceModel as SubAttributeModel;
+use Test\Model418\Resources\MdAttributeCase\ResourceModel as MdAttributeModel;
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
 {
