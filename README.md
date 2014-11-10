@@ -7,12 +7,111 @@ Model418
 [![Total Downloads](https://poser.pugx.org/elephant418/model418/downloads.svg)](https://packagist.org/packages/elephant418/model418)
 [![License](https://poser.pugx.org/elephant418/model418/license.svg)](http://opensource.org/licenses/MIT)
 
-A PHP library for a simple & explicit model layer.
+
+
+Model418 is a nice-to-use & highly flexible `ORM`.
+It maps your data, from a database or another source, and its relationships into accessible objects.
+It could be used with or without a framework.
+
+1. [Features](#features)
+2. [Let's code](#lets-code)
+3. [How to Install](#how-to-install)
+4. [How to Contribute](#how-to-contribute)
+5. [Author & Community](#author--community)
+
+
+
+Features
+--------
+
+For now, Model418 supports only *File system* storage with the following encoding:
+
+ * Yaml (default), JSON, Text and Markdown.
+
+[&uarr; top](#readme)
+
+
+
+Let's code
+--------
+
+### Retrieve all models
+
+```
+$users = (new UserModel)->query()->fetchAll();
+```
+
+### Retrieve by primary key
+
+```
+$users = (new UserModel)->query()->fetchById(1);
+```
+
+### Save a new Model
+
+```
+$user = (new UserModel)
+    ->set('name', 'John')
+    ->save();
+```
+
+### Update an existing Model
+
+```
+$user = (new UserModel)
+    ->query()
+    ->fetchById(1)
+    ->set('name', 'John')
+    ->save();
+```
+
+### Delete an existing Model
+
+```
+$user = (new UserModel)
+    ->query()
+    ->fetchById(1)
+    ->delete();
+```
+
+[&uarr; top](#readme)
+
+
+
+How to Install
+--------
+
+This library package requires `PHP 5.4` or later.
+
+Install [Composer](http://getcomposer.org/doc/01-basic-usage.md#installation) and run the following command to get the latest version:
+
+```
+composer require elephant418/model418:~1.0
+```
+
+[&uarr; top](#readme)
+
+
+
+How to Contribute
+--------
+
+### Here are ways to get involved:
+
+1. [Star](https://github.com/elephant418/model418/stargazers) the project!
+2. [Report a bug](https://github.com/jarednova/timber/issues/new) that you find
+3. Tweet and blog about the advantages (and criticisms) of the library, and [Let me know](https://twitter.com/iamtzi) about it.
+
+#### Pull Requests
+
+Pull requests are highly appreciated. You should read the [Contributing Guidelines](https://github.com/Elephant418/Model418/blob/master/CONTRIBUTING.md) to go further. 
+
+[&uarr; top](#readme)
 
 
 
 Author & Community
 --------
 
-Model418 is under [MIT License](http://opensource.org/licenses/MIT).<br>
-It's created & maintained by [Thomas ZILLIOX](http://tzi.fr).
+Model418 is under [MIT License](http://opensource.org/licenses/MIT).
+It was created & maintained by [Thomas ZILLIOX](http://tzi.fr).
