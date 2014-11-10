@@ -2,7 +2,7 @@ Quick Start
 ======
 
 1. [Install](#install)
-2. [Define A Model](#define-a-model)
+2. [Define a Model](#define-a-model)
 3. [Basic Usage](#basic-usage)
 
 
@@ -18,7 +18,7 @@ composer require elephant418/model418:~1.0
 
 
 
-Define A Model
+Define a Model
 --------
 
 Start by defining a model
