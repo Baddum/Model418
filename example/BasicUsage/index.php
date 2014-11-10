@@ -13,13 +13,17 @@ $user = (new UserModel)
     ->save();
 
 // Retrieve by primary key
+$johnId = $user->id;
 $john = (new UserModel)
     ->query()
-    ->fetchById(1);
+    ->fetchById($johnId);
 
 // Update an existing Model
 $john->set('lastName', 'Doe')
     ->save();
+
+// Access to Model attribute
+echo $john->firstName.' '.$john->lastName.PHP_EOL;
 
 // Delete an existing Model
 $john->delete();

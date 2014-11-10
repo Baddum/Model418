@@ -36,7 +36,7 @@ class UserModel extends Model
     }
     
     // An instance of the associated Query.
-    // It will be used to query the file system
+    // It will be used to query the storage system, in this case the file system.
     protected function initQuery()
     {
         // Instance a FileQuery and set the folder that will be used for storage
@@ -62,11 +62,17 @@ $user = (new UserModel)
     ->save();
     
 // Retrieve by primary key
-$john = (new UserModel)->query()->fetchById(1);
+$johnId = $user->id;
+$john = (new UserModel)
+    ->query()
+    ->fetchById($johnId);
     
 // Update an existing Model
 $john->set('lastName', 'Doe')
     ->save();
+
+// Access to Model attribute
+echo $john->firstName.' '.$john->lastName.PHP_EOL;
     
 // Delete an existing Model
 $john->delete();

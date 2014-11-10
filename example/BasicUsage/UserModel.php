@@ -13,9 +13,9 @@ class UserModel extends Model
     {
         return array('firstName', 'lastName');
     }
-    
+
     // An instance of the associated Query.
-    // It will be used to query the file system
+    // It will be used to query the storage system, in this case the file system.
     protected function initQuery()
     {
         // Instance a FileQuery and set the folder that will be used for storage
