@@ -1,7 +1,9 @@
 <?php
 
-namespace Model418\Core\Provider;
+namespace Model418\Core\Provider\FileProvider;
 
+use Model418\Core\Provider\IProvider;
+use Model418\Core\Provider\TNoRelationProvider;
 use Model418\Core\Request\FileRequestFactory;
 use Model418\Core\Request\TextFileRequest;
 use Model418\Core\Request\JSONFileRequest;
@@ -13,7 +15,7 @@ JSONFileRequest::register();
 YamlFileRequest::register();
 MarkdownFileRequest::register();
 
-class SingleFileProvider implements IProvider
+class FileProvider implements IProvider
 {
     use TNoRelationProvider;
 

@@ -2,8 +2,8 @@
 
 namespace Model418;
 
-use Model418\Core\IQuery;
-use Model418\Core\TQuery;
+use Model418\Core\Query\IQuery;
+use Model418\Core\Query\TQuery;
 
 class Query implements IQuery
 {
