@@ -39,4 +39,9 @@ trait TNoRelationProvider
         }
         return $this->fetchByIdList($idList);
     }
+    
+    protected  function getAllIds()
+    {
+        throw new \LogicException('This method must be overridden');
+    }
 }
