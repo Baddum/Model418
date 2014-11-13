@@ -1,6 +1,6 @@
 {
     "name": "elephant418/model418",
-    "type": "lib",
+    "type": "library",
     "description": "A library for a simple & explicit model couch",
     "keywords": ["model"],
     "license": "MIT",
