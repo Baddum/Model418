@@ -6,7 +6,7 @@ class ListObject extends \ArrayObject
 {
 
 
-    /* CONSTRUCTOR
+    /* INITIALIZATION
      *************************************************************************/
     public function __construct($input = [])
     {

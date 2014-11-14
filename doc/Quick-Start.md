@@ -4,6 +4,7 @@ Quick Start
 1. [Install](#install)
 2. [Define a Model](#define-a-model)
 3. [Basic Usage](#basic-usage)
+4. [Define Storage Folder](#define-storage-folder)
 
 
 
@@ -24,9 +25,9 @@ Define a Model
 Start by defining a model
 
 ```php
-use Model418\Model;
+use Model418\ModelQuery;
 
-class UserModel extends Model
+class UserModel extends ModelQuery
 {
 
     // The list of the attributes of your model
@@ -34,18 +35,8 @@ class UserModel extends Model
     {
         return array('firstName', 'lastName');
     }
-    
-    // An instance of the associated Query.
-    // It will be used to query the storage system, in this case the file system.
-    protected function initQuery()
-    {
-        // Instance a FileQuery and set the folder that will be used for storage
-        return new FileQuery($this, __DIR__.'/User');
-    }
 }
 ```
-
-[&uarr; top](#readme)
 
 
 
@@ -61,6 +52,7 @@ use Model418\Example\BasicUsage\UserModel;
 $userList = (new UserModel)->query()->fetchAll();
 
 // Save a new Model
+// And create a `data/UserModel/1.yml` file
 $user = (new UserModel)
     ->set('firstName', 'John')
     ->save();
@@ -82,4 +74,23 @@ echo $john->firstName.' '.$john->lastName.PHP_EOL;
 $john->delete();
 ```
 
-[&uarr; top](#readme)
+
+
+Define Storage Folder
+--------
+
+You can define in which folder you want to store your data, by overriding the `initFolder()` method:
+
+```php
+use Model418\ModelQuery;
+
+class UserModel extends ModelQuery
+{
+
+    protected function initFolder()
+    {
+        // Return the path where you want to store your data.
+        return __DIR__.'/../data/User';
+    }
+}
+```

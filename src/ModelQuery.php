@@ -26,4 +26,22 @@ class ModelQuery extends Model implements IQuery
     {
         return $this;
     }
+
+    protected function initProvider()
+    {
+        $folder = $this->initFolder();
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777, true);
+        }
+        $provider = (new FileProvider)
+            ->setFolder($folder);
+        return $provider;
+    }
+
+    protected function initFolder()
+    {
+        $className = get_class($this);
+        $folder = './data/'.substr($className, strrpos($className, '\\') + 1);
+        return $folder;
+    }
 }
