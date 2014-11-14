@@ -4,7 +4,7 @@ namespace Test\Model418\Test;
 
 use Test\Model418\Resources\SimpleCase\ResourceModel as SimpleModel;
 use Test\Model418\Resources\SeparateCase\ResourceModel as SeparateModel;
-use Test\Model418\Resources\NoProviderCase\ResourceModel as NoProviderModel;
+use Test\Model418\Resources\NoQueryCase\ResourceModel as NoQueryModel;
 use Test\Model418\Resources\JSONCase\ResourceModel as JSONModel;
 use Test\Model418\Resources\SubAttributeCase\ResourceModel as SubAttributeModel;
 use Test\Model418\Resources\MdAttributeCase\ResourceModel as MdAttributeModel;
@@ -32,10 +32,10 @@ class EndToEndTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('myValue', $model->myName);
     }
     
-    public function testNoProvider()
+    public function testNoQuery()
     {
         $this->setExpectedException('LogicException');
-        (new NoProviderModel)->query()->fetchById('test');
+        (new NoQueryModel)->query()->fetchById('test');
     }
     
     public function testSaveAndDelete()

@@ -1,10 +1,10 @@
 <?php
 
-namespace Test\Model418\Resources\NoProviderCase;
+namespace Test\Model418\Resources\NoQueryCase;
 
-use Model418\ModelQuery;
+use Model418\Model;
 
-class ResourceModel extends ModelQuery
+class ResourceModel extends Model
 {
 
 

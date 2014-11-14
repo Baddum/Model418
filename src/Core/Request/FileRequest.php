@@ -20,7 +20,6 @@ abstract class FileRequest implements IFileRequest
         }
         $filePath = $this->getFilePath($folder, $id);
         $text = file_get_contents($filePath);
-        echo $filePath.PHP_EOL;
         $data = null;
         if ($text) {
             $data = $this->getDataFromText($text);
