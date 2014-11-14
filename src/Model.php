@@ -2,8 +2,9 @@
 
 namespace Model418;
 
-use Model418\Core\Model\SchemaModel;
+use Model418\Core\Model\IModel;
+use Model418\Core\Model\StoredModel;
 
-class Model extends SchemaModel
+class Model extends StoredModel implements IModel
 {
 }

@@ -24,9 +24,9 @@ class SchemaModel extends Model
 
     /* INITIALIZATION
      *************************************************************************/
-    public function __construct($query = null)
+    public function __construct()
     {
-        parent::__construct($query);
+        parent::__construct();
         if (!$this->hasSchema()) {
             $schema = $this->initSchema();
             $this->setSchema($schema);
