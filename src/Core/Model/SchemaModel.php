@@ -51,11 +51,17 @@ class SchemaModel extends Model
             return true;
         }
         $schema = static::$_schema[get_called_class()];
+        if ($schema === false) {
+            return true;
+        }
         return isset($schema[$key]);
     }
 
     protected function uniformSchema($schema)
     {
+        if ($schema === false) {
+            return false;
+        }
         $uniformSchema = array();
         foreach ($schema as $key => $defaultValue) {
             if (is_int($key) && is_string($defaultValue)) {
@@ -72,20 +78,5 @@ class SchemaModel extends Model
         $schema = $this->uniformSchema($schema);
         static::$_schema[get_called_class()] = $schema;
         return $this;
-    }
-
-    protected function getSchema($key = null)
-    {
-        if (!$this->hasSchema()) {
-            return array();
-        }
-        $schema = static::$_schema[get_called_class()];
-        if (is_null($key)) {
-            return $schema;
-        }
-        if (!$this->hasSchema($key)) {
-            return array();
-        }
-        return $schema[$key];
     }
 }

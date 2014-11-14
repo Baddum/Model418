@@ -2,9 +2,9 @@ Quick Start
 ======
 
 1. [Install](#install)
-2. [Define a Model](#define-a-model)
-3. [Basic Usage](#basic-usage)
-4. [Define Storage Folder](#define-storage-folder)
+2. [Basic Usage](#basic-usage)
+3. [Define Storage Folder](#define-storage-folder)
+4. [Define A Model Schema](#define-a-model-schema)
 
 
 
@@ -19,29 +19,18 @@ composer require elephant418/model418:~1.0
 
 
 
-Define a Model
+Basic Usage
 --------
 
-Start by defining a model
+Start by defining a model with the `ModelQuery` starter class:
 
 ```php
 use Model418\ModelQuery;
 
 class UserModel extends ModelQuery
 {
-
-    // The list of the attributes of your model
-    protected function initSchema()
-    {
-        return array('firstName', 'lastName');
-    }
 }
 ```
-
-
-
-Basic Usage
---------
 
 ```php
 // Require composer autoload
@@ -86,11 +75,39 @@ use Model418\ModelQuery;
 
 class UserModel extends ModelQuery
 {
-
     protected function initFolder()
     {
         // Return the path where you want to store your data.
         return __DIR__.'/../data/User';
     }
 }
+```
+
+
+
+Define A Model Schema
+--------
+
+You can define an exclusive list of attribute for your model:
+
+```php
+use Model418\ModelQuery;
+
+class UserModel extends ModelQuery
+{
+    protected function initSchema()
+    {
+        // The list of the attributes of your model
+        return array('firstName', 'lastName');
+    }
+}
+```
+
+If a schema is set, you could not set another attribute: 
+
+```php
+// Throw RuntimeException
+$user = (new UserModel)
+    ->set('age', '30')
+    ->save();
 ```

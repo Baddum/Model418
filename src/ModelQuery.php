@@ -22,6 +22,11 @@ class ModelQuery extends Model implements IQuery
 
     /* PROTECTED ENTITY METHODS
      *************************************************************************/
+    protected function initSchema()
+    {
+        return false;
+    }
+    
     protected function initQuery()
     {
         return $this;
