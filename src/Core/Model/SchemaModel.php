@@ -15,9 +15,10 @@ class SchemaModel extends Model
      *************************************************************************/
     public function offsetSet($name, $value)
     {
-        if ($this->hasSchema($name)) {
-            parent::offsetSet($name, $value);
+        if (!$this->hasSchema($name)) {
+            throw new \RuntimeException('Invalid attribute name: '.$name);
         }
+        parent::offsetSet($name, $value);
         return $this;
     }
 
