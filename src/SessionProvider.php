@@ -15,4 +15,12 @@ class SessionProvider extends NoRelationProvider implements IProvider
     {
         return new SessionRequest;
     }
+
+
+    /* PROTECTED METHODS
+     *************************************************************************/
+    protected function isIdAvailable($id)
+    {
+        return parent::isIdAvailable($id);
+    }
 }

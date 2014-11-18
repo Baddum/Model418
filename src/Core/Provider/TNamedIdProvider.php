@@ -33,6 +33,14 @@ trait TNamedIdProvider
     }
 
 
+    /* PROTECTED METHODS
+     *************************************************************************/
+    protected function isIdAvailable($id)
+    {
+        throw new \LogicException('This method must be overridden');
+    }
+
+
     /* PROTECTED SOURCE FILE METHODS
      *************************************************************************/
     protected function findAvailableIdByData($data) {

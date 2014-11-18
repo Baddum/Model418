@@ -47,8 +47,9 @@ abstract class CacheDumpProvider extends NoRelationProvider
 
     public function deleteById($id)
     {
-        parent::deleteById($id);
+        $status = parent::deleteById($id);
         $this->clearCacheItem($id);
+        return $status;
     }
 
 

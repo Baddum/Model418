@@ -50,6 +50,14 @@ class FileProvider extends CacheDumpProvider implements IProvider
     }
 
 
+    /* PROTECTED METHODS
+     *************************************************************************/
+    protected function isIdAvailable($id)
+    {
+        return parent::isIdAvailable($id);
+    }
+
+
     /* FILE REQUEST METHODS
      *************************************************************************/
     public function setRequest($format)
