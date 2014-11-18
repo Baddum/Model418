@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Model418\Resources\SeparateCase;
+namespace Elephant418\Model418\Test\Resources\NoQuery;
 
-use Model418\Model;
+use Elephant418\Model418\Model;
 
 class ResourceModel extends Model
 {
@@ -13,10 +13,5 @@ class ResourceModel extends Model
     protected function initSchema()
     {
         return array('myName' => 'defaultValue');
-    }
-    
-    protected function initQuery()
-    {
-        return new ResourceQuery($this);
     }
 }

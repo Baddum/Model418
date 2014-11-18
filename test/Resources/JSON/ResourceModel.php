@@ -1,9 +1,9 @@
 <?php
 
-namespace Test\Model418\Resources\MdAttributeCase;
+namespace Elephant418\Model418\Test\Resources\JSON;
 
-use Model418\FileProvider as Provider;
-use Model418\ModelQuery;
+use Elephant418\Model418\FileProvider as Provider;
+use Elephant418\Model418\ModelQuery;
 
 class ResourceModel extends ModelQuery
 {
@@ -14,8 +14,8 @@ class ResourceModel extends ModelQuery
     protected function initProvider()
     {
         $provider = (new Provider)
+            ->setRequest('JSON')
             ->setFolder(__DIR__ . '/../data')
-            ->setSubAttribute('content', 'article', 'md')
             ->setIdField('myName');
         return $provider;
     }
@@ -24,7 +24,7 @@ class ResourceModel extends ModelQuery
     {
         return array(
             'myName' => 'defaultValue',
-            'content' => ''
+            'myArray' => 'defaultArray'
         );
     }
 
@@ -33,6 +33,6 @@ class ResourceModel extends ModelQuery
      *************************************************************************/
     public function fetchTest()
     {
-        return $this->fetchById('test');
+        return $this->fetchById('json');
     }
 }

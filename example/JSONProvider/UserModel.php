@@ -1,9 +1,9 @@
 <?php
 
-namespace Model418\Example\JSONProvider;
+namespace Elephant418\Model418\Example\JSONProvider;
 
-use Model418\ModelQuery;
-use Model418\FileProvider as Provider;
+use Elephant418\Model418\ModelQuery;
+use Elephant418\Model418\FileProvider as Provider;
 
 class UserModel extends ModelQuery
 {

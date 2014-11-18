@@ -1,9 +1,9 @@
 <?php
 
-namespace Model418\Example\SessionProvider;
+namespace Elephant418\Model418\Example\SessionProvider;
 
-use Model418\ModelQuery;
-use Model418\SessionProvider as Provider;
+use Elephant418\Model418\ModelQuery;
+use Elephant418\Model418\SessionProvider as Provider;
 
 class UserModel extends ModelQuery
 {

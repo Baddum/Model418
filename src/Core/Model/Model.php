@@ -1,8 +1,8 @@
 <?php
 
-namespace Model418\Core\Model;
+namespace Elephant418\Model418\Core\Model;
 
-use Model418\Core\ArrayObject;
+use Elephant418\Model418\Core\ArrayObject;
 
 class Model extends ArrayObject
 {

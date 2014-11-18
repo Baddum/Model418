@@ -1,15 +1,15 @@
 <?php
 
-namespace Model418\Core\Provider\FileProvider;
+namespace Elephant418\Model418\Core\Provider\FileProvider;
 
-use Model418\Core\Provider\IProvider;
-use Model418\Core\Provider\CacheDumpProvider;
-use Model418\Core\Provider\TNamedIdProvider;
-use Model418\Core\Request\FileRequestFactory;
-use Model418\Core\Request\TextFileRequest;
-use Model418\Core\Request\JSONFileRequest;
-use Model418\Core\Request\YamlFileRequest;
-use Model418\Core\Request\MarkdownFileRequest;
+use Elephant418\Model418\Core\Provider\IProvider;
+use Elephant418\Model418\Core\Provider\CacheDumpProvider;
+use Elephant418\Model418\Core\Provider\TNamedIdProvider;
+use Elephant418\Model418\Core\Request\FileRequestFactory;
+use Elephant418\Model418\Core\Request\TextFileRequest;
+use Elephant418\Model418\Core\Request\JSONFileRequest;
+use Elephant418\Model418\Core\Request\YamlFileRequest;
+use Elephant418\Model418\Core\Request\MarkdownFileRequest;
 
 TextFileRequest::register();
 JSONFileRequest::register();

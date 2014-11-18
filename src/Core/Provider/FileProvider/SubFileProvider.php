@@ -1,6 +1,6 @@
 <?php
 
-namespace Model418\Core\Provider\FileProvider;
+namespace Elephant418\Model418\Core\Provider\FileProvider;
 
 class SubFileProvider extends FileProvider
 {

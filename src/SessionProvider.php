@@ -1,11 +1,11 @@
 <?php
 
-namespace Model418;
+namespace Elephant418\Model418;
 
-use Model418\Core\Provider\NoRelationProvider;
-use Model418\Core\Provider\IProvider;
-use Model418\Core\Provider\TNamedIdProvider;
-use Model418\Core\Request\SessionRequest;
+use Elephant418\Model418\Core\Provider\NoRelationProvider;
+use Elephant418\Model418\Core\Provider\IProvider;
+use Elephant418\Model418\Core\Provider\TNamedIdProvider;
+use Elephant418\Model418\Core\Request\SessionRequest;
 
 class SessionProvider extends NoRelationProvider implements IProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Model418\Core\Provider;
+namespace Elephant418\Model418\Core\Provider;
 
 abstract class CacheDumpProvider extends NoRelationProvider
 {

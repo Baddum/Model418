@@ -24,9 +24,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Model418\\": "src",
-            "Test\\Model418\\": "test",
-            "Model418\\Example\\": "example"
+            "Elephant418\\Model418\\": "src",
+            "Elephant418\\Model418\\Test\\": "test",
+            "Elephant418\\Model418\\Example\\": "example"
         }
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Model418;
+namespace Elephant418\Model418;
 
-use Model418\Core\Model\IModel;
-use Model418\Core\Model\StoredModel;
+use Elephant418\Model418\Core\Model\IModel;
+use Elephant418\Model418\Core\Model\StoredModel;
 
 class Model extends StoredModel implements IModel
 {
