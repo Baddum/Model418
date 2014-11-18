@@ -25,7 +25,8 @@ class FileProvider extends CacheDumpProvider implements IProvider
      *************************************************************************/
     public function getFolder()
     {
-        return reset($this->getKey());
+        $key = $this->getKey();
+        return reset($key);
     }
 
     public function setFolder($folder)
@@ -33,7 +34,7 @@ class FileProvider extends CacheDumpProvider implements IProvider
         return $this->setKey($folder);
     }
 
-    public function getFolderList($folderList)
+    public function getFolderList()
     {
         return $this->getKey();
     }

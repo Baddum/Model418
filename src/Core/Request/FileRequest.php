@@ -56,7 +56,10 @@ abstract class FileRequest implements INoRelationRequest
     {
         $folderList = $this->formatToFolderList($folderList);
         $filePath = $this->getExistingFilePath($folderList, $id);
-        return unlink($filePath);
+        if ($filePath) {
+            return unlink($filePath);
+        }
+        return false;
     }
 
     public function getIdList($folderList)
