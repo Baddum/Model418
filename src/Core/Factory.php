@@ -24,6 +24,9 @@ class Factory
     
     public function register($class, $indexList)
     {
+        if (!is_array($indexList)) {
+            $indexList = array($indexList);
+        }
         foreach ($indexList as $index) {
             $id = strtolower($index);
             static::$indexList[$id] = $class;
