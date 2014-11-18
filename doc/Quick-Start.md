@@ -25,7 +25,7 @@ Basic Usage
 Start by defining a model with the `ModelQuery` starter class:
 
 ```php
-use Model418\ModelQuery;
+use Elephant418\Model418\ModelQuery;
 
 class UserModel extends ModelQuery
 {
@@ -34,11 +34,12 @@ class UserModel extends ModelQuery
 
 ```php
 // Require composer autoload
-require_once( __DIR__ . '/../../vendor/autoload.php');
-use Model418\Example\BasicUsage\UserModel;
+require_once( __DIR__ . '/path/to/vendor/autoload.php');
+use My\Project\Namespace\Model\UserModel;
 
 // Retrieve all models
 $userList = (new UserModel)->query()->fetchAll();
+echo count($userList);
 
 // Save a new Model
 // And create a `data/UserModel/1.yml` file
@@ -71,8 +72,6 @@ Define Storage Folder
 You can define in which folder you want to store your data, by overriding the `initFolder()` method:
 
 ```php
-use Model418\ModelQuery;
-
 class UserModel extends ModelQuery
 {
     protected function initFolder()
@@ -91,8 +90,6 @@ Define A Model Schema
 You can define an exclusive list of attribute for your model:
 
 ```php
-use Model418\ModelQuery;
-
 class UserModel extends ModelQuery
 {
     protected function initSchema()
