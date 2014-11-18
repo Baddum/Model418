@@ -83,7 +83,7 @@ abstract class FileRequest implements INoRelationRequest
      *************************************************************************/
     public static function register()
     {
-        (new FileRequestFactory)->register(get_called_class());
+        (new FileRequestFactory)->register(get_called_class(), static::$factoryIndexList);
     }
 
 

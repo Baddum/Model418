@@ -45,7 +45,7 @@ class ModelQuery extends Model implements IQuery
 
     protected function initFolder()
     {
-        $className = get_class($this);
+        $className = get_called_class();
         $folder = './data/'.substr($className, strrpos($className, '\\') + 1);
         return $folder;
     }

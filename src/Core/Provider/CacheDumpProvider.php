@@ -57,21 +57,21 @@ abstract class CacheDumpProvider extends NoRelationProvider
      *************************************************************************/
     public function clearCache()
     {
-        $this->_cache[get_class($this)] = null;
+        $this->_cache[get_called_class()] = null;
         return $this;
     }
     
     public function clearCacheItem($id)
     {
         if ($this->hasCache()) {
-            $this->_cache[get_class($this)][$id] = null;
+            $this->_cache[get_called_class()][$id] = null;
         }
         return $this;
     }
     
     protected function setCache($dataList)
     {
-        $this->_cache[get_class($this)] = $dataList;
+        $this->_cache[get_called_class()] = $dataList;
         return $this;
     }
 
@@ -79,20 +79,20 @@ abstract class CacheDumpProvider extends NoRelationProvider
     {
         if ($this->hasCache()) {
             $data['id'] = $id;
-            $this->_cache[get_class($this)][$id] = $data;
+            $this->_cache[get_called_class()][$id] = $data;
         }
         return $this;
     }
 
     protected function hasCache()
     {
-        return isset($this->_cache[get_class($this)]);
+        return isset($this->_cache[get_called_class()]);
     }
 
     protected function getCache()
     {
         if ($this->hasCache()) {
-            return $this->_cache[get_class($this)];
+            return $this->_cache[get_called_class()];
         }
         return array();
     }
@@ -102,9 +102,9 @@ abstract class CacheDumpProvider extends NoRelationProvider
         if (!$this->hasCache()) {
             return array();
         }
-        if (!isset($this->_cache[get_class($this)][$id])) {
+        if (!isset($this->_cache[get_called_class()][$id])) {
             return array();
         }
-        return $this->_cache[get_class($this)][$id];
+        return $this->_cache[get_called_class()][$id];
     }
 }
