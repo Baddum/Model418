@@ -52,7 +52,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getFileRequestStub();
         $stub->expects($this->once())
             ->method('getContents')
-            ->with($folder, $id)
+            ->with(array($folder), $id)
             ->will($this->returnValue($expectedData));
         $provider = $this->getFileProvider($stub, $folder);
         
@@ -248,12 +248,12 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $stub
             ->expects($this->once())
             ->method('exists')
-            ->with(__DIR__, $expectedId)
+            ->with(array(__DIR__), $expectedId)
             ->will($this->returnValue(false));
         $stub
             ->expects($this->once())
             ->method('putContents')
-            ->with(__DIR__, $expectedId, $data);
+            ->with(array(__DIR__), $expectedId, $data);
         
         $provider = $this->getFileProvider($stub, $folder);
         $actualId = $provider->saveById(null, $data);
@@ -271,7 +271,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $stub
             ->expects($this->once())
             ->method('putContents')
-            ->with($folder, $id, $data);
+            ->with(array($folder), $id, $data);
 
         $provider = $this->getFileProvider($stub, $folder);
         $provider->saveById($id, $data);
@@ -305,7 +305,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $stub
             ->expects($this->once())
             ->method('putContents')
-            ->with(__DIR__, $expectedId);
+            ->with(array(__DIR__), $expectedId);
 
         $provider = $this->getFileProvider($stub, $folder);
         $actualId = $provider->saveById(null, $data);

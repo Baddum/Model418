@@ -25,18 +25,33 @@ class FileProvider extends CacheDumpProvider implements IProvider
      *************************************************************************/
     public function getFolder()
     {
-        return $this->getKey();
+        return reset($this->getKey());
     }
-    
+
     public function setFolder($folder)
     {
         return $this->setKey($folder);
     }
-    
-    public function setKey($folder)
+
+    public function getFolderList($folderList)
     {
-        $folder = $this->validFolder($folder);
-        parent::setKey($folder);
+        return $this->getKey();
+    }
+
+    public function setFolderList($folderList)
+    {
+        return $this->setKey($folderList);
+    }
+    
+    public function setKey($key)
+    {
+        if (!is_array($key)) {
+            $key = array($key);
+        }
+        foreach ($key as $index => $folder) {
+            $key[$index] = $this->validFolder($folder);
+        }
+        parent::setKey($key);
         return $this;
     }
 

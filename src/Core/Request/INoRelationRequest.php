@@ -5,7 +5,7 @@ namespace Elephant418\Model418\Core\Request;
 interface INoRelationRequest
 {
     
-    public function getContents($folder, $id);
+    public function getContents($folderList, $id);
 
     public function putContents($folder, $id, $data);
     
