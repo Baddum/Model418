@@ -39,7 +39,7 @@ class ModelQuery extends Model implements IQuery
             mkdir($folder, 0777, true);
         }
         $provider = (new FileProvider)
-            ->setFolder($folder);
+            ->setKey($folder);
         return $provider;
     }
 

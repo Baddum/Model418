@@ -331,7 +331,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     protected function getFileProvider($stub, $folder = __DIR__, $idField = 'name')
     {
         return (new FileProvider())
-            ->setFileRequest($stub)
+            ->setRequest($stub)
             ->setFolder($folder)
             ->setIdField($idField);
     }
@@ -364,10 +364,8 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getFileRequestStub();
         $stub = $this->addGetContentsMethodToStub($stub, $this->exactly($occurrenceList * $occurrenceContents));
         $stub->expects($this->exactly($occurrenceList))
-            ->method('getFolderList')
-            ->will($this->returnValue(array_map(function ($a) {
-                return __DIR__ . '/' . $a . '.yml';
-            }, $idList), true));
+            ->method('getIdList')
+            ->will($this->returnValue($idList), true);
         return $stub;
     }
 

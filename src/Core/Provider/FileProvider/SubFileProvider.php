@@ -25,7 +25,7 @@ class SubFileProvider extends FileProvider
         $subAttribute = array();
         $subAttribute['id'] = $id;
         if (!is_null($format)) {
-            $fileRequest = $this->getFileRequestFromName($format);
+            $fileRequest = $this->getRequestFromName($format);
             $subAttribute['fileRequest'] = $fileRequest;
         }
         $this->subAttributeList[$key] = $subAttribute;
@@ -88,21 +88,21 @@ class SubFileProvider extends FileProvider
     {
         $subId = $this->getSubAttributeId($id, $subKey);
         $this->getSubAttributeFileRequest($subKey)
-            ->putContents($this->folder, $subId, $subData);
+            ->putContents($this->key, $subId, $subData);
     }
 
     protected function deleteSubAttributeById($id, $subKey)
     {
         $subId = $this->getSubAttributeId($id, $subKey);
         $this->getSubAttributeFileRequest($subKey)
-            ->unlink($this->folder, $subId);
+            ->unlink($this->key, $subId);
     }
 
     protected function fetchSubAttributeById($id, $subKey)
     {
         $subId = $this->getSubAttributeId($id, $subKey);
         $subData = $this->getSubAttributeFileRequest($subKey)
-            ->getContents($this->folder, $subId);
+            ->getContents($this->key, $subId);
         return $subData;
     }
 
@@ -119,6 +119,6 @@ class SubFileProvider extends FileProvider
         if (isset($this->subAttributeList[$subKey]['fileRequest'])) {
             return $this->subAttributeList[$subKey]['fileRequest'];
         }
-        return $this->getFileRequest();
+        return $this->getRequest();
     }
 }

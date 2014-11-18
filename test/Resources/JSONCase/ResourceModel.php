@@ -14,7 +14,7 @@ class ResourceModel extends ModelQuery
     protected function initProvider()
     {
         $provider = (new Provider)
-            ->setFileRequest('JSON')
+            ->setRequest('JSON')
             ->setFolder(__DIR__ . '/../data')
             ->setIdField('myName');
         return $provider;

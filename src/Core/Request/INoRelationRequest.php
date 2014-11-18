@@ -2,7 +2,7 @@
 
 namespace Model418\Core\Request;
 
-interface IFileRequest
+interface INoRelationRequest
 {
     
     public function getContents($folder, $id);
@@ -13,5 +13,5 @@ interface IFileRequest
 
     public function unlink($folder, $id);
 
-    public function getFolderList($folder);
+    public function getIdList($folder);
 }

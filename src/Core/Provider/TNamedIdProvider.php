@@ -2,7 +2,7 @@
 
 namespace Model418\Core\Provider;
 
-abstract class NamedIdProvider extends NoRelationProvider
+trait TNamedIdProvider
 {
 
 
@@ -17,6 +17,19 @@ abstract class NamedIdProvider extends NoRelationProvider
     {
         $this->idField = $idField;
         return $this;
+    }
+
+
+    /* SAVE METHODS
+     *************************************************************************/
+    public function saveById($id, $data)
+    {
+        $exists = !is_null($id);
+        if (!$exists) {
+            $id = $this->findAvailableIdByData($data);
+        }
+        parent::saveById($id, $data);
+        return $id;
     }
 
 
@@ -45,10 +58,5 @@ abstract class NamedIdProvider extends NoRelationProvider
             $id[] = $suffix+1;
         }
         return implode('-', $id);
-    }
-
-    protected function isIdAvailable($id)
-    {
-        throw new \LogicException('This method must be overridden');
     }
 }

@@ -6,11 +6,49 @@ abstract class NoRelationProvider
 {
 
 
+    /* ATTRIBUTES
+     *************************************************************************/
+    protected $key;
+    protected $request;
+
+
+    /* KEY METHODS
+     *************************************************************************/
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    public function setKey($key)
+    {
+        $this->key = $key;
+        return $this;
+    }
+
+
+    /* FILE REQUEST METHODS
+     *************************************************************************/
+    public function setRequest($request)
+    {
+        $this->request = $request;
+        return $this;
+    }
+
+    public function getRequest()
+    {
+        if (!$this->request) {
+            $this->setRequest($this->initDefaultRequest());
+        }
+        return $this->request;
+    }
+    
+    
     /* FETCHING METHODS
      *************************************************************************/
     public function fetchById($id)
     {
-        throw new \LogicException('This method must be overridden');
+        $data = $this->getRequest()->getContents($this->getKey(), $id);
+        return $data;
     }
 
     public function fetchByIdList($idList)
@@ -37,14 +75,43 @@ abstract class NoRelationProvider
     }
 
 
+    /* SAVE METHODS
+     *************************************************************************/
+    public function saveById($id, $data)
+    {
+        $this->getRequest()->putContents($this->getKey(), $id, $data);
+        return $id;
+    }
+
+    public function deleteById($id)
+    {
+        $status = $this->getRequest()->unlink($this->getKey(), $id);
+        return $status;
+    }
+
+
     /* PROTECTED METHODS
      *************************************************************************/
-    protected function getAllIds()
+    protected function initDefaultRequest()
     {
         throw new \LogicException('This method must be overridden');
     }
 
-    public function slice($dataList, $limit = null, $offset = null)
+
+    /* PROTECTED METHODS
+     *************************************************************************/
+    protected function isIdAvailable($id)
+    {
+        return !$this->getRequest()->exists($this->getKey(), $id);
+    }
+
+    protected function getAllIds()
+    {
+        $idList = $this->getRequest()->getIdList($this->getKey());
+        return $idList;
+    }
+    
+    protected function slice($dataList, $limit = null, $offset = null)
     {
         if (is_null($offset)) {
             $offset = 0;

@@ -1,8 +1,12 @@
 <?php
 
+session_start();
+
 // Require composer autoload
-require_once( __DIR__ . '/../../vendor/autoload.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 use Model418\Example\BasicUsage\UserModel;
+// use Model418\Example\JSONProvider\UserModel;
+// use Model418\Example\SessionProvider\UserModel;
 
 // Retrieve all models
 $userList = (new UserModel)->query()->fetchAll();

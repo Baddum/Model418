@@ -2,7 +2,7 @@
 
 namespace Model418\Core\Request;
 
-abstract class FileRequest implements IFileRequest
+abstract class FileRequest implements INoRelationRequest
 {
     
     /* ATTRIBUTES
@@ -49,10 +49,17 @@ abstract class FileRequest implements IFileRequest
         return unlink($filePath);
     }
 
-    public function getFolderList($folder)
+    public function getIdList($folder)
     {
+        $idList = array();
         $filePattern = $this->getFilePath($folder);
-        return glob($filePattern);
+        $fileList = glob($filePattern);
+        foreach ($fileList as $file) {
+            $file = basename($file);
+            $id = substr($file, 0, strrpos($file, '.'));
+            $idList[] = $id;
+        }
+        return $idList;
     }
 
 
