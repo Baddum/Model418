@@ -3,7 +3,7 @@
 namespace Model418\Core\Provider\FileProvider;
 
 use Model418\Core\Provider\IProvider;
-use Model418\Core\Provider\TNoRelationProvider;
+use Model418\Core\Provider\SimpleCacheProvider;
 use Model418\Core\Request\FileRequestFactory;
 use Model418\Core\Request\TextFileRequest;
 use Model418\Core\Request\JSONFileRequest;
@@ -15,9 +15,8 @@ JSONFileRequest::register();
 YamlFileRequest::register();
 MarkdownFileRequest::register();
 
-class FileProvider implements IProvider
+class FileProvider extends SimpleCacheProvider implements IProvider
 {
-    use TNoRelationProvider;
 
 
     /* ATTRIBUTES

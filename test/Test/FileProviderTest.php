@@ -100,6 +100,31 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $actualDataList = $provider->fetchAll();
         $this->assertEquals($idList, array_keys($actualDataList));
     }
+    
+    /**
+     * @dataProvider providerIdList
+     */
+    public function testFetchAllCached($idList)
+    {
+        $stub = $this->getFetchAllStub($idList, count($idList));
+        $provider = $this->getFileProvider($stub);
+
+        $provider->fetchAll();
+        $provider->fetchAll();
+    }
+
+    /**
+     * @dataProvider providerIdList
+     */
+    public function testFetchAllClearCached($idList)
+    {
+        $stub = $this->getFetchAllStub($idList, count($idList), 2);
+        $provider = $this->getFileProvider($stub);
+
+        $provider->fetchAll();
+        $provider->clearCache();
+        $provider->fetchAll();
+    }
 
     /**
      * @dataProvider providerIdList
