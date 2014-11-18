@@ -3,7 +3,7 @@
 namespace Model418\Core\Provider\FileProvider;
 
 use Model418\Core\Provider\IProvider;
-use Model418\Core\Provider\SimpleCacheProvider;
+use Model418\Core\Provider\CacheDumpProvider;
 use Model418\Core\Request\FileRequestFactory;
 use Model418\Core\Request\TextFileRequest;
 use Model418\Core\Request\JSONFileRequest;
@@ -15,7 +15,7 @@ JSONFileRequest::register();
 YamlFileRequest::register();
 MarkdownFileRequest::register();
 
-class FileProvider extends SimpleCacheProvider implements IProvider
+class FileProvider extends CacheDumpProvider implements IProvider
 {
 
 
@@ -23,16 +23,6 @@ class FileProvider extends SimpleCacheProvider implements IProvider
      *************************************************************************/
     protected $fileRequest;
     protected $folder;
-    protected $idField = 'name';
-
-
-    /* SETTER
-     *************************************************************************/
-    public function setIdField($idField)
-    {
-        $this->idField = $idField;
-        return $this;
-    }
 
 
     /* FOLDER METHODS
@@ -113,29 +103,9 @@ class FileProvider extends SimpleCacheProvider implements IProvider
 
     /* PROTECTED SOURCE FILE METHODS
      *************************************************************************/
-    protected function findAvailableIdByData($data) {
-        $name = '';
-        if (isset($data[$this->idField]) && is_string($data[$this->idField])) {
-            $name = $data[$this->idField];
-        }
-        $suffix = 0;
-        do {
-            $id = $this->getIdByNameAndSuffix($name, $suffix);
-            $suffix++;
-        } while ($this->getFileRequest()->exists($this->folder, $id));
-        return $id;
-    }
-
-    protected function getIdByNameAndSuffix($name = '', $suffix = 0)
+    protected function isIdAvailable($id)
     {
-        $id = array();
-        if (!empty($name)) {
-            $id[] = $name;
-        }
-        if ($suffix > 0 || empty($id)) {
-            $id[] = $suffix+1;
-        }
-        return implode('-', $id);
+        return !$this->getFileRequest()->exists($this->folder, $id);
     }
 
     protected function getAllIds()

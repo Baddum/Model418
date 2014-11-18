@@ -2,7 +2,7 @@
 
 namespace Model418\Core\Provider;
 
-abstract class SimpleCacheProvider extends NoRelationProvider
+abstract class CacheDumpProvider extends NamedIdProvider
 {
 
 
