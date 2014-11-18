@@ -6,11 +6,6 @@ abstract class NoRelationProvider
 {
 
 
-    /* ATTRIBUTES
-     *************************************************************************/
-    protected $_cache = array();
-
-
     /* FETCHING METHODS
      *************************************************************************/
     public function fetchById($id)
@@ -39,34 +34,6 @@ abstract class NoRelationProvider
         $idList = $this->slice($idList, $limit, $offset);
         $dataList = $this->fetchByIdList($idList);
         return $dataList;
-    }
-
-
-    /* CACHE METHODS
-     *************************************************************************/
-    protected function setCache($dataList)
-    {
-        $this->_cache[get_class($this)] = $dataList;
-        return $this;
-    }
-
-    protected function hasCache()
-    {
-        return isset($this->_cache[get_class($this)]);
-    }
-
-    protected function getCache()
-    {
-        if ($this->hasCache()) {
-            return $this->_cache[get_class($this)];
-        }
-        return array();
-    }
-    
-    protected function clearCache()
-    {
-        $this->_cache[get_class($this)] = null;
-        return $this;
     }
 
 
