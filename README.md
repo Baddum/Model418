@@ -40,13 +40,14 @@ Let's code
 --------
 
 ```php
-// Retrieve all models
-$userList = (new UserModel)->query()->fetchAll();
-
 // Save a new Model
 $user = (new UserModel)
     ->set('firstName', 'John')
     ->save();
+
+// Retrieve all models
+$userList = (new UserModel)->query()->fetchAll();
+count($userList) // 1 
     
 // Retrieve by primary key
 $john = (new UserModel)->query()->fetchById(1);
