@@ -24,9 +24,13 @@ It could be used with or without a framework.
 Features
 --------
 
-For now, Model418 supports only *File system* storage with the following encoding:
+For now, Model418 supports only the following storage:
 
- * Yaml (default), JSON, Text and Markdown.
+ * File System: 
+    - Encoding: in Yaml (default), JSON, Text or Markdown
+    - Subfile: Write the data of an attribute in another file
+    - Multi folders: Use multiple folders, like plugins folder
+ * Session System
 
 [&uarr; top](#readme)
 

@@ -14,7 +14,7 @@ Install
 Install [Composer](http://getcomposer.org/doc/01-basic-usage.md#installation) and run the following command:
 
 ```sh
-composer require elephant418/model418:~1.0
+composer require elephant418/model418:~1.1
 ```
 
 
