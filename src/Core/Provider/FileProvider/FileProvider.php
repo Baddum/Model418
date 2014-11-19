@@ -90,7 +90,7 @@ class FileProvider extends CacheDumpProvider implements IProvider
     protected function getRequestFromName($format)
     {
         if (is_string($format)) {
-            $format = (new FileRequestFactory)->get($format);
+            $format = (new FileRequestFactory)->newInstance($format);
         }
         return $format;
     }

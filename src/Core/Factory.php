@@ -12,7 +12,7 @@ class Factory
 
     /* PUBLIC METHODS
      *************************************************************************/
-    public function get($index)
+    public function newInstance($index)
     {
         $id = strtolower($index);
         if (!isset(static::$indexList[$id])) {
