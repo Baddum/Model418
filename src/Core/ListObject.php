@@ -14,7 +14,16 @@ class ListObject extends \ArrayObject
     }
 
 
-    /* GETTER & SETTER
+    /* FILTERING METHODS
+     *************************************************************************/
+    public function filterCallback($callback)
+    {
+        $this->exchangeArray(array_filter($this->toArray(), $callback));
+        return $this;
+    }
+
+
+    /* ARRAY OBJECT METHODS
      *************************************************************************/
     public function offsetGet($name)
     {
