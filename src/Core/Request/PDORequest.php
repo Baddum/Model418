@@ -76,7 +76,6 @@ class PDORequest
         }
 
         // Prepare the request
-        $this->connect();
         $statement = $this->PDO->prepare($this->SQL);
         foreach ($arguments as $parameter => $value) {
             $statement->bindValue($parameter, $value);
@@ -101,7 +100,6 @@ class PDORequest
             $this->lastInsertId = $id;
         }
 
-        $this->disconnect();
         return $result;
     }
 }
