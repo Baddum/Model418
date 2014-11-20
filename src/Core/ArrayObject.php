@@ -31,7 +31,8 @@ class ArrayObject extends \ArrayObject
 
     public function set($name, $value)
     {
-        return $this->offsetSet($name, $value);
+        $this->offsetSet($name, $value);
+        return $this;
     }
 
     public function offsetUnset($index)
