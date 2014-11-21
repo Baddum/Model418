@@ -1,15 +1,17 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\Aspect;
+namespace Elephant418\Model418\Core\Provider\FileProvider\Aspect;
 
 use Elephant418\Model418\Core\Provider\IProvider;
+use Elephant418\Model418\Core\Provider\Aspect\RuntimeCacheKeyValueProvider;
+use Elephant418\Model418\Core\Provider\Aspect\TNamedIdProvider;
 use Elephant418\Model418\Core\Request\FileRequest\FileRequestFactory;
 use Elephant418\Model418\Core\Request\FileRequest\TextFileRequest;
 use Elephant418\Model418\Core\Request\FileRequest\JSONFileRequest;
 use Elephant418\Model418\Core\Request\FileRequest\YamlFileRequest;
 use Elephant418\Model418\Core\Request\FileRequest\MarkdownFileRequest;
 
-abstract class FileProvider extends RuntimeCacheKeyValueProvider implements IProvider
+abstract class BaseFileProvider extends RuntimeCacheKeyValueProvider implements IProvider
 {
     use TNamedIdProvider;
 
