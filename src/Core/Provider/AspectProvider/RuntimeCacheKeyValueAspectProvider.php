@@ -22,13 +22,14 @@ abstract class RuntimeCacheKeyValueAspectProvider extends KeyValueAspectProvider
         return parent::fetchById($id);
     }
 
-    public function fetchAll($limit = null, $offset = null, &$count = false)
+    public function fetchAll($limit = null, $order = null, $offset = null, &$count = false)
     {
         if ($this->hasCache()) {
             $dataList = $this->getCache();
+            $dataList = $this->order($dataList, $order);
             return $this->slice($dataList, $limit, $offset);
         }
-        $dataList = parent::fetchAll($limit, $offset, $count);
+        $dataList = parent::fetchAll($limit, $order, $offset, $count);
         if (is_null($limit)) {
             $this->setCache($dataList);
         }

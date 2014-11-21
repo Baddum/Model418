@@ -134,7 +134,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getFetchAllStub($idList, count($idList));
         $provider = $this->getFileProvider($stub);
         $actualCount = 0;
-        $actualDataList = $provider->fetchAll(null, null, $actualCount);
+        $actualDataList = $provider->fetchAll(null, null, null, $actualCount);
         $this->assertEquals($idList, array_keys($actualDataList));
         $this->assertEquals(count($idList), $actualCount);
     }
@@ -159,7 +159,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getFetchAllStub($idList, count($expectedIdList));
         $provider = $this->getFileProvider($stub);
         $actualCount = 0;
-        $actualDataList = $provider->fetchAll($limit, null, $actualCount);
+        $actualDataList = $provider->fetchAll($limit, null, null, $actualCount);
         $this->assertEquals(count($expectedIdList), count($actualDataList));
         $this->assertEquals(count($idList), $actualCount);
         $this->assertEquals($expectedIdList, array_keys($actualDataList));
@@ -172,7 +172,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
     {
         $stub = $this->getFetchAllStub($idList, count($expectedIdList));
         $provider = $this->getFileProvider($stub);
-        $actualDataList = $provider->fetchAll($limit, $offset);
+        $actualDataList = $provider->fetchAll($limit, null, $offset);
         $this->assertEquals(count($expectedIdList), count($actualDataList));
         $this->assertEquals($expectedIdList, array_keys($actualDataList));
     }
@@ -185,7 +185,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getFetchAllStub($idList, count($expectedIdList));
         $provider = $this->getFileProvider($stub);
         $actualCount = 0;
-        $actualDataList = $provider->fetchAll($limit, $offset, $actualCount);
+        $actualDataList = $provider->fetchAll($limit, null, $offset, $actualCount);
         $this->assertEquals(count($expectedIdList), count($actualDataList));
         $this->assertEquals(count($idList), $actualCount);
         $this->assertEquals($expectedIdList, array_keys($actualDataList));

@@ -27,6 +27,15 @@ class ModelList extends ListObject
         return $this;
     }
 
+    public function order($name, $reverse = false)
+    {
+        $this->orderCallback(function ($a, $b) use ($name, $reverse) {
+            $intReverse = -2*$reverse +1;
+            return strcmp($a->get($name), $b->get($name)) * $intReverse;
+        });
+        return $this;
+    }
+
 
     /* GETTER & SETTER
      *************************************************************************/

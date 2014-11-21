@@ -63,14 +63,20 @@ abstract class KeyValueAspectProvider
         return $dataList;
     }
 
-    public function fetchAll($limit = null, $offset = null, &$count = false)
+    public function fetchAll($limit = null, $order = null, $offset = null, &$count = false)
     {
         $idList = $this->getAllIds();
         if ($count !== false) {
             $count = count($idList);
         }
-        $idList = $this->slice($idList, $limit, $offset);
+        if (is_null($order)) {
+            $idList = $this->slice($idList, $limit, $offset);
+        }
         $dataList = $this->fetchByIdList($idList);
+        if (!is_null($order)) {
+            $dataList = $this->order($dataList, $order);
+            $dataList = $this->slice($dataList, $limit, $offset);
+        }
         return $dataList;
     }
 
@@ -118,6 +124,16 @@ abstract class KeyValueAspectProvider
         }
         if (!is_null($limit)) {
             $dataList = array_slice($dataList, $offset, $limit);
+        }
+        return $dataList;
+    }
+
+    protected function order($dataList, $order)
+    {
+        if (!is_null($order)) {
+            uasort($dataList, function ($a, $b) use ($order) {
+                return strcmp($a[$order], $b[$order]);
+            });
         }
         return $dataList;
     }

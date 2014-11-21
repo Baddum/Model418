@@ -21,6 +21,12 @@ class ListObject extends \ArrayObject
         $this->exchangeArray(array_filter($this->toArray(), $callback));
         return $this;
     }
+    
+    public function orderCallback($callback)
+    {
+        $this->uasort($callback);
+        return $this;
+    }
 
 
     /* ARRAY OBJECT METHODS

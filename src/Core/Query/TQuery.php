@@ -28,9 +28,9 @@ trait TQuery
         return $this->resultAsModelList($dataList);
     }
 
-    public function fetchAll($limit = null, $offset = null, &$count = false)
+    public function fetchAll($limit = null, $order = null, $offset = null, &$count = false)
     {
-        $dataList = $this->getProvider()->fetchAll($limit, $offset, $count);
+        $dataList = $this->getProvider()->fetchAll($limit, $order, $offset, $count);
         return $this->resultAsModelList($dataList);
     }
 

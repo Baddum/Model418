@@ -9,7 +9,7 @@ interface IProvider
 
     public function fetchByIdList($idList);
 
-    public function fetchAll($limit = null, $offset = null, &$count = false);
+    public function fetchAll($limit = null, $order = null, $offset = null, &$count = false);
 
     public function saveById($id, $data);
 
