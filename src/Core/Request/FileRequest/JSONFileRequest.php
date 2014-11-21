@@ -23,7 +23,7 @@ class JSONFileRequest extends FileRequest
         }
         return $data;
     }
-    
+
     protected function getTextFromData($data)
     {
         return json_encode($data);

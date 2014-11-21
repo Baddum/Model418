@@ -26,11 +26,11 @@ class YamlFileRequest extends FileRequest
         }
         return $data;
     }
-    
+
     protected function getTextFromData($data)
     {
         if (!is_array($data)) {
-            throw new \RuntimeException('Wrong type of data to markdownify: '.get_type($data));
+            throw new \RuntimeException('Wrong type of data to markdownify: ' . get_type($data));
         }
         return Yaml::dump($data, 3);
     }

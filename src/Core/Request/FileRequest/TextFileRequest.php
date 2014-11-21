@@ -19,11 +19,11 @@ class TextFileRequest extends FileRequest
     {
         return $text;
     }
-    
+
     protected function getTextFromData($data)
     {
         if (!is_string($data)) {
-            throw new \RuntimeException('Wrong type of data to markdownify: '.get_type($data));
+            throw new \RuntimeException('Wrong type of data to markdownify: ' . get_type($data));
         }
         return $data;
     }

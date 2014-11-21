@@ -3,13 +3,13 @@
 namespace Elephant418\Model418;
 
 use Elephant418\Model418\Core\Provider\IProvider;
-use Elephant418\Model418\Core\Provider\Aspect\TNamedIdProvider;
-use Elephant418\Model418\Core\Provider\Aspect\KeyValueProvider;
+use Elephant418\Model418\Core\Provider\AspectProvider\TNamedIdAspectProvider;
+use Elephant418\Model418\Core\Provider\AspectProvider\KeyValueAspectProvider;
 use Elephant418\Model418\Core\Request\SessionRequest;
 
-class SessionProvider extends KeyValueProvider implements IProvider
+class SessionProvider extends KeyValueAspectProvider implements IProvider
 {
-    use TNamedIdProvider;
+    use TNamedIdAspectProvider;
 
     protected function initDefaultRequest()
     {

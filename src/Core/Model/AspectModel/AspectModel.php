@@ -1,10 +1,10 @@
 <?php
 
-namespace Elephant418\Model418\Core\Model\Aspect;
+namespace Elephant418\Model418\Core\Model\AspectModel;
 
 use Elephant418\Model418\Core\ArrayObject;
 
-abstract class Model extends ArrayObject
+abstract class AspectModel extends ArrayObject
 {
 
 

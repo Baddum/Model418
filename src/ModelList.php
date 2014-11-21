@@ -21,7 +21,7 @@ class ModelList extends ListObject
      *************************************************************************/
     public function filter($name, $value)
     {
-        $this->filterCallback(function($model) use ($name, $value) {
+        $this->filterCallback(function ($model) use ($name, $value) {
             return ($model->get($name) === $value);
         });
         return $this;

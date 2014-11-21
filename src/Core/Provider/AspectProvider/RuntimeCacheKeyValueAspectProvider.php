@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\Aspect;
+namespace Elephant418\Model418\Core\Provider\AspectProvider;
 
-abstract class RuntimeCacheKeyValueProvider extends KeyValueProvider
+abstract class RuntimeCacheKeyValueAspectProvider extends KeyValueAspectProvider
 {
 
 
@@ -21,7 +21,7 @@ abstract class RuntimeCacheKeyValueProvider extends KeyValueProvider
         }
         return parent::fetchById($id);
     }
-    
+
     public function fetchAll($limit = null, $offset = null, &$count = false)
     {
         if ($this->hasCache()) {
@@ -60,7 +60,7 @@ abstract class RuntimeCacheKeyValueProvider extends KeyValueProvider
         $this->_cache[get_called_class()] = null;
         return $this;
     }
-    
+
     public function clearCacheItem($id)
     {
         if ($this->hasCache()) {
@@ -68,7 +68,7 @@ abstract class RuntimeCacheKeyValueProvider extends KeyValueProvider
         }
         return $this;
     }
-    
+
     protected function setCache($dataList)
     {
         $this->_cache[get_called_class()] = $dataList;

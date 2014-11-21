@@ -32,7 +32,7 @@ class ListObject extends \ArrayObject
         }
         return parent::offsetGet($name);
     }
-    
+
     public function offsetSet($index, $value)
     {
         if (!is_int($index)) {

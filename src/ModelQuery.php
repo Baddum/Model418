@@ -26,7 +26,7 @@ class ModelQuery extends Model implements IQuery
     {
         return false;
     }
-    
+
     protected function initQuery()
     {
         return $this;
@@ -46,7 +46,7 @@ class ModelQuery extends Model implements IQuery
     protected function initFolder()
     {
         $className = get_called_class();
-        $folder = './data/'.substr($className, strrpos($className, '\\') + 1);
+        $folder = './data/' . substr($className, strrpos($className, '\\') + 1);
         return $folder;
     }
 }

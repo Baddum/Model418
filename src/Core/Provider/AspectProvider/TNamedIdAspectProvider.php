@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\Aspect;
+namespace Elephant418\Model418\Core\Provider\AspectProvider;
 
-trait TNamedIdProvider
+trait TNamedIdAspectProvider
 {
 
 
@@ -43,7 +43,8 @@ trait TNamedIdProvider
 
     /* PROTECTED SOURCE FILE METHODS
      *************************************************************************/
-    protected function findAvailableIdByData($data) {
+    protected function findAvailableIdByData($data)
+    {
         $name = '';
         if (isset($data[$this->idField]) && is_string($data[$this->idField])) {
             $name = $data[$this->idField];
@@ -63,7 +64,7 @@ trait TNamedIdProvider
             $id[] = $name;
         }
         if ($suffix > 0 || empty($id)) {
-            $id[] = $suffix+1;
+            $id[] = $suffix + 1;
         }
         return implode('-', $id);
     }

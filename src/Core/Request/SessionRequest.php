@@ -4,11 +4,11 @@ namespace Elephant418\Model418\Core\Request;
 
 class SessionRequest implements IKeyValueRequest
 {
-    
+
     /* CONSTANTS
      *************************************************************************/
     const SCOPE_KEY = 'Elephant418\Model418:storage';
-    
+
 
     /* PUBLIC METHODS
      *************************************************************************/
@@ -29,7 +29,7 @@ class SessionRequest implements IKeyValueRequest
         $this->initKey($key);
         $_SESSION[self::SCOPE_KEY][$key][$id] = $data;
     }
-    
+
     public function exists($key, $id)
     {
         $this->initKey($key);

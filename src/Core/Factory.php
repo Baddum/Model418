@@ -4,11 +4,11 @@ namespace Elephant418\Model418\Core;
 
 abstract class Factory
 {
-    
+
     /* ATTRIBUTES
      *************************************************************************/
     public static $indexList = array();
-    
+
 
     /* PUBLIC METHODS
      *************************************************************************/
@@ -16,12 +16,12 @@ abstract class Factory
     {
         $id = strtolower($index);
         if (!isset(static::$indexList[get_called_class()][$id])) {
-            throw new \RuntimeException('No FileRequest found for: '.$id);
+            throw new \RuntimeException('No FileRequest found for: ' . $id);
         }
         $class = static::$indexList[get_called_class()][$id];
         return new $class;
     }
-    
+
     public function register($class, $indexList)
     {
         if (is_object($class)) {

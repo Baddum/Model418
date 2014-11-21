@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Model\Aspect;
+namespace Elephant418\Model418\Core\Model\AspectModel;
 
-abstract class SchemaModel extends Model
+abstract class SchemaAspectModel extends AspectModel
 {
 
 
@@ -16,7 +16,7 @@ abstract class SchemaModel extends Model
     public function offsetSet($name, $value)
     {
         if (!$this->hasSchema($name)) {
-            throw new \RuntimeException('Invalid attribute name: '.$name);
+            throw new \RuntimeException('Invalid attribute name: ' . $name);
         }
         parent::offsetSet($name, $value);
         return $this;

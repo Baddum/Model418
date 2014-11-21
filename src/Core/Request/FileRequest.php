@@ -6,12 +6,12 @@ use Elephant418\Model418\Core\Request\FileRequest\FileRequestFactory;
 
 abstract class FileRequest implements IKeyValueRequest
 {
-    
+
     /* ATTRIBUTES
      *************************************************************************/
     public static $extension = '';
     public static $factoryIndexList = array();
-    
+
 
     /* PUBLIC METHODS
      *************************************************************************/
@@ -46,7 +46,7 @@ abstract class FileRequest implements IKeyValueRequest
         $text = $this->getTextFromData($data);
         return file_put_contents($filePath, $text);
     }
-    
+
     public function exists($folderList, $id)
     {
         $folderList = $this->formatToFolderList($folderList);
@@ -91,22 +91,25 @@ abstract class FileRequest implements IKeyValueRequest
 
     /* PROTECTED METHODS
      *************************************************************************/
-    protected function formatToFolderList($folderList) {
+    protected function formatToFolderList($folderList)
+    {
         if (!is_array($folderList)) {
             $folderList = array($folderList);
         }
         return $folderList;
     }
-    
-    protected function getFilePath($folder, $id='*') {
-        $filePath = $folder.'/'.$id;
+
+    protected function getFilePath($folder, $id = '*')
+    {
+        $filePath = $folder . '/' . $id;
         if (!static::$extension) {
             return $filePath;
         }
-        return $filePath.'.'.static::$extension;
+        return $filePath . '.' . static::$extension;
     }
 
-    protected function getExistingFilePath($folderList, $id) {
+    protected function getExistingFilePath($folderList, $id)
+    {
         foreach ($folderList as $folder) {
             $filePath = $this->getFilePath($folder, $id);
             if (file_exists($filePath)) {
@@ -115,7 +118,7 @@ abstract class FileRequest implements IKeyValueRequest
         }
         return false;
     }
-    
+
     protected function getDataFromText($text)
     {
         throw new \LogicException('This method must be overridden');

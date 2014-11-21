@@ -1,24 +1,25 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\FileProvider\Aspect;
+namespace Elephant418\Model418\Core\Provider\AspectProvider\FileAspectProvider;
 
 use Elephant418\Model418\Core\Provider\IProvider;
-use Elephant418\Model418\Core\Provider\Aspect\RuntimeCacheKeyValueProvider;
-use Elephant418\Model418\Core\Provider\Aspect\TNamedIdProvider;
+use Elephant418\Model418\Core\Provider\AspectProvider\RuntimeCacheKeyValueAspectProvider;
+use Elephant418\Model418\Core\Provider\AspectProvider\TNamedIdAspectProvider;
 use Elephant418\Model418\Core\Request\FileRequest\FileRequestFactory;
 use Elephant418\Model418\Core\Request\FileRequest\TextFileRequest;
 use Elephant418\Model418\Core\Request\FileRequest\JSONFileRequest;
 use Elephant418\Model418\Core\Request\FileRequest\YamlFileRequest;
 use Elephant418\Model418\Core\Request\FileRequest\MarkdownFileRequest;
 
-abstract class BaseFileProvider extends RuntimeCacheKeyValueProvider implements IProvider
+abstract class FileAspectProvider extends RuntimeCacheKeyValueAspectProvider implements IProvider
 {
-    use TNamedIdProvider;
+    use TNamedIdAspectProvider;
 
 
     /* INITIALIZATION
      *************************************************************************/
-    public function __construct() {
+    public function __construct()
+    {
         TextFileRequest::register();
         JSONFileRequest::register();
         YamlFileRequest::register();
@@ -48,7 +49,7 @@ abstract class BaseFileProvider extends RuntimeCacheKeyValueProvider implements 
     {
         return $this->setKey($folderList);
     }
-    
+
     public function setKey($key)
     {
         if (!is_array($key)) {
@@ -86,12 +87,12 @@ abstract class BaseFileProvider extends RuntimeCacheKeyValueProvider implements 
         parent::setRequest($this->getRequestFromName($format));
         return $this;
     }
-    
+
     protected function initDefaultRequest()
     {
         return 'yml';
     }
-    
+
     protected function getRequestFromName($format)
     {
         if (is_string($format)) {

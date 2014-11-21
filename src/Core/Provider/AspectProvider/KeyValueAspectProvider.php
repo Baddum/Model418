@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\Aspect;
+namespace Elephant418\Model418\Core\Provider\AspectProvider;
 
-abstract class KeyValueProvider
+abstract class KeyValueAspectProvider
 {
 
 
@@ -41,8 +41,8 @@ abstract class KeyValueProvider
         }
         return $this->request;
     }
-    
-    
+
+
     /* FETCHING METHODS
      *************************************************************************/
     public function fetchById($id)
@@ -110,7 +110,7 @@ abstract class KeyValueProvider
         $idList = $this->getRequest()->getIdList($this->getKey());
         return $idList;
     }
-    
+
     protected function slice($dataList, $limit = null, $offset = null)
     {
         if (is_null($offset)) {

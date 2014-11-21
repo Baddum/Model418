@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Model\Aspect;
+namespace Elephant418\Model418\Core\Model\AspectModel;
 
-abstract class StoredModel extends SchemaModel
+abstract class StoredAspectModel extends SchemaAspectModel
 {
 
 
@@ -42,7 +42,7 @@ abstract class StoredModel extends SchemaModel
     public function initByData($data)
     {
         if (!isset($data['id'])) {
-            throw new \Exception('Try to retrieve incomplete data');
+            throw new \Exception('Try to retrieve data without storage id');
         }
         $this->id = $data['id'];
         unset($data['id']);
@@ -82,8 +82,9 @@ abstract class StoredModel extends SchemaModel
     {
         throw new \LogicException('This method must be overridden');
     }
-    
-    protected function injectQuery($query) {
+
+    protected function injectQuery($query)
+    {
         if (!$this->hasQuery() && !$query) {
             $query = $this->initQuery();
         }

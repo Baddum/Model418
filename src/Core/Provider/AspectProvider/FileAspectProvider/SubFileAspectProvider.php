@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\FileProvider\Aspect;
+namespace Elephant418\Model418\Core\Provider\AspectProvider\FileAspectProvider;
 
-abstract class SubFileProvider extends BaseFileProvider
+abstract class SubFileAspectProvider extends FileAspectProvider
 {
 
 
@@ -20,7 +20,7 @@ abstract class SubFileProvider extends BaseFileProvider
             $id = $key;
         }
         if (in_array($id, $this->subAttributeList)) {
-            throw new \RuntimeException('Another sub attribute use the id: '.$id);
+            throw new \RuntimeException('Another sub attribute use the id: ' . $id);
         }
         $subAttribute = array();
         $subAttribute['id'] = $id;
@@ -31,7 +31,7 @@ abstract class SubFileProvider extends BaseFileProvider
         $this->subAttributeList[$key] = $subAttribute;
         return $this;
     }
-    
+
     public function unsetSubAttribute($key)
     {
         unset($this->subAttributeList[$key]);
@@ -110,12 +110,13 @@ abstract class SubFileProvider extends BaseFileProvider
     {
         $subId = $id;
         if ($this->subAttributeList[$subKey]['id']) {
-            $subId .= '.'.$this->subAttributeList[$subKey]['id'];
+            $subId .= '.' . $this->subAttributeList[$subKey]['id'];
         }
         return $subId;
     }
-    
-    protected function getSubAttributeFileRequest($subKey) {
+
+    protected function getSubAttributeFileRequest($subKey)
+    {
         if (isset($this->subAttributeList[$subKey]['fileRequest'])) {
             return $this->subAttributeList[$subKey]['fileRequest'];
         }
