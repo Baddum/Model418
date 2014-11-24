@@ -66,7 +66,7 @@ class PDORequest
         return $result;
     }
 
-    public function execute($arguments = array())
+    public function execute($parameters = array())
     {
         if (empty($this->PDO)) {
             throw new \PDOException('The PDO object is empty.');
@@ -77,19 +77,19 @@ class PDORequest
 
         // Prepare the request
         $statement = $this->PDO->prepare($this->SQL);
-        foreach ($arguments as $parameter => $value) {
+        foreach ($parameters as $parameter => $value) {
             $statement->bindValue($parameter, $value);
         }
         $result = $statement->execute();
 
         // Execute the request
         if (!$result) {
-            throw new \PDOException('Error with the SQL request : ' . $this->SQL, $statement->errorInfo());
+            throw new \PDOException('Error with the SQL request : "' . implode(PHP_EOL, $statement->errorInfo()));
         }
 
-        if (\UString::isStartWith($this->SQL, ['SELECT', 'SHOW', 'DESCRIBE', 'EXPLAIN'])) {
+        if ($this->isStartWith($this->SQL, ['SELECT', 'SHOW', 'DESCRIBE', 'EXPLAIN'])) {
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-        } else if (\UString::isStartWith($this->SQL, "INSERT")) {
+        } else if ($this->isStartWith($this->SQL, "INSERT")) {
             $result = true;
             $id = $this->PDO->lastInsertId();
             if ($id == '0') {
@@ -101,6 +101,21 @@ class PDORequest
         }
 
         return $result;
+    }
+
+
+    /* PROTECTED METHODS
+     *************************************************************************/
+    protected function isStartWith($haystack, $needles) {
+        if (!is_array($needles)) {
+            $needles = array($needles);
+        }
+        foreach ($needles as $needle) {
+            if (substr($haystack, 0, strlen($needle)) === $needle) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
