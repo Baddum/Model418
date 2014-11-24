@@ -32,6 +32,23 @@ abstract class SchemaAspectModel extends AspectModel
             $schema = $this->initSchema();
             $this->setSchema($schema);
         }
+        foreach ($this->getSchema() as $name => $value) {
+            $this->set($name, $value);
+        }
+    }
+    
+    public function initByData($data)
+    {
+        if (!$this->hasSchema()) {
+            return parent::initByData($data);
+        }
+        foreach ($this->getSchema() as $name => $value) {
+            if (isset($data[$name])) {
+                $value = $data[$name];
+            }
+            $this->set($name, $value);
+        }
+        $this->initialize();
     }
 
 
@@ -71,6 +88,14 @@ abstract class SchemaAspectModel extends AspectModel
             }
         }
         return $uniformSchema;
+    }
+
+    protected function getSchema()
+    {
+        if (!$this->hasSchema()) {
+            return array();
+        }
+        return static::$_schema[get_called_class()];
     }
 
     protected function setSchema($schema)
