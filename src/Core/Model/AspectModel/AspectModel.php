@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Model\AspectModel;
+namespace Baddum\Model418\Core\Model\AspectModel;
 
-use Elephant418\Model418\Core\ArrayObject;
+use Baddum\Model418\Core\ArrayObject;
 
 abstract class AspectModel extends ArrayObject
 {

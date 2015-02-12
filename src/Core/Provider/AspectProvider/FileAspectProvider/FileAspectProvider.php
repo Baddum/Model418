@@ -1,15 +1,15 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\AspectProvider\FileAspectProvider;
+namespace Baddum\Model418\Core\Provider\AspectProvider\FileAspectProvider;
 
-use Elephant418\Model418\Core\Provider\IProvider;
-use Elephant418\Model418\Core\Provider\AspectProvider\RuntimeCacheKeyValueAspectProvider;
-use Elephant418\Model418\Core\Provider\AspectProvider\TNamedIdAspectProvider;
-use Elephant418\Model418\Core\Request\FileRequest\FileRequestFactory;
-use Elephant418\Model418\Core\Request\FileRequest\TextFileRequest;
-use Elephant418\Model418\Core\Request\FileRequest\JSONFileRequest;
-use Elephant418\Model418\Core\Request\FileRequest\YamlFileRequest;
-use Elephant418\Model418\Core\Request\FileRequest\MarkdownFileRequest;
+use Baddum\Model418\Core\Provider\IProvider;
+use Baddum\Model418\Core\Provider\AspectProvider\RuntimeCacheKeyValueAspectProvider;
+use Baddum\Model418\Core\Provider\AspectProvider\TNamedIdAspectProvider;
+use Baddum\Model418\Core\Request\FileRequest\FileRequestFactory;
+use Baddum\Model418\Core\Request\FileRequest\TextFileRequest;
+use Baddum\Model418\Core\Request\FileRequest\JSONFileRequest;
+use Baddum\Model418\Core\Request\FileRequest\YamlFileRequest;
+use Baddum\Model418\Core\Request\FileRequest\MarkdownFileRequest;
 
 abstract class FileAspectProvider extends RuntimeCacheKeyValueAspectProvider implements IProvider
 {

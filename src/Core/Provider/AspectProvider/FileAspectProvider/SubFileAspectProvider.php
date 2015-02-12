@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\AspectProvider\FileAspectProvider;
+namespace Baddum\Model418\Core\Provider\AspectProvider\FileAspectProvider;
 
 abstract class SubFileAspectProvider extends FileAspectProvider
 {

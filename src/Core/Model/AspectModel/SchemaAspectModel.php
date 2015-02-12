@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Model418\Core\Model\AspectModel;
+namespace Baddum\Model418\Core\Model\AspectModel;
 
 abstract class SchemaAspectModel extends AspectModel
 {

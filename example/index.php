@@ -4,9 +4,9 @@ session_start();
 
 // Require composer autoload
 require_once(__DIR__ . '/../vendor/autoload.php');
-//use Elephant418\Model418\Example\BasicUsage\UserModel;
-use Elephant418\Model418\Example\JSONProvider\UserModel;
-// use Elephant418\Model418\Example\SessionProvider\UserModel;
+//use Baddum\Model418\Example\BasicUsage\UserModel;
+use Baddum\Model418\Example\JSONProvider\UserModel;
+// use Baddum\Model418\Example\SessionProvider\UserModel;
 
 function dumpUser($user) {
     return $user->firstName.' '.$user->lastName.' ('.$user->id.')'.PHP_EOL;

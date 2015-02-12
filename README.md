@@ -1,11 +1,11 @@
 Model418
 =====
-[![Latest Stable Version](https://poser.pugx.org/elephant418/model418/v/stable.svg)](https://github.com/Elephant418/Model418)
-[![Build Status](https://travis-ci.org/Elephant418/Model418.png?branch=master)](https://travis-ci.org/Elephant418/Model418)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Elephant418/Model418/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Elephant418/Model418/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/Elephant418/Model418/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Elephant418/Model418/?branch=master)
-[![Total Downloads](https://poser.pugx.org/elephant418/model418/downloads.svg)](https://packagist.org/packages/elephant418/model418)
-[![License](https://poser.pugx.org/elephant418/model418/license.svg)](http://opensource.org/licenses/MIT)
+[![Latest Stable Version](https://poser.pugx.org/baddum/model418/v/stable.svg)](https://github.com/Baddum/Model418)
+[![Build Status](https://travis-ci.org/Baddum/Model418.png?branch=master)](https://travis-ci.org/Baddum/Model418)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Baddum/Model418/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Baddum/Model418/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Baddum/Model418/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Baddum/Model418/?branch=master)
+[![Total Downloads](https://poser.pugx.org/baddum/model418/downloads.svg)](https://packagist.org/packages/baddum/model418)
+[![License](https://poser.pugx.org/baddum/model418/license.svg)](http://opensource.org/licenses/MIT)
 
 
 
@@ -60,7 +60,7 @@ $john->set('lastName', 'Doe')
 $john->delete();
 ```
 
-To go further, you should read [the complete documentation](https://github.com/Elephant418/Model418/blob/master/doc/Index.md).
+To go further, you should read [the complete documentation](https://github.com/Baddum/Model418/blob/master/doc/Index.md).
 
 [&uarr; top](#readme)
 
@@ -73,7 +73,7 @@ This library package requires `PHP 5.4` or later.<br>
 Install [Composer](http://getcomposer.org/doc/01-basic-usage.md#installation) and run the following command to get the latest version:
 
 ```sh
-composer require elephant418/model418:1.2.*
+composer require baddum/model418:1.2.*
 ```
 
 [&uarr; top](#readme)
@@ -85,14 +85,14 @@ How to Contribute
 
 ### Get involved
 
-1. [Star](https://github.com/elephant418/model418/stargazers) the project!
-2. [Report a bug](https://github.com/elephant418/model418/issues/new) that you find
+1. [Star](https://github.com/baddum/model418/stargazers) the project!
+2. [Report a bug](https://github.com/baddum/model418/issues/new) that you find
 3. Tweet and blog about Model418 and [Let me know](https://twitter.com/iamtzi) about it.
 
 ### Pull Requests
 
 Pull requests are highly appreciated.<br>
-Please review the [guidelines for contributing](https://github.com/Elephant418/Model418/blob/master/CONTRIBUTING.md) to go further. 
+Please review the [guidelines for contributing](https://github.com/Baddum/Model418/blob/master/CONTRIBUTING.md) to go further. 
 
 [&uarr; top](#readme)
 
@@ -102,4 +102,4 @@ Author & Community
 --------
 
 Model418 is under [MIT License](http://opensource.org/licenses/MIT).<br>
-It was created & maintained by [Thomas ZILLIOX](http://tzi.fr).
+It was created & is maintained by [Thomas ZILLIOX](http://tzi.fr).

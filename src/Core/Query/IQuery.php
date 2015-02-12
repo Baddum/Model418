@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Model418\Core\Query;
+namespace Baddum\Model418\Core\Query;
 
 interface IQuery
 {

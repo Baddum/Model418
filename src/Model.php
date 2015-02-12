@@ -1,9 +1,9 @@
 <?php
 
-namespace Elephant418\Model418;
+namespace Baddum\Model418;
 
-use Elephant418\Model418\Core\Model\IModel;
-use Elephant418\Model418\Core\Model\AspectModel\StoredAspectModel;
+use Baddum\Model418\Core\Model\IModel;
+use Baddum\Model418\Core\Model\AspectModel\StoredAspectModel;
 
 class Model extends StoredAspectModel implements IModel
 {

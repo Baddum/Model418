@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephant418\Model418\Core\Request;
+namespace Baddum\Model418\Core\Request;
 
 class PDORequest
 {

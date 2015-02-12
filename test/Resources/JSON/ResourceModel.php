@@ -1,9 +1,9 @@
 <?php
 
-namespace Elephant418\Model418\Test\Resources\JSON;
+namespace Baddum\Model418\Test\Resources\JSON;
 
-use Elephant418\Model418\FileProvider as Provider;
-use Elephant418\Model418\ModelQuery;
+use Baddum\Model418\FileProvider as Provider;
+use Baddum\Model418\ModelQuery;
 
 class ResourceModel extends ModelQuery
 {

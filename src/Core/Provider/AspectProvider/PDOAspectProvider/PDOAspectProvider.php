@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Provider\AspectProvider\PDOAspectProvider;
+namespace Baddum\Model418\Core\Provider\AspectProvider\PDOAspectProvider;
 
-use Elephant418\Model418\Core\Request\PDORequest as Request;
+use Baddum\Model418\Core\Request\PDORequest as Request;
 
 abstract class PDOAspectProvider
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Elephant418\Model418\Test\Scenario;
+namespace Baddum\Model418\Test\Scenario;
 
-use Elephant418\Model418\Test\Resources\Simple\ResourceModel as SimpleModel;
-use Elephant418\Model418\Test\Resources\Separate\ResourceModel as SeparateModel;
-use Elephant418\Model418\Test\Resources\NoQuery\ResourceModel as NoQueryModel;
-use Elephant418\Model418\Test\Resources\JSON\ResourceModel as JSONModel;
-use Elephant418\Model418\Test\Resources\SubAttribute\ResourceModel as SubAttributeModel;
-use Elephant418\Model418\Test\Resources\MdAttribute\ResourceModel as MdAttributeModel;
+use Baddum\Model418\Test\Resources\Simple\ResourceModel as SimpleModel;
+use Baddum\Model418\Test\Resources\Separate\ResourceModel as SeparateModel;
+use Baddum\Model418\Test\Resources\NoQuery\ResourceModel as NoQueryModel;
+use Baddum\Model418\Test\Resources\JSON\ResourceModel as JSONModel;
+use Baddum\Model418\Test\Resources\SubAttribute\ResourceModel as SubAttributeModel;
+use Baddum\Model418\Test\Resources\MdAttribute\ResourceModel as MdAttributeModel;
 
 class EndToEndTest extends \PHPUnit_Framework_TestCase
 {

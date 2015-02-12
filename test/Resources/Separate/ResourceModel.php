@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Test\Resources\Separate;
+namespace Baddum\Model418\Test\Resources\Separate;
 
-use Elephant418\Model418\Model;
+use Baddum\Model418\Model;
 
 class ResourceModel extends Model
 {

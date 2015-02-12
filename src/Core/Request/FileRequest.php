@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Request;
+namespace Baddum\Model418\Core\Request;
 
-use Elephant418\Model418\Core\Request\FileRequest\FileRequestFactory;
+use Baddum\Model418\Core\Request\FileRequest\FileRequestFactory;
 
 abstract class FileRequest implements IKeyValueRequest
 {

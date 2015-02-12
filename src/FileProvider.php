@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418;
+namespace Baddum\Model418;
 
-use Elephant418\Model418\Core\Provider\AspectProvider\FileAspectProvider\SubFileAspectProvider;
+use Baddum\Model418\Core\Provider\AspectProvider\FileAspectProvider\SubFileAspectProvider;
 
 class FileProvider extends SubFileAspectProvider
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Elephant418\Model418;
+namespace Baddum\Model418;
 
-use Elephant418\Model418\Core\Provider\IProvider;
-use Elephant418\Model418\Core\Provider\AspectProvider\TNamedIdAspectProvider;
-use Elephant418\Model418\Core\Provider\AspectProvider\KeyValueAspectProvider;
-use Elephant418\Model418\Core\Request\SessionRequest;
+use Baddum\Model418\Core\Provider\IProvider;
+use Baddum\Model418\Core\Provider\AspectProvider\TNamedIdAspectProvider;
+use Baddum\Model418\Core\Provider\AspectProvider\KeyValueAspectProvider;
+use Baddum\Model418\Core\Request\SessionRequest;
 
 class SessionProvider extends KeyValueAspectProvider implements IProvider
 {

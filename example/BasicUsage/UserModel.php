@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Example\BasicUsage;
+namespace Baddum\Model418\Example\BasicUsage;
 
-use Elephant418\Model418\ModelQuery;
+use Baddum\Model418\ModelQuery;
 
 class UserModel extends ModelQuery
 {

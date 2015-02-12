@@ -1,10 +1,10 @@
 <?php
 
-namespace Elephant418\Model418\Core\Request\FileRequest;
+namespace Baddum\Model418\Core\Request\FileRequest;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
-use Elephant418\Model418\Core\Request\FileRequest;
+use Baddum\Model418\Core\Request\FileRequest;
 
 class YamlFileRequest extends FileRequest
 {

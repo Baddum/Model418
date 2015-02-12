@@ -1,13 +1,13 @@
 <?php
 
-namespace Elephant418\Model418\Core\Request;
+namespace Baddum\Model418\Core\Request;
 
 class SessionRequest implements IKeyValueRequest
 {
 
     /* CONSTANTS
      *************************************************************************/
-    const SCOPE_KEY = 'Elephant418\Model418:storage';
+    const SCOPE_KEY = 'Baddum\Model418:storage';
 
 
     /* PUBLIC METHODS

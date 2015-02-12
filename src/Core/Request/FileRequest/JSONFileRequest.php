@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephant418\Model418\Core\Request\FileRequest;
+namespace Baddum\Model418\Core\Request\FileRequest;
 
-use Elephant418\Model418\Core\Request\FileRequest;
+use Baddum\Model418\Core\Request\FileRequest;
 
 class JSONFileRequest extends FileRequest
 {

@@ -1,10 +1,10 @@
 {
-    "name": "elephant418/model418",
+    "name": "Baddum/model418",
     "type": "library",
     "description": "A library for a simple & explicit model couch",
     "keywords": ["model"],
     "license": "MIT",
-    "homepage": "https://github.com/Elephant418/Model418",
+    "homepage": "https://github.com/Baddum/Model418",
     "authors": [
         {
             "name": "Thomas Zilliox",
@@ -25,9 +25,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Elephant418\\Model418\\": "src",
-            "Elephant418\\Model418\\Test\\": "test",
-            "Elephant418\\Model418\\Example\\": "example"
+            "Baddum\\Model418\\": "src",
+            "Baddum\\Model418\\Test\\": "test",
+            "Baddum\\Model418\\Example\\": "example"
         }
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Elephant418\Model418\Test\Resources\Separate;
+namespace Baddum\Model418\Test\Resources\Separate;
 
-use Elephant418\Model418\FileProvider as Provider;
-use Elephant418\Model418\Query;
+use Baddum\Model418\FileProvider as Provider;
+use Baddum\Model418\Query;
 
 class ResourceQuery extends Query
 {

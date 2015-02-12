@@ -14,7 +14,7 @@ Install
 Install [Composer](http://getcomposer.org/doc/01-basic-usage.md#installation) and run the following command:
 
 ```sh
-composer require elephant418/model418:~1.2.*
+composer require baddum/model418:~1.2.*
 ```
 
 
@@ -25,7 +25,7 @@ Basic Usage
 Start by defining a model with the `ModelQuery` starter class:
 
 ```php
-use Elephant418\Model418\ModelQuery;
+use Baddum\Model418\ModelQuery;
 
 class UserModel extends ModelQuery
 {
